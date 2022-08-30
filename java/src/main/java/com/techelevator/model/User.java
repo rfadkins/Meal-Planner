@@ -1,14 +1,23 @@
 package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class User {
 
-   private Long id;
+   private Long userId;
    private String username;
    @JsonIgnore
    private String password;
@@ -16,38 +25,27 @@ public class User {
    private boolean activated;
    private Set<Authority> authorities = new HashSet<>();
 
-   public User() { }
-
-   public User(Long id, String username, String password, String authorities) {
-      this.id = id;
+   public User(Long userId, String username, String password, String authorities) {
+      this.userId = userId;
       this.username = username;
       this.password = password;
       this.activated = true;
    }
 
-   public Long getId() {
-      return id;
-   }
+   /*
+   Cascade ALL = whatever happens to user,
+                  happens to the user's pantry,
+                  and the user's meal plan
+    */
+   @JsonIgnore
+   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+   private Pantry pantry;
 
-   public void setId(Long id) {
-      this.id = id;
-   }
+   @JsonIgnore
+   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+   private MealPlan mealPlan;
 
-   public String getUsername() {
-      return username;
-   }
 
-   public void setUsername(String username) {
-      this.username = username;
-   }
-
-   public String getPassword() {
-      return password;
-   }
-
-   public void setPassword(String password) {
-      this.password = password;
-   }
 
    public boolean isActivated() {
       return activated;
@@ -78,7 +76,7 @@ public class User {
       if (this == o) return true;
       if (o == null || getClass() != o.getClass()) return false;
       User user = (User) o;
-      return id == user.id &&
+      return userId == user.userId &&
               activated == user.activated &&
               Objects.equals(username, user.username) &&
               Objects.equals(password, user.password) &&
@@ -87,13 +85,13 @@ public class User {
 
    @Override
    public int hashCode() {
-      return Objects.hash(id, username, password, activated, authorities);
+      return Objects.hash(userId, username, password, activated, authorities);
    }
 
    @Override
    public String toString() {
       return "User{" +
-              "id=" + id +
+              "id=" + userId +
               ", username='" + username + '\'' +
               ", activated=" + activated +
               ", authorities=" + authorities +
