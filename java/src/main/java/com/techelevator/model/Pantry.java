@@ -10,11 +10,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table(name="pantry")
 public class Pantry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)  // double check column name
+    @Column(name = "pantry_id", nullable = false)  // double check column name
     private Long pantryId;
 
     @Column(name = "user_id", nullable = false)
@@ -23,13 +24,13 @@ public class Pantry {
     @JsonIgnore
     private String itemName;
 
-    @JsonIgnore
-    @ManyToMany
-    @JoinTable(name = "ingredient-pantry",
-                joinColumns =
-                @JoinColumn(name = "pantry_id",
-                referencedColumnName = "pantry-id"))
-    private List<Ingredient> pantryList;
+//    @JsonIgnore
+//    @Transient
+//    @JoinTable(name = "ingredient-pantry",
+//                joinColumns =
+//                @JoinColumn(name = "pantry_id",
+//                referencedColumnName = "pantry-id"))
+//    private List<Ingredient> pantryList;
 
     @JsonIgnore
     @ManyToOne

@@ -10,19 +10,19 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "meal-plan")
+@Table(name = "meal_plan")
 public class MealPlan {
 
     @Id
-    @Column(name = "meal-plan-id", nullable = false) // confirm column name
-    private Long id;
+    @Column(name = "meal_plan_id", nullable = false) // confirm column name
+    private Long mealPlanId;
 
     @JsonIgnore
     @OneToOne
     private User user;
 
     @JsonIgnore
-    @OneToMany
+    @OneToOne
     private Meal meal;
 
 }

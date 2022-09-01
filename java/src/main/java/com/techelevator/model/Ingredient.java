@@ -13,10 +13,10 @@ import javax.persistence.*;
 @Table(name = "ingredient")
 public class Ingredient {
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "ingredient_id", nullable = false)
     private Long ingredientId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "ingredient_name", nullable = false)
     private String ingredientName;
 
     @Column(name = "category")
