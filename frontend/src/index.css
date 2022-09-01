@@ -1,3 +1,110 @@
+/* css for pc */
 body{
+  background-color: #363636;
   margin:0;
+}
+
+
+/* css for phone app */
+@media (max-width: 500px){
+  body{ /* defualt*/
+    background-color: #9747FF;
+    margin:0;
+  }
+
+  /* opening page */
+  .welcome-Page, .login-Page{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+  }
+
+  .welcomeHeader, .login-Header{
+    grid-area: Header;
+    background-color: #E6E6E6;
+    border-radius: 20px;
+    padding: 50px;
+  }
+
+  .Brand-Img{
+    grid-area: Brand-Img;
+    background-color: #1E1E1E;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+  }
+  .welcome-Descritpuon{
+    grid-area: welcome-Descritpuon;
+    background-color: #E6E6E6;
+    border-radius: 20px;
+    padding: 50px;
+    width: 300px;
+  }
+  .login-Button{
+    grid-area: login-Button;
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+  }
+  .signUp-Button{
+    grid-area: signUp-Button;
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+  }
+  .welcome-Help, .login-Help{
+    grid-area: welcome-Help;
+    background-color: #E6E6E6;
+    height: 25px;
+    width: 100px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  /* opening page */
+
+  /* login */
+  .login-input{
+    grid-area: login-Button;
+    height: 40px;
+    width: 300px;
+    border-radius: 20px;
+  }
+
+  .login-Button{
+    grid-area: login-Button;
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+  }
+  .login-forgot-password{
+    grid-area: welcome-Help;
+    background-color: #E6E6E6;
+    height: 25px;
+    width: 150px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  /* login */
+
+  /* Sign up */
+  .Brand-Border{
+    grid-area: Brand-Img;
+    background-color: #1E1E1E;
+    height: 100px;
+    width: 450px;
+    border-radius: 25px;
+  }
+  /* Sign up */
+
+  /* welcome */
+
+  /* welcome */
 }
