@@ -48,6 +48,8 @@ public class UserRepositoryTests {
         Assertions.assertThat(user.getUserId()).isNotNull();
     }
 
+
+
 }
 
 

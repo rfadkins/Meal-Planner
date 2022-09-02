@@ -1,20 +1,28 @@
 package com.techelevator.business;
 
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.User;
 import com.techelevator.repository.IngredientRepository;
+import com.techelevator.repository.UserRepository;
 import com.techelevator.util.BasicLogger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class IngredientService {
 
-    IngredientRepository ingredientRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private IngredientRepository ingredientRepository;
     private final RestTemplate restTemplate = new RestTemplate();
     private String authToken;
 
@@ -30,19 +38,19 @@ public class IngredientService {
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientName(name);
         ingredient.setIngredientCategory(category);
-        ingredientRepository.save(ingredient);
+        ingredientRepository.saveAndFlush(ingredient);
 
-        ResponseEntity<Ingredient> response;
-        try {
-            response = restTemplate.exchange
-                    (baseUrl +
-                    "ingredient/" ,
-                    HttpMethod.POST,
-                    createEntity(),
-                    Ingredient.class);
-        } catch (RestClientResponseException e) {
-            BasicLogger.log("status code: " + e.getRawStatusCode() + "   " + e.getMessage());
-        }
+//        ResponseEntity<Ingredient> response;
+//        try {
+//            response = restTemplate.exchange
+//                    (baseUrl +
+//                    "ingredient/" ,
+//                    HttpMethod.POST,
+//                    createEntity(),
+//                    Ingredient.class);
+//        } catch (RestClientResponseException e) {
+//            BasicLogger.log("status code: " + e.getRawStatusCode() + "   " + e.getMessage());
+//        }
 
         return ingredient;
     }
@@ -56,6 +64,16 @@ public class IngredientService {
         listOfIngredients.remove(ingredient);
         return listOfIngredients;
     }
+
+    public Map<Long, Ingredient> addIngredientToUserPantry(Long userId, Ingredient ingredient){
+        User user = userRepository.findByUserId(userId);
+        Map<Long, Ingredient> pantry = new HashMap<>();
+        pantry.put(user.getUserId(), ingredient);
+        user.setUserPantry(pantry);
+        return pantry;
+    }
+
+
 
 
     private HttpHeaders createHeader() {

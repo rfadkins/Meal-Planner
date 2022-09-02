@@ -60,6 +60,11 @@ public class User {
       this.activated = true;
    }
 
+   public User(Long user_id, Map<Long, Ingredient> userPantry) {
+      this.userId = user_id;
+      this.userPantry = userPantry;
+   }
+
    /*
    Cascade ALL = whatever happens to user,
                   happens to the user's pantry,
