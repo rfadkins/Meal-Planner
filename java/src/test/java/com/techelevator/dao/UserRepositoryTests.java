@@ -25,50 +25,28 @@ public class UserRepositoryTests {
     @Autowired
     private TestEntityManager testEntityManager;
 
-    @Test
-    public void userIdIsNotNull() {
-        User user = new User();
-        user.setUsername("TestUsername");
-        user.setPassword("TestPassword");
-
-        userRepository.saveAndFlush(user);
-
-        Assertions.assertThat(user.getUserId()).isNotNull();
-
-    }
 
     @Test
     public void userIdIsGreaterThanZero() {
-        User user = new User();
-        user.setUsername("TestUsername");
-        user.setPassword("TestPassword");
-
-        userRepository.saveAndFlush(user);
+        User user = User.builder()
+                .username("TestUsername")
+                .password("TestPassword")
+                .build();
+        user = userService.create(user.getUsername(), user.getPassword());
 
         Assertions.assertThat(user.getUserId()).isGreaterThan(0);
-
     }
 
-//    @Test
-//    public void userIdIsGreaterThanZero() {
-//        User user = User.builder()
-//                .username("TestUsername")
-//                .password("TestPassword")
-//                .build();
-//        userService.create(user.getUsername(), user.getPassword());
-//        Assertions.assertThat(user.getUserId()).isGreaterThan(0);
-//
-//    }
+    @Test
+    public void userIdIsNotNull() {
+        User user = User.builder()
+                .username("TestUsername")
+                .password("TestPassword")
+                .build();
+        user = userService.create(user.getUsername(), user.getPassword());
 
-//    public void userIdIsNotNull(); {
-//        User user = User.builder()
-//                .username("TestUsername")
-//                .password("TestPassword")
-//                .build();
-//
-//        userService.create(user.getUsername(), user.getPassword());
-//        Assertions.assertThat(user.getUserId()).isNotNull();
-//    }
+        Assertions.assertThat(user.getUserId()).isNotNull();
+    }
 
 }
 

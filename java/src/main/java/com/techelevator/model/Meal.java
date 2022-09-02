@@ -14,19 +14,24 @@ import java.util.List;
 @Entity
 @Table(name = "meal")
 public class Meal {
-// add join table for meal and recipe
+
     @Id
     @Column(name = "meal_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_meal_id")
     private Long mealId;
 
-    @Column(name="recipe_id")
+    @Column(name="recipe_id", insertable = false, updatable = false)
     private Long recipeId;
 
     @Column(name="meal_plan_id")  // confirm column name
     private Long mealPlanId;
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "recipe_id", nullable = false)
+    private Recipe recipe;
+
     @JsonIgnore
     @Transient
-    private List<Recipe> userRecipeList;
+    private List<Recipe> mealDetails;
 
 }

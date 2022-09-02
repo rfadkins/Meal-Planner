@@ -1,8 +1,6 @@
 package com.techelevator.business;
 import com.techelevator.util.BasicLogger;
-import com.techelevator.model.Pantry;
 import com.techelevator.model.User;
-import com.techelevator.repository.PantryRepository;
 import com.techelevator.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -22,9 +20,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PantryRepository pantryRepository;
-
     User findByUserId(Long userId){
         return userRepository.findByUserId(userId);
     }
@@ -33,7 +28,7 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public boolean create(String username, String password ) {
+    public User create(String username, String password ) {
         boolean userCreated = false;
         User newUser = new User();
         String password_hash = new BCryptPasswordEncoder().encode(password);
@@ -47,15 +42,15 @@ public class UserService {
             BasicLogger.log(e.getMessage());
             userCreated = false;
         }
-        Pantry newPantry = new Pantry();
-        newPantry.setUserId(newUser.getUserId());
-        try {
-            pantryRepository.saveAndFlush(newPantry);
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-            userCreated = false;
-        }
-        return userCreated;
+//        Pantry newPantry = new Pantry();
+//        newPantry.setUserId(newUser.getUserId());
+//        try {
+//            pantryRepository.saveAndFlush(newPantry);
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//            userCreated = false;
+//        }
+        return newUser;
     }
 
 

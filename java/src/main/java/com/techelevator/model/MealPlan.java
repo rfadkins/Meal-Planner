@@ -14,15 +14,16 @@ import java.util.List;
 public class MealPlan {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "meal_plan_id", nullable = false) // confirm column name
     private Long mealPlanId;
 
-    @JsonIgnore
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @JsonIgnore
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meal")
     private Meal meal;
 
 }

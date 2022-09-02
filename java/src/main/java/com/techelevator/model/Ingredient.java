@@ -12,8 +12,10 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ingredient")
 public class Ingredient {
+
     @Id
     @Column(name = "ingredient_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_ingredient_id")
     private Long ingredientId;
 
     @Column(name = "ingredient_name", nullable = false)
@@ -21,6 +23,10 @@ public class Ingredient {
 
     @Column(name = "category")
     private String ingredientCategory;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "recipe_recipe_id")
+    private Recipe recipeRecipe;
 
 
 

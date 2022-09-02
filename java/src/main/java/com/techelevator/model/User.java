@@ -35,7 +35,7 @@ public class User {
    @Transient
    private Set<Authority> authorities = new HashSet<>();
 
-   public User(Long id, String username, String password, Set<Authority> authorities, Pantry pantry) {
+   public User(Long id, String username, String password, Set<Authority> authorities) {
       this.userId = id;
       this.username = username;
       this.password = password;
@@ -48,9 +48,6 @@ public class User {
                   happens to the user's pantry,
                   and the user's meal plan
     */
-   @JsonIgnore
-   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-   private Pantry pantry;
 
 //   @JsonIgnore
 //   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
