@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class FoodController {
+public class IngredientController {
     UserService userService;
     IngredientService ingredientService;
 
     @Autowired
-    public FoodController(UserService userService, IngredientService ingredientService) {
+    public IngredientController(UserService userService, IngredientService ingredientService) {
         this.userService = userService;
         this.ingredientService = ingredientService;
     }

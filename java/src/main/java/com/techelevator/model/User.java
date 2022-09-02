@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,6 +25,24 @@ public class User {
     @Column(name = "PASSWORD", nullable = false)
    @JsonIgnore
    private String password;
+
+   @ManyToMany
+   @JoinTable(name="user_pantry",
+      joinColumns =
+      @JoinColumn(name="user_id"),
+      inverseJoinColumns =
+      @JoinColumn(name="ingredient_id"))
+   //Map<ingredientId, Ingredient>
+   private Map<Long, Ingredient> userPantry;
+
+   @ManyToMany
+   @JoinTable(name="user_recipe",
+      joinColumns =
+      @JoinColumn(name="user_id"),
+      inverseJoinColumns =
+      @JoinColumn(name="recipe_id"))
+   // Map<recipeId, Recipe>
+   private Map<Long, Recipe> userRecipes;
 
 
    @JsonIgnore

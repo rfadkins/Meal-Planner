@@ -4,6 +4,8 @@ import lombok.NoArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
+import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,9 +26,7 @@ public class Ingredient {
     @Column(name = "category")
     private String ingredientCategory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_recipe_id")
-    private Recipe recipeRecipe;
+
 
 
 

@@ -25,7 +25,7 @@ public class IngredientService {
 
 
     public Ingredient createIngredient(String name, String category) {
-        String baseUrl = "http://localhost:8080";
+        String baseUrl = "http://localhost:8080/api";
 
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientName(name);

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,11 +29,13 @@ public class Recipe {
     @Column(name = "meal_id")
     private Long mealId;
 
-    @JsonIgnore
-    private String ingredient;
-
-    @JsonIgnore
-    @Transient
-    private List<Ingredient> ingredientsList;
+    @ManyToMany
+    @JoinTable(name="recipe_ingredient",
+            joinColumns =
+            @JoinColumn(name="recipe_id"),
+            inverseJoinColumns =
+            @JoinColumn(name="ingredient_id"))
+    //Map<recipeId, Ingredient>
+    private Map<Long, Ingredient> recipeIngredients;
 
 }
