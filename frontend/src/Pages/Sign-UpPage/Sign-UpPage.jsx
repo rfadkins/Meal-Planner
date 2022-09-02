@@ -1,5 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import './Sign-UpPage.css'
+import { Link } from 'react-router-dom'
+import ButtonStyleOne from '../../Components/Button.Components/ButtonStyleOne'
 
 export default function LoginPage(props) {
     return (
@@ -20,7 +23,9 @@ export default function LoginPage(props) {
         <br/>
         <input className='login-input' placeholder='dietary restrictions'/>
         <br/>
-        <button className='login-Button'>Submit</button>
+        <Link to="/user-welcome">
+          <ButtonStyleOne buttonName="Submit"/>
+        </Link>
         <br/>
         <p className='login-Help'>Help?</p>
       </div>

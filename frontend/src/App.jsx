@@ -1,18 +1,22 @@
 import React from "react"
-import OpeningPage from "../src/Pages/OpeningPage/OpeningPage"
-import BrandImg from '../src/Images/placeHolder.png';
-import LoginPage from '../src/Pages/LoginPage/LoginPage';
-import SignUpPage from '../src/Pages/Sign-UpPage/Sign-UpPage'
-import WelcomePage from '../src/Pages/WelcomePage/WelcomePage'
+import { Link, Routes, Route } from 'react-router-dom';
+
+/* pages */
+import WelcomePage from './Pages/WelcomePage/WelcomePage';
+import LoginPage from './Pages/LoginPage/LoginPage';
+import SignUpPage from './Pages/Sign-UpPage/Sign-UpPage';
+import UserWelcomePage from './Pages/UserWelcomePage/UserWelcomePage';
+/* pages */
 
 export default function App() {
   return (
     <div className="app">
-      {/* <h1>App Component</h1> */}
-      {/* <OpeningPage PlaceHolderImg= {BrandImg}/> */}
-      {/* <LoginPage PlaceHolderImg= {BrandImg}/> */}
-      {/* <SignUpPage /> */}
-      <WelcomePage PlaceHolderImg= {BrandImg}/>
+      <Routes>
+        <Route path="/" element={<WelcomePage />}/>
+        <Route path="/login" element={<LoginPage />}/>
+        <Route path="/sign-up" element={<SignUpPage />}/>
+        <Route path="/user-welcome" element={<UserWelcomePage />}/>
+      </Routes>
     </div>
   )
 }
