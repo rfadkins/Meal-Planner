@@ -58,7 +58,6 @@ CREATE SEQUENCE mp_meal_id
 CREATE TABLE meal (
     meal_id int NOT NULL DEFAULT nextval('mp_meal_id'),
     meal_name varchar(50) NOT NULL , 
-    recipe_id int NOT NULL,
     CONSTRAINT PK_meal PRIMARY KEY (meal_id)
     /*CONSTRAINT FK_meal_recipe_id FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id),*/
 );
@@ -85,8 +84,8 @@ CREATE TABLE recipe (
 );
 
 /*This is here because I couldn't set a foreign key in meal for recipe before recipe exists!*/
-ALTER TABLE meal 
-     ADD CONSTRAINT FK_meal_recipe_id FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id);
+/*ALTER TABLE meal 
+     ADD CONSTRAINT FK_meal_recipe_id FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id);*/
 
 /*---------------------------------------- 
 ingredient table
@@ -203,14 +202,30 @@ VALUES (1, 5, 'One Box'), (1,1,'One Cup'), (1,2,'One Cup'),
 (4,1,'8 oz'),
 (5,2,'12 oz');
 
+/* meals */
+INSERT INTO meal (meal_name)
+VALUES ('Family Dinner'), ('Quick Lunch'), ('Healthy Breakfast'), ('Family Lunch');
+
+/*Meal Recipe */
+INSERT INTO meal_recipe (recipe_id, meal_id)
+VALUES (1,1), (1,2), (1,3), (2,3), (3,4), (4,3), (4,4), (4,1); 
+
 /* A Join that will list EVERYTHING inserted so far, as associated, EXCEPIT user_recipe
 select * 
 from users
 join user_pantry on user_pantry.user_id = users.user_id
 join ingredient on ingredient.ingredient_id = user_pantry.ingredient_id
 join recipe_ingredient on recipe_ingredient.ingredient_id = ingredient.ingredient_id
-join recipe on recipe.recipe_id = recipe_ingredient.recipe_id; 
+join recipe on recipe.recipe_id = recipe_ingredient.recipe_id
+join recipe on meal_recipe.recipe_id = recipe.recipe_id 
+join meal on meal.meal_id = meal_recipe.meal_id;
 */
 
 
 COMMIT;
+
+
+
+
+
+
