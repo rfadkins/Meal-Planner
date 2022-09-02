@@ -42,14 +42,7 @@ public class UserService {
             BasicLogger.log(e.getMessage());
             userCreated = false;
         }
-//        Pantry newPantry = new Pantry();
-//        newPantry.setUserId(newUser.getUserId());
-//        try {
-//            pantryRepository.saveAndFlush(newPantry);
-//        } catch (Exception e) {
-//            BasicLogger.log(e.getMessage());
-//            userCreated = false;
-//        }
+
         return newUser;
     }
 

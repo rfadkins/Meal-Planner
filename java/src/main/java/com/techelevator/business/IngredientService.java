@@ -8,12 +8,9 @@ import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service
@@ -33,42 +30,49 @@ public class IngredientService {
 
 
     public Ingredient createIngredient(String name, String category) {
-        String baseUrl = "http://localhost:8080/api";
+
 
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientName(name);
         ingredient.setIngredientCategory(category);
         ingredientRepository.saveAndFlush(ingredient);
 
-//        ResponseEntity<Ingredient> response;
-//        try {
-//            response = restTemplate.exchange
-//                    (baseUrl +
-//                    "ingredient/" ,
-//                    HttpMethod.POST,
-//                    createEntity(),
-//                    Ingredient.class);
-//        } catch (RestClientResponseException e) {
-//            BasicLogger.log("status code: " + e.getRawStatusCode() + "   " + e.getMessage());
-//        }
-
         return ingredient;
     }
 
-    public List<Ingredient> addIngredient(Ingredient ingredient, List<Ingredient> listOfIngredients){
-        listOfIngredients.add(ingredient);
-        return listOfIngredients;
+    public long deleteIngredient(Long ingredientId) {
+        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+        String name = ingredient.getIngredientName();
+
+        if(ingredient == null) {
+
+                BasicLogger.log("Ingredient doesn't exist");
+            } else {
+            ingredientRepository.deleteById(ingredientId);
+        }
+        return 0;
     }
 
-    public List<Ingredient> removeIngredient(Ingredient ingredient, List<Ingredient> listOfIngredients){
-        listOfIngredients.remove(ingredient);
-        return listOfIngredients;
-    }
 
-    public Map<Long, Ingredient> addIngredientToUserPantry(Long userId, Ingredient ingredient){
+
+    public Map<Long, Ingredient> addIngredientToUserPantry(Long userId, Long ingredientId){
+
         User user = userRepository.findByUserId(userId);
+        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+
         Map<Long, Ingredient> pantry = new HashMap<>();
         pantry.put(user.getUserId(), ingredient);
+
+        user.setUserPantry(pantry);
+        userRepository.save(user);
+
+        return pantry;
+    }
+
+    public Map<Long, Ingredient> deleteIngredientFromUserPantry(Long userId, Long ingredientId) {
+        User user = userRepository.findByUserId(userId);
+        Map<Long, Ingredient> pantry = user.getUserPantry();
+        pantry.remove(ingredientId);
         user.setUserPantry(pantry);
         return pantry;
     }
@@ -93,3 +97,15 @@ public class IngredientService {
 
 
 }
+// RESTTEMPLATE SAVE ------
+//        ResponseEntity<Ingredient> response;
+//        try {
+//            response = restTemplate.exchange
+//                    (baseUrl +
+//                    "ingredient/" ,
+//                    HttpMethod.POST,
+//                    createEntity(),
+//                    Ingredient.class);
+//        } catch (RestClientResponseException e) {
+//            BasicLogger.log("status code: " + e.getRawStatusCode() + "   " + e.getMessage());
+//        }

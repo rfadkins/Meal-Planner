@@ -1,7 +1,5 @@
-package com.techelevator.dao;
+package com.techelevator.business;
 
-import com.techelevator.business.IngredientService;
-import com.techelevator.business.UserService;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.User;
 import com.techelevator.repository.IngredientRepository;
@@ -12,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import javax.transaction.Transactional;
 import java.util.Map;
+
+
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class UserPantryTests {
+public class IngredientServiceTests {
 
     @Autowired
     UserRepository userRepository;
@@ -27,7 +28,6 @@ public class UserPantryTests {
     @Autowired
     IngredientService ingredientService;
 
-
     @Test
     public void ingredientIdIsNotNull() {
         Ingredient ingredient = Ingredient.builder()
@@ -37,6 +37,21 @@ public class UserPantryTests {
         ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
 
         Assertions.assertThat(ingredient.getIngredientId()).isNotNull();
+    }
+
+    //fails -- unsure how to test
+    @Test
+    public void deletedIngredientIdShouldBeNull() throws Exception {
+        Ingredient ingredient = Ingredient.builder()
+                .ingredientName("TestIngredient")
+                .ingredientCategory("TestCategory")
+                .build();
+        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+        //ingredientService.deleteIngredient(ingredient.getIngredientId());
+
+        ingredientRepository.deleteById(ingredient.getIngredientId());
+
+        Assertions.assertThat(ingredient).isNull();
     }
 
     @Test
@@ -53,8 +68,32 @@ public class UserPantryTests {
 
         ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
 
-        Map<Long, Ingredient> testUserPantry = ingredientService.addIngredientToUserPantry(user.getUserId(), ingredient);
+        Map<Long, Ingredient> testUserPantry = ingredientService.addIngredientToUserPantry(user.getUserId(), ingredient.getIngredientId());
 
         Assertions.assertThat(testUserPantry.get(user.getUserId())).isNotNull();
+        }
+
+    @Test
+    public void deletedIngredientShouldBeRemovedFromUserPantry() {
+        User user = User.builder()
+                .username("TestUsername")
+                .password("TestPassword")
+                .build();
+        Ingredient ingredient = Ingredient.builder()
+                .ingredientName("TestIngredient")
+                .ingredientCategory("TestCategory")
+                .build();
+        user = userService.create(user.getUsername(), user.getPassword());
+
+        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+
+        Map<Long, Ingredient> testUserPantry = ingredientService.addIngredientToUserPantry(user.getUserId(), ingredient.getIngredientId());
+        long testId = ingredient.getIngredientId();
+        ingredientService.deleteIngredient(ingredient.getIngredientId());
+
+        Assertions.assertThat(testUserPantry.get(testId)).isNull();
     }
+
+
 }
+

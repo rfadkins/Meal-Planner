@@ -1,15 +1,14 @@
 package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
@@ -18,6 +17,7 @@ public class Recipe {
 
     @Id
     @Column(name = "recipe_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_recipe_id")
     private Long recipeId;
 
     @Column(name = "recipe_name", nullable = false)
@@ -26,8 +26,10 @@ public class Recipe {
     @Column(name="category" )
     private String category;
 
-    @Column(name = "meal_id")
-    private Long mealId;
+    @Column(name="recipe_instructions")
+    private String recipeInstructions;
+
+
 
     @ManyToMany
     @JoinTable(name="recipe_ingredient",
