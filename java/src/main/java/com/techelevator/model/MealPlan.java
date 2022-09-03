@@ -10,19 +10,20 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "meal-plan")
+@Table(name = "meal_plan")
 public class MealPlan {
 
     @Id
-    @Column(name = "meal-plan-id", nullable = false) // confirm column name
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "meal_plan_id", nullable = false) // confirm column name
+    private Long mealPlanId;
 
-    @JsonIgnore
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @JsonIgnore
-    @OneToMany
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "meal")
     private Meal meal;
 
 }

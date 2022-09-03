@@ -1,17 +1,19 @@
 package com.techelevator.repository;
 import com.techelevator.model.Meal;
+import com.techelevator.model.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
+@Repository
 public interface MealRepository extends JpaRepository<Meal, Long> {
 
     Meal findByMealId(Long mealId);
 
-    List<Meal> findAllByMealPlanId(Long mealPlanId);
+    //Map<Long, Recipe> findAllRecipesByMealId(Long mealId);
 
-    List<Meal> findAllByRecipeCategory(String recipeCategory);
-
-    List<Meal> findAllByIngredientCategory(String ingredientCategory);
 
 }
 

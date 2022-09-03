@@ -1,14 +1,14 @@
 package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
@@ -16,15 +16,22 @@ import java.util.List;
 public class Meal {
 
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "meal_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_meal_id")
     private Long mealId;
 
-    @Column(name="recipe-id")
-    private Long recipeId;
+    @Column(name = "meal_name", nullable = false)
+    private String mealName;
 
-    @Column(name="meal-plan-id")  // confirm column name
-    private Long mealPlanId;
+    @ManyToMany
+    @JoinTable(name="meal_recipe",
+            joinColumns =
+            @JoinColumn(name="meal_id"),
+            inverseJoinColumns =
+            @JoinColumn(name="recipe_id"))
+    //Map<mealId, Recipe>
+    private Map<Long, Recipe> mealRecipes;
 
-    private List<Recipe> userRecipeList;
+
 
 }

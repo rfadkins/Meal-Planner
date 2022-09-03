@@ -1,35 +1,68 @@
 package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.OneToOne;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import javax.persistence.*;
+import java.util.*;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
+@Entity
+@Table(name="users")
 public class User {
-
+   @Id
+   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
+   @Column(name = "USER_ID", nullable = false)
    private Long userId;
+
+    @Column(name = "USERNAME", nullable = false, unique = true)
    private String username;
+
+    @Column(name = "PASSWORD", nullable = false)
    @JsonIgnore
    private String password;
+
+   @ManyToMany
+   @JoinTable(name="user_pantry",
+      joinColumns =
+      @JoinColumn(name="user_id"),
+      inverseJoinColumns =
+      @JoinColumn(name="ingredient_id"))
+   //Map<ingredientId, Ingredient>
+   private Map<Long, Ingredient> userPantry;
+
+   @ManyToMany
+   @JoinTable(name="user_recipe",
+      joinColumns =
+      @JoinColumn(name="user_id"),
+      inverseJoinColumns =
+      @JoinColumn(name="recipe_id"))
+   // Map<recipeId, Recipe>
+   private Map<Long, Recipe> userRecipes;
+
+
    @JsonIgnore
-   private boolean activated;
+   @Transient
+   private boolean activated = true;
+
+   @Transient
    private Set<Authority> authorities = new HashSet<>();
 
-   public User(Long userId, String username, String password, String authorities) {
-      this.userId = userId;
+   public User(Long id, String username, String password, Set<Authority> authorities) {
+      this.userId = id;
       this.username = username;
       this.password = password;
+      this.authorities = authorities;
       this.activated = true;
+   }
+
+   public User(Long user_id, Map<Long, Ingredient> userPantry) {
+      this.userId = user_id;
+      this.userPantry = userPantry;
    }
 
    /*
@@ -37,13 +70,10 @@ public class User {
                   happens to the user's pantry,
                   and the user's meal plan
     */
-   @JsonIgnore
-   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-   private Pantry pantry;
 
-   @JsonIgnore
-   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-   private MealPlan mealPlan;
+//   @JsonIgnore
+//   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+//   private MealPlan mealPlan;
 
 
 
@@ -66,8 +96,9 @@ public class User {
    public void setAuthorities(String authorities) {
       String[] roles = authorities.split(",");
       for(String role : roles) {
-         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
-         this.authorities.add(new Authority(authority));
+         this.authorities.add(new Authority("ROLE_" + role));
+//         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
+//         this.authorities.add(new Authority(authority));
       }
    }
 

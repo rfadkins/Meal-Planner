@@ -1,36 +1,43 @@
 package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @Entity
+@Table(name="recipe")
 public class Recipe {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "recipe_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_recipe_id")
     private Long recipeId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "recipe_name", nullable = false)
     private String recipeName;
 
-    @Column(name = "category")
-    private String recipeCategory;
+    @Column(name="category" )
+    private String category;
 
-    @Column(name = "meal_id")
-    private Long mealId;
+    @Column(name="recipe_instructions")
+    private String recipeInstructions;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "meal_id")
-    private Meal meal;
 
-    private String ingredient;
 
-    private List<Ingredient> ingredientsList;
+    @ManyToMany
+    @JoinTable(name="recipe_ingredient",
+            joinColumns =
+            @JoinColumn(name="recipe_id"),
+            inverseJoinColumns =
+            @JoinColumn(name="ingredient_id"))
+    //Map<recipeId, Ingredient>
+    private Map<Long, Ingredient> recipeIngredients;
 
 }
