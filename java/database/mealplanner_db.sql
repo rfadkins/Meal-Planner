@@ -2,7 +2,7 @@ rollback;
 BEGIN TRANSACTION;
 
 /* Little Bobby Tables */
-DROP TABLE IF EXISTS users, meal_plan, meal, meal_recipe, recipe, recipe_ingredient, ingredient, user_pantry, ingredient_pantry, user_recipe;
+DROP TABLE IF EXISTS users, meal_plan, meal, meal_recipe, recipe, recipe_ingredient, ingredient, user_pantry, ingredient_pantry, user_recipe, user_meal;
 DROP SEQUENCE IF EXISTS mp_user_id, mp_meal_plan_id, mp_meal_id, mp_recipe_id, mp_ingredient_id, mp_pantry_id;
 
 /*---------------------------------------- 
@@ -159,7 +159,17 @@ CREATE TABLE user_recipe (
     CONSTRAINT FK_user_recipe_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id)
 );
 
-
+/*---------------------------------------- 
+user_meal table (JOIN TABLE)
+user_id                 FK to user table 
+meal_id           FK to meal table
+-----------------------------------------*/
+CREATE TABLE user_meal (
+user_id int NOT NULL,
+meal_id int NOT NULL,
+CONSTRAINT FK_user_meal_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_user_meal_meal FOREIGN KEY (meal_id) REFERENCES meal (meal_id)
+);
 
 
 
@@ -210,8 +220,12 @@ VALUES ('Family Dinner'), ('Quick Lunch'), ('Healthy Breakfast'), ('Family Lunch
 INSERT INTO meal_recipe (recipe_id, meal_id)
 VALUES (1,1), (1,2), (1,3), (2,3), (3,4), (4,3), (4,4), (4,1); 
 
+/*USER MEAL */
+INSERT INTO user_meal (user_id, meal_id)
+VALUES (1,1), (1,2), (1,3), (1,4), (2,1), (2,2), (2,3), (2,4), (3,1), (3,2), (3,3), (3,4);
+
 /* A Join that will list EVERYTHING inserted so far, as associated, EXCEPIT user_recipe
-select * 
+select (CURRENTLY DEPRECATED* 
 from users
 join user_pantry on user_pantry.user_id = users.user_id
 join ingredient on ingredient.ingredient_id = user_pantry.ingredient_id
