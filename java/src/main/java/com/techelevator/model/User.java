@@ -52,6 +52,12 @@ public class User {
    @Transient
    private Set<Authority> authorities = new HashSet<>();
 
+//   @JsonIgnore
+//   @OneToOne
+//   @JoinColumn(name = "user_id")
+//   //Map<mealId, Meal>
+//   private Map<Long, Meal> mealPlan;
+
    public User(Long id, String username, String password, Set<Authority> authorities) {
       this.userId = id;
       this.username = username;
@@ -71,9 +77,7 @@ public class User {
                   and the user's meal plan
     */
 
-//   @JsonIgnore
-//   @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-//   private MealPlan mealPlan;
+
 
 
 

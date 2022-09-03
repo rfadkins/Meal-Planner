@@ -41,22 +41,26 @@ public class IngredientServiceTests {
 
     //fails -- unsure how to test
     @Test
-    public void deletedIngredientIdShouldBeNull() throws Exception {
+    public void deletedIngredientIsNull() throws Exception {
         Ingredient ingredient = Ingredient.builder()
                 .ingredientName("TestIngredient")
                 .ingredientCategory("TestCategory")
                 .build();
+
         ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
-        //ingredientService.deleteIngredient(ingredient.getIngredientId());
+        Long ingredientId = ingredient.getIngredientId();
 
-        ingredientRepository.deleteById(ingredient.getIngredientId());
+        ingredientService.deleteIngredient(ingredient.getIngredientId());
 
-        Assertions.assertThat(ingredient).isNull();
+        Ingredient testIngredient = ingredientRepository.findByIngredientId(ingredientId);
+
+        Assertions.assertThat(testIngredient).isNull();
     }
 
     @Test
     public void userPantryUserIdAndIngredientIdAreNotNull() {
-        User user = User.builder()
+        User user = new User();
+        user = User.builder()
                 .username("TestUsername")
                 .password("TestPassword")
                 .build();

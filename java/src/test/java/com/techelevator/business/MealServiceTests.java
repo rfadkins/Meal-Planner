@@ -5,6 +5,7 @@ import com.techelevator.model.Meal;
 import com.techelevator.model.Recipe;
 import com.techelevator.model.User;
 import com.techelevator.repository.IngredientRepository;
+import com.techelevator.repository.MealRepository;
 import com.techelevator.repository.RecipeRepository;
 import com.techelevator.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -33,6 +34,8 @@ public class MealServiceTests {
     RecipeService recipeService;
     @Autowired
     MealService mealService;
+    @Autowired
+    MealRepository mealRepository;
 
     @Test
     public void mealIdIsNotNull() {
@@ -42,6 +45,21 @@ public class MealServiceTests {
         meal = mealService.createMeal(meal.getMealName());
 
         Assertions.assertThat(meal.getMealId()).isNotNull();
+    }
+
+    @Test
+    public void deletedMealIsNull() {
+        Meal meal = Meal.builder()
+                .mealName("TestMealName")
+                .build();
+        meal = mealService.createMeal(meal.getMealName());
+
+        Long testMealId = meal.getMealId();
+        mealService.deleteMeal(meal.getMealId());
+
+        Meal testMeal = mealRepository.findByMealId(testMealId);
+
+        Assertions.assertThat(testMeal).isNull();
     }
 }
 

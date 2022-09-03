@@ -1,5 +1,7 @@
 package com.techelevator.business;
 
+import com.techelevator.exceptions.IngredientNotFoundException;
+import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.User;
 import com.techelevator.repository.IngredientRepository;
@@ -30,82 +32,73 @@ public class IngredientService {
 
 
     public Ingredient createIngredient(String name, String category) {
-
-
         Ingredient ingredient = new Ingredient();
+
         ingredient.setIngredientName(name);
         ingredient.setIngredientCategory(category);
+
         ingredientRepository.saveAndFlush(ingredient);
 
         return ingredient;
     }
 
-    public long deleteIngredient(Long ingredientId) {
+    public void deleteIngredient(Long ingredientId) {
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-        String name = ingredient.getIngredientName();
-
-        if(ingredient == null) {
-
-                BasicLogger.log("Ingredient doesn't exist");
+        try {
+            if (ingredient == null) {
+                throw new IngredientNotFoundException();
             } else {
-            ingredientRepository.deleteById(ingredientId);
+                ingredientRepository.deleteById(ingredientId);
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
         }
-        return 0;
     }
 
-
-
-    public Map<Long, Ingredient> addIngredientToUserPantry(Long userId, Long ingredientId){
-
-        User user = userRepository.findByUserId(userId);
-        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-
+    public Map<Long, Ingredient> addIngredientToUserPantry(Long userId, Long ingredientId) {
         Map<Long, Ingredient> pantry = new HashMap<>();
-        pantry.put(user.getUserId(), ingredient);
+        try {
+            if (userRepository.findByUserId(userId) == null) {
+                throw new UserNotFoundException();
+            } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
+                throw new IngredientNotFoundException();
+            } else {
+                User user = userRepository.findByUserId(userId);
+                Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
 
-        user.setUserPantry(pantry);
-        userRepository.save(user);
+                pantry.put(user.getUserId(), ingredient);
 
+                user.setUserPantry(pantry);
+                userRepository.save(user);
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
         return pantry;
     }
 
     public Map<Long, Ingredient> deleteIngredientFromUserPantry(Long userId, Long ingredientId) {
-        User user = userRepository.findByUserId(userId);
-        Map<Long, Ingredient> pantry = user.getUserPantry();
-        pantry.remove(ingredientId);
-        user.setUserPantry(pantry);
+        Map<Long, Ingredient> pantry = new HashMap<>();
+        try {
+            if (userRepository.findByUserId(userId) == null) {
+                throw new UserNotFoundException();
+            } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
+                throw new IngredientNotFoundException();
+            } else {
+                User user = userRepository.findByUserId(userId);
+                Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+
+                pantry = user.getUserPantry();
+                pantry.remove(user.getUserId(), ingredient);
+
+                user.setUserPantry(pantry);
+                userRepository.save(user);
+
+                return pantry;
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
         return pantry;
     }
-
-
-
-
-    private HttpHeaders createHeader() {
-        HttpHeaders headers = new HttpHeaders();
-
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(authToken);
-        return headers;
-    }
-
-    private HttpEntity createEntity() {
-        var headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(authToken);
-        return new HttpEntity<String>(headers);
-    }
-
-
 }
-// RESTTEMPLATE SAVE ------
-//        ResponseEntity<Ingredient> response;
-//        try {
-//            response = restTemplate.exchange
-//                    (baseUrl +
-//                    "ingredient/" ,
-//                    HttpMethod.POST,
-//                    createEntity(),
-//                    Ingredient.class);
-//        } catch (RestClientResponseException e) {
-//            BasicLogger.log("status code: " + e.getRawStatusCode() + "   " + e.getMessage());
-//        }

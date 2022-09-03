@@ -40,6 +40,10 @@ public class RecipeService {
     }
 
     //TODO delete recipe
+    public Long deleteRecipe (Long recipeId) {
+        recipeRepository.delete(recipeRepository.findByRecipeId(recipeId));
+        return recipeId;
+    }
 
     public Map<Long, Ingredient> addRecipeIngredient(Long recipeId, Long ingredientId) {
 
