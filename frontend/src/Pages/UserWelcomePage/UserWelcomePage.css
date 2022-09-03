@@ -1,9 +1,0 @@
-@media (max-width: 500px){
-    .Brand-Border{
-        grid-area: Brand-Img;
-        background-color: #1E1E1E;
-        height: 100px;
-        width: 450px;
-        border-radius: 25px;
-      }
-}

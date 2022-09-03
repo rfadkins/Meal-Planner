@@ -1,15 +1,8 @@
-.login-input{
-    grid-area: login-Button;
-    height: 40px;
-    width: 300px;
-    border-radius: 20px;
-  }
-
-  .login-forgot-password{
+.Help-Button{
     grid-area: welcome-Help;
     background-color: #E6E6E6;
     height: 25px;
-    width: 150px;
+    width: 100px;
     border-radius: 20px;
     display: flex;
     flex-direction: column;

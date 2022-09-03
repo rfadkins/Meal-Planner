@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './UserWelcomePage.css'
-import ProfileImg from '../../Components/Image.Components/Profile-Image/Profile-Image'
-
+/*components*/
+import ProfileImg from '../../../Components/Image.Components/Profile-Image/Profile-Image'
+/*components*/
 export default function LoginPage(props) {
     return (
-      <div className='login-Page'>
+      <div className='user-Welcome-Page'>
         <br/>
         <br/>
         <br/>
