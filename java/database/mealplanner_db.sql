@@ -2,8 +2,8 @@ rollback;
 BEGIN TRANSACTION;
 
 /* Little Bobby Tables */
-DROP TABLE IF EXISTS users, meal_plan, meal, meal_recipe, recipe, recipe_ingredient, ingredient, user_pantry, ingredient_pantry, user_recipe, user_meal;
-DROP SEQUENCE IF EXISTS mp_user_id, mp_meal_plan_id, mp_meal_id, mp_recipe_id, mp_ingredient_id, mp_pantry_id;
+DROP TABLE IF EXISTS users, meal_plan, meal, meal_recipe, recipe, recipe_ingredient, ingredient, user_pantry, user_recipe, user_meal, user_meal_plan, meal_plan_meal;
+DROP SEQUENCE IF EXISTS mp_user_id, mp_meal_plan_id, mp_meal_id, mp_recipe_id, mp_ingredient_id;
 
 /*---------------------------------------- 
 Users Table
@@ -169,6 +169,30 @@ user_id int NOT NULL,
 meal_id int NOT NULL,
 CONSTRAINT FK_user_meal_user FOREIGN KEY (user_id) REFERENCES users (user_id),
 CONSTRAINT FK_user_meal_meal FOREIGN KEY (meal_id) REFERENCES meal (meal_id)
+);
+
+/*---------------------------------------- 
+meal_plan_meal table (JOIN TABLE)
+user_id                 FK to user table 
+meal_id           FK to meal table
+-----------------------------------------*/
+CREATE TABLE meal_plan_meal (
+meal_id int NOT NULL,
+meal_plan_id int NOT NULL,
+CONSTRAINT FK_user_meal_plan_meal FOREIGN KEY (meal_id) REFERENCES meal (meal_id),
+CONSTRAINT FK_user_meal_plan_meal_plan FOREIGN KEY (meal_plan_id) REFERENCES meal_plan (meal_plan_id)
+);
+
+/*---------------------------------------- 
+user_meal_plan table (JOIN TABLE)
+user_id                 FK to user table 
+meal_plan_id           FK to meal table
+-----------------------------------------*/
+CREATE TABLE user_meal_plan (
+user_id int NOT NULL,
+meal_plan_id int NOT NULL,
+CONSTRAINT FK_user_meal_plan_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_user_meal_plan_meal_plan FOREIGN KEY (meal_plan_id) REFERENCES meal_plan (meal_plan_id)
 );
 
 
