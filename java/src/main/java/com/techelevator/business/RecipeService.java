@@ -1,5 +1,7 @@
 package com.techelevator.business;
 
+import com.techelevator.exceptions.RecipeIngredientsNotFoundException;
+import com.techelevator.exceptions.RecipeNotFoundException;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Meal;
 import com.techelevator.model.Recipe;
@@ -8,10 +10,13 @@ import com.techelevator.repository.IngredientRepository;
 import com.techelevator.repository.MealRepository;
 import com.techelevator.repository.RecipeRepository;
 import com.techelevator.repository.UserRepository;
+import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -27,7 +32,6 @@ public class RecipeService {
     private MealRepository mealRepository;
 
     public Recipe createRecipe (String name, String instructions, String category) {
-
         Recipe recipe = new Recipe();
 
         recipe.setRecipeName(name);
@@ -39,13 +43,20 @@ public class RecipeService {
         return recipe;
     }
 
-    //TODO delete recipe
-    public Long deleteRecipe (Long recipeId) {
-        recipeRepository.delete(recipeRepository.findByRecipeId(recipeId));
-        return recipeId;
+
+    public void deleteRecipe (Long recipeId) {
+        try {
+            if(recipeRepository.findByRecipeId(recipeId) == null) {
+                throw new RecipeNotFoundException();
+            } else {
+                recipeRepository.delete(recipeRepository.findByRecipeId(recipeId));
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
     }
 
-    public Map<Long, Ingredient> addRecipeIngredient(Long recipeId, Long ingredientId) {
+    public Map<Long, Ingredient> addIngredientToRecipe(Long recipeId, Long ingredientId) {
 
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
@@ -59,7 +70,30 @@ public class RecipeService {
         return recipeIngredients;
     }
 
-    public Map<Long, Recipe> addUserRecipe(Long userId, Long recipeId) {
+    public List<Ingredient> listIngredientsInRecipe(Long recipeId) {
+        List<Ingredient> ingredientsInRecipe = new ArrayList<>();
+        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
+        try {
+            if (recipeRepository.findByRecipeId(recipeId) == null) {
+                throw new RecipeNotFoundException();
+            } else {
+                Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+                if (recipe.getRecipeIngredients() == null) {
+                    throw new RecipeIngredientsNotFoundException();
+                } else {
+                    recipeIngredients = recipe.getRecipeIngredients();
+                    for (Map.Entry<Long, Ingredient> entry : recipeIngredients.entrySet()) {
+                        ingredientsInRecipe.add(entry.getValue());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return ingredientsInRecipe;
+    }
+
+    public Map<Long, Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
 
         User user = userRepository.findByUserId(userId);
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
@@ -73,7 +107,7 @@ public class RecipeService {
         return userRecipes;
     }
 
-    public Map<Long, Recipe> addMealRecipe(Long mealId, Long recipeId) {
+    public Map<Long, Recipe> addRecipeToMeal(Long mealId, Long recipeId) {
 
         Meal meal = mealRepository.findByMealId(mealId);
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);

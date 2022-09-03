@@ -26,16 +26,16 @@ public class User {
    @JsonIgnore
    private String password;
 
-   @ManyToMany
+   @ManyToMany(cascade = CascadeType.PERSIST)
    @JoinTable(name="user_pantry",
-      joinColumns =
-      @JoinColumn(name="user_id"),
-      inverseJoinColumns =
-      @JoinColumn(name="ingredient_id"))
+      joinColumns = {
+      @JoinColumn(name="user_id")},
+      inverseJoinColumns = {
+      @JoinColumn(name ="ingredient_id")})
    //Map<ingredientId, Ingredient>
-   private Map<Long, Ingredient> userPantry;
+   private Map<Long, Ingredient> xuserPantry;
 
-   @ManyToMany
+   @ManyToMany(cascade = CascadeType.PERSIST)
    @JoinTable(name="user_recipe",
       joinColumns =
       @JoinColumn(name="user_id"),
@@ -66,17 +66,10 @@ public class User {
       this.activated = true;
    }
 
-   public User(Long user_id, Map<Long, Ingredient> userPantry) {
+   public User(Long user_id, Map<Long, Ingredient> xuserPantry) {
       this.userId = user_id;
-      this.userPantry = userPantry;
+      this.xuserPantry = xuserPantry;
    }
-
-   /*
-   Cascade ALL = whatever happens to user,
-                  happens to the user's pantry,
-                  and the user's meal plan
-    */
-
 
 
 

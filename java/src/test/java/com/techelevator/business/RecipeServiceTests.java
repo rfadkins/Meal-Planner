@@ -61,7 +61,7 @@ public class RecipeServiceTests {
         recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
         ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
 
-        Map<Long, Ingredient> testRecipeIngredients = recipeService.addRecipeIngredient(recipe.getRecipeId(), ingredient.getIngredientId());
+        Map<Long, Ingredient> testRecipeIngredients = recipeService.addIngredientToRecipe(recipe.getRecipeId(), ingredient.getIngredientId());
 
         Assertions.assertThat(testRecipeIngredients.get(recipe.getRecipeId())).isNotNull();
     }
@@ -81,7 +81,7 @@ public class RecipeServiceTests {
         user = userService.create(user.getUsername(), user.getPassword());
         recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
 
-        Map<Long, Recipe> testUserRecipes = recipeService.addUserRecipe(user.getUserId(), recipe.getRecipeId());
+        Map<Long, Recipe> testUserRecipes = recipeService.addRecipeToUserRecipes(user.getUserId(), recipe.getRecipeId());
 
         Assertions.assertThat(testUserRecipes.get(user.getUserId())).isNotNull();
     }
@@ -98,9 +98,25 @@ public class RecipeServiceTests {
                 .build();
         recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
         meal = mealService.createMeal(meal.getMealName());
-        Map<Long, Recipe> testMealRecipes = recipeService.addMealRecipe(meal.getMealId(), recipe.getRecipeId());
+        Map<Long, Recipe> testMealRecipes = recipeService.addRecipeToMeal(meal.getMealId(), recipe.getRecipeId());
 
         Assertions.assertThat(testMealRecipes.get(meal.getMealId())).isNotNull();
+    }
+
+    @Test
+    public void deletedRecipeIsNull() {
+        Recipe recipe = Recipe.builder()
+                .recipeName("TestRecipeName")
+                .recipeInstructions("TestRecipeInstructions")
+                .category("TestCategory")
+                .build();
+
+        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+        recipeService.deleteRecipe(recipe.getRecipeId());
+
+        Recipe testRecipe = recipeRepository.findByRecipeId(recipe.getRecipeId());
+
+        Assertions.assertThat(testRecipe).isNull();
     }
 
 }
