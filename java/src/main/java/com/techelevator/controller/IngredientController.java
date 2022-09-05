@@ -9,7 +9,52 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class IngredientController {
-    UserService userService;
+    //This controller handles the Indredient table
+
+    /*--------------------
+    createIngredient()
+    POST
+    PATH: /ingredient/
+    --------------------*/
+
+
+    /*--------------------
+    editIngredient()
+    PUT
+    PATH: /ingredient/{ingredient_id}
+    --------------------*/
+
+
+    /*--------------------
+    deleteIngredient()
+    DELETE
+    PATH: /ingredient/{ingredient_id}
+    --------------------*/
+
+
+    /*--------------------
+    getIngredient()
+    GET
+    PATH: /Ingredient/{Ingredient_id}
+    --------------------*/
+
+
+    /*--------------------
+    List listIngredients()
+    GET
+    PATH: /Ingredient/
+    --------------------*/
+
+
+
+}
+
+
+
+
+    //old code - may still be needed :)
+
+    /*UserService userService;
     IngredientService ingredientService;
 
     @Autowired
@@ -18,9 +63,15 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
+    //Creats an infgredient
+
     @PostMapping("/ingredient")
     public Ingredient createIngredient(String name, String category) {
         return ingredientService.createIngredient(name, category);
-    }
+    }*/
 
-}
+    //Edit an ingredient
+
+    //Remove an ingredient
+
+
