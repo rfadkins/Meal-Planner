@@ -22,6 +22,8 @@ public class IngredientService {
     private RecipeRepository recipeRepository;
     @Autowired
     private RecipeService recipeService;
+    @Autowired
+    UserPantryRepository userPantryRepository;
 
 
     public Ingredient createIngredient(String name, String category) {
@@ -64,109 +66,88 @@ public class IngredientService {
         return ingredientRepository.findAll();
     }
 
-    public Map<Long, Ingredient> addIngredientToUserPantry(Long userId, Long ingredientId) {
-        Map<Long, Ingredient> pantry = new HashMap<>();
-        try {
-            if (userRepository.findByUserId(userId) == null) {
-                throw new UserNotFoundException();
-            } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
-                throw new IngredientNotFoundException();
-            } else {
-                User user = userRepository.findByUserId(userId);
-                Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
 
-                pantry.put(user.getUserId(), ingredient);
 
-                user.setXuserPantry(pantry);
-                userRepository.save(user);
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return pantry;
-    }
+//    public List<Ingredient> deleteIngredientFromUserPantry(Long userId, Long ingredientId) {
+//        List<Ingredient> pantry = new ArrayList<>();
+//        try {
+//            if (userRepository.findByUserId(userId) == null) {
+//                throw new UserNotFoundException();
+//            } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
+//                throw new IngredientNotFoundException();
+//            } else {
+//                User user = userRepository.findByUserId(userId);
+//                Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+//
+//                pantry = user.getPantryStock();
+//                pantry.remove(pantry.indexOf(ingredient));
+//
+//                userRepository.save(user);
+//            }
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return pantry;
+//    }
 
-    public Map<Long, Ingredient> deleteIngredientFromUserPantry(Long userId, Long ingredientId) {
-        Map<Long, Ingredient> pantry = new HashMap<>();
-        try {
-            if (userRepository.findByUserId(userId) == null) {
-                throw new UserNotFoundException();
-            } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
-                throw new IngredientNotFoundException();
-            } else {
-                User user = userRepository.findByUserId(userId);
-                Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+//    public List<Ingredient> listIngredientsInPantry(Long userId) {
+//        List<Ingredient> pantry = new ArrayList<>();
+//        List<Ingredient> ingredientsInUserPantry = new ArrayList<>();
+//        try {
+//            if(userRepository.findByUserId(userId) == null) {
+//                throw new UserNotFoundException();
+//            } else{
+//                User user = userRepository.findByUserId(userId);
+//                if (user.getPantryStock() == null) {
+//                    throw new PantryNotFoundException();
+//                } else {
+//                    pantry = user.getPantryStock();
+//                    for (Map.Entry<Long, Ingredient> entry : pantry.entrySet()) {
+//                        ingredientsInUserPantry.add(entry.getValue());
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return ingredientsInUserPantry;
+//    }
 
-                pantry = user.getXuserPantry();
-                pantry.remove(user.getUserId(), ingredient);
-
-                user.setXuserPantry(pantry);
-                userRepository.save(user);
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return pantry;
-    }
-
-    public List<Ingredient> listIngredientsInPantry(Long userId) {
-        Map<Long, Ingredient> pantry = new HashMap<>();
-        List<Ingredient> ingredientsInUserPantry = new ArrayList<>();
-        try {
-            if(userRepository.findByUserId(userId) == null) {
-                throw new UserNotFoundException();
-            } else{
-                User user = userRepository.findByUserId(userId);
-                if (user.getXuserPantry() == null) {
-                    throw new PantryNotFoundException();
-                } else {
-                    pantry = user.getXuserPantry();
-                    for (Map.Entry<Long, Ingredient> entry : pantry.entrySet()) {
-                        ingredientsInUserPantry.add(entry.getValue());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return ingredientsInUserPantry;
-    }
-
-    public List<Ingredient> makeGroceryListFromRecipeIngredientsAndPantryIngredients(Long userId, Long recipeId) {
-        List<Ingredient> groceryList = new ArrayList<>();
-        try {
-            if (userRepository.findByUserId(userId) == null) {
-                throw new UserNotFoundException();
-
-            } else if (recipeRepository.findByRecipeId(recipeId) == null) {
-                throw new RecipeNotFoundException();
-
-            } else {
-                User user = userRepository.findByUserId(userId);
-                Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-
-                if (user.getXuserPantry() == null) {
-                    throw new PantryNotFoundException();
-
-                } else if (recipe.getRecipeIngredients().isEmpty() || recipe.getRecipeIngredients() == null) {
-                    throw new RecipeIngredientsNotFoundException();
-                } else {
-                    Map<Long, Ingredient> pantry = user.getXuserPantry();
-                    Map<Long, Ingredient> recipeIngredients = recipe.getRecipeIngredients();
-                   //List<Ingredient> recipeIngredients = recipeService.listIngredientsInRecipe(recipeId);
-
-                    for (Map.Entry<Long, Ingredient> entry : recipeIngredients.entrySet()) {
-                        if (!pantry.containsValue(entry)) {
-                            groceryList.add(entry.getValue());
-                        }
-                    }
-                }
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return groceryList;
-    }
+//    public List<Ingredient> makeGroceryListFromRecipeIngredientsAndPantryIngredients(Long userId, Long recipeId) {
+//        List<Ingredient> groceryList = new ArrayList<>();
+//        try {
+//            if (userRepository.findByUserId(userId) == null) {
+//                throw new UserNotFoundException();
+//
+//            } else if (recipeRepository.findByRecipeId(recipeId) == null) {
+//                throw new RecipeNotFoundException();
+//
+//            } else {
+//                User user = userRepository.findByUserId(userId);
+//                Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//
+//                if (user.getPantryStock() == null) {
+//                    throw new PantryNotFoundException();
+//
+//                } else if (recipe.getRecipeIngredients().isEmpty() || recipe.getRecipeIngredients() == null) {
+//                    throw new RecipeIngredientsNotFoundException();
+//                } else {
+//                    List<Ingredient> pantry = user.getPantryStock();
+//                    List<Ingredient> recipeIngredients = recipe.getRecipeIngredients();
+//                   //List<Ingredient> recipeIngredients = recipeService.listIngredientsInRecipe(recipeId);
+//
+//                    for (Ingredient ingredient : recipeIngredients) {
+//                        if (!pantry.contains(ingredient)) {
+//                            groceryList.add(ingredient);
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return groceryList;
+//    }
 
 
     //TODO grocery list logic...

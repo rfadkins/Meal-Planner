@@ -26,10 +26,6 @@ public class MealPlan {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meal")
-    private Meal meal;
-
     @Transient
     @JsonIgnore
     Map<Long, MealPlan> mealPlanLibrary;

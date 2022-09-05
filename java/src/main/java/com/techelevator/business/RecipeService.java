@@ -56,71 +56,71 @@ public class RecipeService {
         }
     }
 
-    public Map<Long, Ingredient> addIngredientToRecipe(Long recipeId, Long ingredientId) {
+//    public Map<Long, Ingredient> addIngredientToRecipe(Long recipeId, Long ingredientId) {
+//
+//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+//
+//        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
+//        recipeIngredients.put(recipe.getRecipeId(), ingredient);
+//
+//        recipe.setRecipeIngredients(recipeIngredients);
+//        recipeRepository.save(recipe);
+//
+//        return recipeIngredients;
+//    }
 
-        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-
-        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
-        recipeIngredients.put(recipe.getRecipeId(), ingredient);
-
-        recipe.setRecipeIngredients(recipeIngredients);
-        recipeRepository.save(recipe);
-
-        return recipeIngredients;
-    }
-
-    public List<Ingredient> listIngredientsInRecipe(Long recipeId) {
-        List<Ingredient> ingredientsInRecipe = new ArrayList<>();
-        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
-        try {
-            if (recipeRepository.findByRecipeId(recipeId) == null) {
-                throw new RecipeNotFoundException();
-            } else {
-                Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-                if (recipe.getRecipeIngredients() == null) {
-                    throw new RecipeIngredientsNotFoundException();
-                } else {
-                    recipeIngredients = recipe.getRecipeIngredients();
-                    for (Map.Entry<Long, Ingredient> entry : recipeIngredients.entrySet()) {
-                        ingredientsInRecipe.add(entry.getValue());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return ingredientsInRecipe;
-    }
-
-    public Map<Long, Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
-
-        User user = userRepository.findByUserId(userId);
-        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-
-        Map<Long, Recipe> userRecipes = new HashMap<>();
-        userRecipes.put(user.getUserId(), recipe);
-
-        user.setUserRecipes(userRecipes);
-        userRepository.save(user);
-
-        return userRecipes;
-    }
-
-    public Map<Long, Recipe> addRecipeToMeal(Long mealId, Long recipeId) {
-
-        Meal meal = mealRepository.findByMealId(mealId);
-        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-
-        Map<Long, Recipe> mealRecipes = new HashMap<>();
-        mealRecipes.put(meal.getMealId(), recipe);
-
-        meal.setMealRecipes(mealRecipes);
-        mealRepository.save(meal);
-
-        return mealRecipes;
-    }
-
+//    public List<Ingredient> listIngredientsInRecipe(Long recipeId) {
+//        List<Ingredient> ingredientsInRecipe = new ArrayList<>();
+//        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
+//        try {
+//            if (recipeRepository.findByRecipeId(recipeId) == null) {
+//                throw new RecipeNotFoundException();
+//            } else {
+//                Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//                if (recipe.getRecipeIngredients() == null) {
+//                    throw new RecipeIngredientsNotFoundException();
+//                } else {
+//                    recipeIngredients = recipe.getRecipeIngredients();
+//                    for (Map.Entry<Long, Ingredient> entry : recipeIngredients.entrySet()) {
+//                        ingredientsInRecipe.add(entry.getValue());
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return ingredientsInRecipe;
+//    }
+//
+//    public Map<Long, Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
+//
+//        User user = userRepository.findByUserId(userId);
+//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//
+//        Map<Long, Recipe> userRecipes = new HashMap<>();
+//        userRecipes.put(user.getUserId(), recipe);
+//
+//        user.setUserRecipes(userRecipes);
+//        userRepository.save(user);
+//
+//        return userRecipes;
+//    }
+//
+//    public Map<Long, Recipe> addRecipeToMeal(Long mealId, Long recipeId) {
+//
+//        Meal meal = mealRepository.findByMealId(mealId);
+//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//
+//        Map<Long, Recipe> mealRecipes = new HashMap<>();
+//        mealRecipes.put(meal.getMealId(), recipe);
+//
+//        meal.setMealRecipes(mealRecipes);
+//        mealRepository.save(meal);
+//
+//        return mealRecipes;
+//    }
+//
 
 
 
