@@ -1,8 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Link, Routes, Route } from 'react-router-dom';
 import './UserWelcomePage.css'
 /*components*/
-import ProfileImg from '../../../Components/Image.Components/Profile-Image/Profile-Image'
+import ProfileImgLarge from '../../../Components/Image.Components/Profile-Image-large/Profile-Image-Large'
+import ButtonStyleOne from '../../../Components/Button.Components/ButtonStyleOne/ButtonStyleOne'
 /*components*/
 export default function LoginPage(props) {
     return (
@@ -10,7 +12,7 @@ export default function LoginPage(props) {
         <br/>
         <br/>
         <br/>
-        <ProfileImg imageSorce='../src/Images/placeHolder.png'/>
+        <ProfileImgLarge imageSorce='../src/Images/placeHolder.png'/>
         {/* <img src='../src/Images/placeHolder.png' alt='placeHolder' className='Brand-Img'/> */}
         <br/>
         <br/>
@@ -18,6 +20,11 @@ export default function LoginPage(props) {
         <br/>
         <br/>
         <img src=' ' alt='placeHolder' className='Brand-Border'/>
+        <br/>
+        <br/>
+        <Link to="/user">
+          <ButtonStyleOne buttonName="Lets get cooking!"/>
+        </Link>
       </div>
     )
   }

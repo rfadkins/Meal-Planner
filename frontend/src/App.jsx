@@ -1,23 +1,16 @@
 import React from "react"
 import { Link, Routes, Route } from 'react-router-dom';
+/* access pages */
+import AccessPages from './Pages/AccessPages/AccessPage'
+/* access pages */
 
-/* pages */
-import WelcomePage from './Pages/AccessPages/WelcomePage/WelcomePage';
-import LoginPage from './Pages/AccessPages/LoginPage/LoginPage';
-import SignUpPage from './Pages/AccessPages/Sign-UpPage/Sign-UpPage';
-import UserWelcomePage from './Pages/AccessPages/UserWelcomePage/UserWelcomePage';
-/* pages */
+import MainPages from './Pages/MainPages/MainPage'
 
 export default function App() {
   return (
     <div className="app">
-      <Routes>
-        {/* still required -  */}
-        <Route path="/" element={<WelcomePage />}/>
-        <Route path="/login" element={<LoginPage />}/>
-        <Route path="/sign-up" element={<SignUpPage />}/>
-        <Route path="/user-welcome" element={<UserWelcomePage />}/>
-      </Routes>
+      <AccessPages/>
+      <MainPages/>
     </div>
   )
 }
