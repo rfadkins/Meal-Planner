@@ -3,6 +3,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +30,15 @@ public class Recipe {
     @Column(name="recipe_instructions")
     private String recipeInstructions;
 
+    @JsonIgnore
+    @Transient
+    List<Ingredient> recipeIngredients = new ArrayList<>();
 
 
+
+}
+
+/*
     @ManyToMany
     @JoinTable(name="recipe_ingredient",
             joinColumns =
@@ -39,5 +47,4 @@ public class Recipe {
             @JoinColumn(name="ingredient_id"))
     //Map<recipeId, Ingredient>
     private Map<Long, Ingredient> recipeIngredients;
-
-}
+ */

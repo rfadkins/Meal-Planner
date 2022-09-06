@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor
 @Getter
@@ -15,15 +16,18 @@ public class MealPlan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "meal_plan_id", nullable = false) // confirm column name
+    @Column(name = "meal_plan_id", nullable = false)
     private Long mealPlanId;
+
+    @Column(name = "meal_plan_name", nullable = false)
+    private String mealPlanName;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "meal")
-    private Meal meal;
+    @Transient
+    @JsonIgnore
+    Map<Long, MealPlan> mealPlanLibrary;
 
 }

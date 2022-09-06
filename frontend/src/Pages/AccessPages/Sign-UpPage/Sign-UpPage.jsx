@@ -1,38 +1,106 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './Sign-UpPage.css'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import axios from "axios";
+import { baseUrl } from "../../../api/baseUrl";
+import "./Sign-UpPage.css";
+import { useNavigate } from "react-router-dom";
+
 /*components*/
-import ButtonStyleOne from '../../../Components/Button.Components/ButtonStyleOne/ButtonStyleOne'
-import HelpButton from '../../../Components/Button.Components/HelpButtonOne/HelpButtonOne'
-import TextInputOne from '../../../Components/Input.Component/TextInputOne/TextInputOne'
-import TextBanner from '../../../Components/Banner.Component/Text-Banner.Component'
-/*components*/
-// frontend\src\Components\Button.Components\ButtonStyleOne\ButtonStyleOne.jsx
-export default function LoginPage(props) {
-    return (
-      <div className='SignUp-Page'>
-        <br/>
-        <img src=' ' alt='placeHolder' className='Brand-Border'/>
-        <TextBanner text='Just a few questions'/>
-        <br/>
-        <TextInputOne textPlaceHolder='user name'/>
-        <br/>
-        <TextInputOne textPlaceHolder='password'/>
-        <br/>
-        <TextInputOne textPlaceHolder='conferm password'/>
-        <br/>
-        <TextInputOne textPlaceHolder='email'/>
-        <br/>
-        <TextInputOne textPlaceHolder='dietary goals'/>
-        <br/>
-        <TextInputOne textPlaceHolder='dietary restrictions'/>
-        <br/>
-        <Link to="/user-welcome">
-          <ButtonStyleOne buttonName="Submit"/>
-        </Link>
-        <br/>
-        <HelpButton buttonName="Help?"/>
-      </div>
-    )
-  }
+import HelpButton from "../../../Components/Button.Components/HelpButtonOne/HelpButtonOne";
+import TextBanner from "../../../Components/Banner.Component/Text-Banner.Component";
+
+export default function SignUpPage(props) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
+    console.log(
+      `Username: ${username}, Password: ${password}, Confirm: ${confirmPassword}`
+    );
+
+    e.preventDefault();
+
+    const data = {
+      username: username,
+      password: password,
+      confirmPassword: confirmPassword,
+      role: "USER",
+    };
+
+    try {
+      if (password === confirmPassword) {
+        const response = await axios.post(baseUrl + "/register", data);
+        alert("Registration Successful")
+        console.log(response);
+        navigate('/login')
+      } else {
+        alert("Password and Confirm Password must match!");
+      }
+    } catch (err) {
+      if (!err?.response) {
+        alert("No Server Response");
+      } else if (err.response?.status === 409) {
+        alert("Username Taken");
+      } else {
+        alert("Registration Failed");
+      }
+    }
+  };
+
+  return (
+    <div className="SignUp-Page">
+      <br />
+      <img src=" " alt="placeHolder" className="Brand-Border" />
+      <TextBanner text="Just a few questions" />
+      <br />
+
+      <label className="SignUp-Page--label">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        className="SignUp-Page--input"
+        placeholder="Username"
+        onChange={(event) => setUsername(event.target.value)}
+        required
+      />
+      <label className="SignUp-Page--label">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        className="SignUp-Page--input"
+        placeholder="Password"
+        onChange={(event) => setPassword(event.target.value)}
+        required
+      />
+      <input
+        type="password"
+        id="password-confirm"
+        name="confirmPassword"
+        className="SignUp-Page--input"
+        placeholder="Confirm Password"
+        onChange={(event) => setConfirmPassword(event.target.value)}
+        required
+      />
+      <button className="SignUp-Page--button" onClick={handleSubmit}>Sign-up</button>
+
+      <br />
+      <HelpButton buttonName="Help?" />
+    </div>
+  );
+}
+
+/*
+  Removed for now
+
+  <TextInputOne textPlaceHolder='email'/>
+  <br/>
+  <TextInputOne textPlaceHolder='dietary goals'/>
+  <br/>
+  <TextInputOne textPlaceHolder='dietary restrictions'/>
+  <br/>
+  */
