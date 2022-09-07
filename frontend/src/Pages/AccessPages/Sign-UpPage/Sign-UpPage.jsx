@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import "./Sign-UpPage.css";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
+import { useNavigate } from "react-router-dom";
+/*api*/
 import axios from "axios";
 import { baseUrl } from "../../../api/baseUrl";
-import "./Sign-UpPage.css";
-import { useNavigate } from "react-router-dom";
-
 /*components*/
 import HelpButton from "../../../Components/Button.Components/HelpButtonOne/HelpButtonOne";
 import TextBanner from "../../../Components/Banner.Component/Text-Banner.Component";
@@ -14,13 +14,9 @@ export default function SignUpPage(props) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    console.log(
-      `Username: ${username}, Password: ${password}, Confirm: ${confirmPassword}`
-    );
-
     e.preventDefault();
 
     const data = {
@@ -33,9 +29,9 @@ export default function SignUpPage(props) {
     try {
       if (password === confirmPassword) {
         const response = await axios.post(baseUrl + "/register", data);
-        alert("Registration Successful")
+        alert("Registration Successful");
         console.log(response);
-        navigate('/login')
+        navigate("/login");
       } else {
         alert("Password and Confirm Password must match!");
       }
@@ -57,22 +53,22 @@ export default function SignUpPage(props) {
       <TextBanner text="Just a few questions" />
       <br />
 
-      <label className="SignUp-Page--label">Username</label>
+      <label className="SignUp-label">Username</label>
       <input
         type="text"
         id="username"
         name="username"
-        className="SignUp-Page--input"
+        className="SignUp-input"
         placeholder="Username"
         onChange={(event) => setUsername(event.target.value)}
         required
       />
-      <label className="SignUp-Page--label">Password</label>
+      <label className="SignUp-label">Password</label>
       <input
         type="password"
         id="password"
         name="password"
-        className="SignUp-Page--input"
+        className="SignUp-input"
         placeholder="Password"
         onChange={(event) => setPassword(event.target.value)}
         required
@@ -81,12 +77,14 @@ export default function SignUpPage(props) {
         type="password"
         id="password-confirm"
         name="confirmPassword"
-        className="SignUp-Page--input"
+        className="SignUp-input"
         placeholder="Confirm Password"
         onChange={(event) => setConfirmPassword(event.target.value)}
         required
       />
-      <button className="SignUp-Page--button" onClick={handleSubmit}>Sign-up</button>
+      <button className="SignUp-button" onClick={handleSubmit}>
+        Sign-up
+      </button>
 
       <br />
       <HelpButton buttonName="Help?" />
