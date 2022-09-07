@@ -1,16 +1,19 @@
-import React from "react"
-import { Link, Routes, Route } from 'react-router-dom';
+import React from "react";
+import { Link, Routes, Route } from "react-router-dom";
 /* access pages */
-import AccessPages from './Pages/AccessPages/AccessPage'
-/* access pages */
-
-import MainPages from './Pages/MainPages/MainPage'
+import AccessPages from "./Pages/AccessPages/AccessPage";
+/* main pages */
+import MainPages from "./Pages/MainPages/MainPage";
+import store from "./Redux/configureStore";
+import { Provider } from "react-redux";
 
 export default function App() {
   return (
-    <div className="app">
-      <AccessPages/>
-      <MainPages/>
-    </div>
-  )
+    <Provider store={store}>
+      <div className="app">
+        <AccessPages />
+        <MainPages />
+      </div>
+    </Provider>
+  );
 }
