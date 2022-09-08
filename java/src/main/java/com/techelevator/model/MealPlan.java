@@ -22,12 +22,20 @@ public class MealPlan {
     @Column(name = "meal_plan_name", nullable = false)
     private String mealPlanName;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//    @ManyToMany(mappedBy="userMealPlans")
+//    private User user;
 
-    @Transient
-    @JsonIgnore
-    Map<Long, MealPlan> mealPlanLibrary;
+    /*
+     **** MEAL PLAN-MEAL ****
+     */
+    @ManyToMany
+    @JoinTable(name="meal_plan_meal",
+            joinColumns =
+            @JoinColumn(name="meal_plan_id"),
+            inverseJoinColumns =
+            @JoinColumn(name="meal_id"))
+    private Map<Long, Meal> mealsForMealPlan;
+
+
 
 }

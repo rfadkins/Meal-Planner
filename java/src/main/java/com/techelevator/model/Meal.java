@@ -23,15 +23,22 @@ public class Meal {
     @Column(name = "meal_name", nullable = false)
     private String mealName;
 
+    /*
+     **** MEAL-RECIPE ****
+     */
     @ManyToMany
     @JoinTable(name="meal_recipe",
             joinColumns =
             @JoinColumn(name="meal_id"),
             inverseJoinColumns =
             @JoinColumn(name="recipe_id"))
-    //Map<mealId, Recipe>
     private Map<Long, Recipe> mealRecipes;
 
+//    @ManyToMany(mappedBy="userMeals")
+//    private User user;
+//
+//    @ManyToMany(mappedBy="mealsForMealPlan")
+//    private MealPlan mealPlan;
 
 
 }

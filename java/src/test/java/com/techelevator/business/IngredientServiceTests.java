@@ -3,10 +3,8 @@ package com.techelevator.business;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Recipe;
 import com.techelevator.model.User;
-import com.techelevator.model.UserPantry;
 import com.techelevator.repository.IngredientRepository;
 import com.techelevator.repository.RecipeRepository;
-import com.techelevator.repository.UserPantryRepository;
 import com.techelevator.repository.UserRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -38,8 +36,7 @@ public class IngredientServiceTests {
     RecipeRepository recipeRepository;
     @Autowired
     RecipeService recipeService;
-    @Autowired
-    UserPantryRepository userPantryRepository;
+
     @Autowired
     UserPantryService userPantryService;
 
@@ -72,32 +69,32 @@ public class IngredientServiceTests {
 
         Assertions.assertThat(testIngredient).isNull();
     }
-
-    @Test
-    public void userPantryUserIdAndIngredientIdAreNotNull() {
-        User user = new User();
-        user = User.builder()
-                .username("TestUsername")
-                .password("TestPassword")
-                .build();
-        Ingredient ingredient = Ingredient.builder()
-                .ingredientName("TestIngredient")
-                .ingredientCategory("TestCategory")
-                .build();
-        UserPantry userPantry = UserPantry.builder()
-                .userId(user.getUserId())
-                .ingredientId(ingredient.getIngredientId())
-                .build();
-        user = userService.create(user.getUsername(), user.getPassword());
-
-        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
-
-        userPantry = userPantryService.create(userPantry.getUserId());
-
-        Map<Long, Ingredient> userPantryStock = userPantryService.addIngredientToUserPantry(user.getUserId(), ingredient.getIngredientId());
-
-        Assertions.assertThat(userPantryStock.containsValue(ingredient)).isTrue();
-        }
+//
+//    @Test
+//    public void userPantryUserIdAndIngredientIdAreNotNull() {
+//        User user = new User();
+//        user = User.builder()
+//                .username("TestUsername")
+//                .password("TestPassword")
+//                .build();
+//        Ingredient ingredient = Ingredient.builder()
+//                .ingredientName("TestIngredient")
+//                .ingredientCategory("TestCategory")
+//                .build();
+//        UserPantry userPantry = UserPantry.builder()
+//                .userId(user.getUserId())
+//                .ingredientId(ingredient.getIngredientId())
+//                .build();
+//        user = userService.create(user.getUsername(), user.getPassword());
+//
+//        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+//
+//        userPantry = userPantryService.create(userPantry.getUserId());
+//
+//        Map<Long, Ingredient> userPantryStock = userPantryService.addIngredientToUserPantry(user.getUserId(), ingredient.getIngredientId());
+//
+//        Assertions.assertThat(userPantryStock.containsValue(ingredient)).isTrue();
+//        }
 
 //    @Test
 //    public void deletedIngredientShouldBeRemovedFromUserPantry() {

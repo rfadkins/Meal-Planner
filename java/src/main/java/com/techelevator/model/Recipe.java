@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,11 +31,20 @@ public class Recipe {
     @Column(name="recipe_instructions")
     private String recipeInstructions;
 
-    @JsonIgnore
-    @Transient
-    List<Ingredient> recipeIngredients = new ArrayList<>();
+    /*
+     **** RECIPE-INGREDIENTS ****
+     */
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "recipe_ingredients",
+            joinColumns = @JoinColumn(name = "recipe_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    Map<Long, Ingredient> recipeIngredients = new HashMap<>();
 
-
+//    @ManyToMany(mappedBy = "userRecipes")
+//    private User user;
+//
+//    @ManyToMany(mappedBy = "mealRecipes")
+//    private Meal meal;
 
 }
 

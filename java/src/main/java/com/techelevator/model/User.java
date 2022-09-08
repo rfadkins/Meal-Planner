@@ -12,10 +12,6 @@ import java.util.*;
 @Entity
 @Table(name="users")
 public class User {
-//   @Id
-//   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq")
-//   @Column(name = "USER_ID", nullable = false)
-//   private Long userId;
 
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +25,43 @@ public class User {
    @JsonIgnore
    private String password;
 
-   @JsonIgnore
-   @Transient
-   List<Ingredient> pantryStock = new ArrayList<>();
+
+
+   /*
+   **** USER-PANTRY ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_pantry",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+   Map<Long, Ingredient> userPantry = new HashMap<>();
+
+   /*
+    **** USER-RECIPES ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_recipe",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "recipe_id"))
+   Map<Long, Recipe> userRecipes = new HashMap<>();
+
+   /*
+    **** USER-MEALS ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_meals",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "meal_id"))
+   Map<Long, Meal> userMeals = new HashMap<>();
+
+   /*
+    **** USER-MEAL PLANS ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_meal_plan",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "meal_plan_id"))
+   Map<Long, MealPlan> userMealPlans = new HashMap<>();
 
    @JsonIgnore
    @Transient
@@ -48,10 +78,7 @@ public class User {
       this.activated = true;
    }
 
-   public User(Long user_id, List<Ingredient> pantryStock) {
-      this.userId = user_id;
-      this.pantryStock = pantryStock;
-   }
+
 
    public boolean isActivated() {
       return activated;
@@ -105,26 +132,3 @@ public class User {
                '}';
    }
 }
-
-
-/*
-
-   @ManyToMany(cascade = CascadeType.PERSIST)
-   @JoinTable(name="user_pantry",
-      joinColumns = {
-      @JoinColumn(name="user_id")},
-      inverseJoinColumns = {
-      @JoinColumn(name ="ingredient_id")})
-   //Map<ingredientId, Ingredient>
-   private Map<Long, Ingredient> xuserPantry;
-
-   @ManyToMany(cascade = CascadeType.PERSIST)
-   @JoinTable(name="user_recipe",
-      joinColumns =
-      @JoinColumn(name="user_id"),
-      inverseJoinColumns =
-      @JoinColumn(name="recipe_id"))
-   // Map<recipeId, Recipe>
-   private Map<Long, Recipe> userRecipes;
-
- */
