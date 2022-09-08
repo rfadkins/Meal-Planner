@@ -38,9 +38,7 @@ CREATE SEQUENCE mp_meal_plan_id
 CREATE TABLE meal_plan (
     meal_plan_id int NOT NULL DEFAULT nextval('mp_meal_plan_id'),
     meal_plan_name varchar(50) NOT NULL,
-    user_id int NOT NULL, 
-    CONSTRAINT PK_meal_plan PRIMARY KEY (meal_plan_id),
-    CONSTRAINT FK_meal_plan_users FOREIGN KEY (user_id) REFERENCES users (user_id)
+    CONSTRAINT PK_meal_plan PRIMARY KEY (meal_plan_id)
 );
 
 
