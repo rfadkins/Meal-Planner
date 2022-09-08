@@ -67,6 +67,9 @@ public class AuthenticationController {
     public void register(@Valid @RequestBody RegisterUserDTO newUser) {
         try {
             User user = userService.findByUsername(newUser.getUsername());
+            if(user == null){
+                throw new UsernameNotFoundException("");
+            }
 //            User user = userDao.findByUsername(newUser.getUsername());
             throw new UserAlreadyExistsException();
         } catch (UsernameNotFoundException e) {
