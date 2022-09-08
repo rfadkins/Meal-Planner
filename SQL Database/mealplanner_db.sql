@@ -1,8 +1,9 @@
+rollback;
 BEGIN TRANSACTION;
 
 /* Little Bobby Tables */
-DROP TABLE IF EXISTS users, meal_plan, meal, meal_recipe, recipe, recipe_ingredient, ingredient, ingredient_pantry, pantry;
-DROP SEQUENCE IF EXISTS mp_user_id, mp_meal_plan_id, mp_meal_id, mp_recipe_id, mp_ingredient_id, mp_pantry_id;
+DROP TABLE IF EXISTS users, meal_plan, meal, meal_recipe, recipe, recipe_ingredient, ingredient, user_pantry, user_recipe, user_meal, user_meal_plan, meal_plan_meal;
+DROP SEQUENCE IF EXISTS mp_user_id, mp_meal_plan_id, mp_meal_id, mp_recipe_id, mp_ingredient_id;
 
 /*---------------------------------------- 
 Users Table
@@ -36,6 +37,7 @@ CREATE SEQUENCE mp_meal_plan_id
 
 CREATE TABLE meal_plan (
     meal_plan_id int NOT NULL DEFAULT nextval('mp_meal_plan_id'),
+    meal_plan_name varchar(50) NOT NULL,
     user_id int NOT NULL, 
     CONSTRAINT PK_meal_plan PRIMARY KEY (meal_plan_id),
     CONSTRAINT FK_meal_plan_users FOREIGN KEY (user_id) REFERENCES users (user_id)
@@ -55,7 +57,7 @@ CREATE SEQUENCE mp_meal_id
 
 CREATE TABLE meal (
     meal_id int NOT NULL DEFAULT nextval('mp_meal_id'),
-    recipe_id int NOT NULL,
+    meal_name varchar(50) NOT NULL , 
     CONSTRAINT PK_meal PRIMARY KEY (meal_id)
     /*CONSTRAINT FK_meal_recipe_id FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id),*/
 );
@@ -82,8 +84,8 @@ CREATE TABLE recipe (
 );
 
 /*This is here because I couldn't set a foreign key in meal for recipe before recipe exists!*/
-ALTER TABLE meal 
-     ADD CONSTRAINT FK_meal_recipe_id FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id);
+/*ALTER TABLE meal 
+     ADD CONSTRAINT FK_meal_recipe_id FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id);*/
 
 /*---------------------------------------- 
 ingredient table
@@ -102,24 +104,6 @@ CREATE TABLE ingredient (
     ingredient_name varchar(50) NOT NULL,
     category varchar(50) NOT NULL,
     CONSTRAINT PK_ingredient PRIMARY KEY (ingredient_id)
-);
-
-/*---------------------------------------- 
-Pantry table
-pantry_id               PK 
-user_id                 FK to users table
------------------------------------------*/
-
-CREATE SEQUENCE mp_pantry_id
-  INCREMENT BY 1
-  START WITH 1
-  NO MAXVALUE;
-
-CREATE TABLE pantry (
-    pantry_id int NOT NULL DEFAULT nextval('mp_pantry_id'),
-    user_id int NOT NULL,
-    CONSTRAINT PK_pantry PRIMARY KEY (pantry_id),
-    CONSTRAINT FK_pantry_users FOREIGN KEY (user_id) REFERENCES users (user_id) 
 );
 
 /*---------------------------------------- 
@@ -150,17 +134,67 @@ CREATE TABLE recipe_ingredient (
 );
 
 /*---------------------------------------- 
-ingredient_pantry table  (JOIN TABLE)
-pantry_id               FK to pantry table
+user_pantry table  (JOIN TABLE)
+user_id                 FK to user table (formerly pantry table)
 ingredient_id           FK to ingredient table
 -----------------------------------------*/
 
-CREATE TABLE ingredient_pantry (
-    pantry_id int NOT NULL,
+CREATE TABLE user_pantry (
+    user_id int NOT NULL,
     ingredient_id int NOT NULL,
-    CONSTRAINT FK_ingredient_pantry_pantry FOREIGN KEY (pantry_id) REFERENCES pantry (pantry_id),
-    CONSTRAINT FK_ingredient_pantry_ingredient FOREIGN KEY (ingredient_id) REFERENCES ingredient (ingredient_id) 
+    CONSTRAINT FK_user_pantry_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+    CONSTRAINT FK_user_pantry_ingredient FOREIGN KEY (ingredient_id) REFERENCES ingredient (ingredient_id) 
 );
+
+/*---------------------------------------- 
+user_recipe table (JOIN TABLE)
+user_id                 FK to user table 
+recipe_id           FK to recipe table
+-----------------------------------------*/
+
+CREATE TABLE user_recipe (
+    user_id int NOT NULL,
+    recipe_id int NOT NULL,
+    CONSTRAINT FK_user_recipe_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+    CONSTRAINT FK_user_recipe_recipe FOREIGN KEY (recipe_id) REFERENCES recipe (recipe_id)
+);
+
+/*---------------------------------------- 
+user_meal table (JOIN TABLE)
+user_id                 FK to user table 
+meal_id           FK to meal table
+-----------------------------------------*/
+CREATE TABLE user_meal (
+user_id int NOT NULL,
+meal_id int NOT NULL,
+CONSTRAINT FK_user_meal_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_user_meal_meal FOREIGN KEY (meal_id) REFERENCES meal (meal_id)
+);
+
+/*---------------------------------------- 
+meal_plan_meal table (JOIN TABLE)
+user_id                 FK to user table 
+meal_id           FK to meal table
+-----------------------------------------*/
+CREATE TABLE meal_plan_meal (
+meal_id int NOT NULL,
+meal_plan_id int NOT NULL,
+CONSTRAINT FK_user_meal_plan_meal FOREIGN KEY (meal_id) REFERENCES meal (meal_id),
+CONSTRAINT FK_user_meal_plan_meal_plan FOREIGN KEY (meal_plan_id) REFERENCES meal_plan (meal_plan_id)
+);
+
+/*---------------------------------------- 
+user_meal_plan table (JOIN TABLE)
+user_id                 FK to user table 
+meal_plan_id           FK to meal table
+-----------------------------------------*/
+CREATE TABLE user_meal_plan (
+user_id int NOT NULL,
+meal_plan_id int NOT NULL,
+CONSTRAINT FK_user_meal_plan_user FOREIGN KEY (user_id) REFERENCES users (user_id),
+CONSTRAINT FK_user_meal_plan_meal_plan FOREIGN KEY (meal_plan_id) REFERENCES meal_plan (meal_plan_id)
+);
+
 
 
 /* DEMO USERS 
@@ -173,14 +207,10 @@ ID 1-6 */
 INSERT INTO ingredient (ingredient_name, category)
 VALUES ('Milk', 'Dairy'),('Cheese','Dairy'),('Hot Pockets', 'Frozen'),('Instant Ramen', 'Salt'),('Macaroni', 'Pasta'),('Love','Care');
 
-/* Demo Pantry 
-User and Pantry ID the same for simplicity*/
-INSERT INTO pantry (pantry_id, user_id)
-VALUES (1,1), (2,2), (3,3);
 
-/* Demo Pantry Ingredient  
+/* Demo USER Ingredient  
 Everybody has everything for now*/
-INSERT INTO ingredient_pantry (pantry_id, ingredient_id)
+INSERT INTO user_pantry (user_id, ingredient_id)
 VALUES (1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (2,1), (2,2), (2,3), (2,4), (2,5), (2,6), (3,1), (3,2), (3,3), (3,4), (3,5), (3,6);
 
 /*Demo Recipes
@@ -192,6 +222,11 @@ VALUES ('Macaroni and Cheese Dinner', 'Pasta', 'Boil two cups of water. Add Past
 ('Glass of Milk', 'Dairy', 'Pour 8oz of cold milk into a glass.'),
 ('Cheese Cubes', 'Dairy', 'Cut cheese into small cubes' );
 
+/*Demo User Recipes
+Everybody gets everything again for now*/
+INSERT INTO user_recipe (user_id, recipe_id)
+VALUES (1,1), (1,2), (1,3), (1,4), (1,5), (2,1), (2,2), (2,3), (2,4), (2,5), (3,1), (3,2), (3,3), (3,4), (3,5);
+
 
 /*Recipe Ingredients*/
 INSERT INTO recipe_ingredient (recipe_id, ingredient_id, count)
@@ -201,15 +236,34 @@ VALUES (1, 5, 'One Box'), (1,1,'One Cup'), (1,2,'One Cup'),
 (4,1,'8 oz'),
 (5,2,'12 oz');
 
-/* A Join that will list EVERYTHING inserted so far, as associated
-select * 
+/* meals */
+INSERT INTO meal (meal_name)
+VALUES ('Family Dinner'), ('Quick Lunch'), ('Healthy Breakfast'), ('Family Lunch');
+
+/*Meal Recipe */
+INSERT INTO meal_recipe (recipe_id, meal_id)
+VALUES (1,1), (1,2), (1,3), (2,3), (3,4), (4,3), (4,4), (4,1); 
+
+/*USER MEAL */
+INSERT INTO user_meal (user_id, meal_id)
+VALUES (1,1), (1,2), (1,3), (1,4), (2,1), (2,2), (2,3), (2,4), (3,1), (3,2), (3,3), (3,4);
+
+/* A Join that will list EVERYTHING inserted so far, as associated, EXCEPIT user_recipe
+select (CURRENTLY DEPRECATED* 
 from users
-join pantry on pantry.user_id = users.user_id
-join ingredient_pantry on ingredient_pantry.pantry_id = pantry.pantry_id
-join ingredient on ingredient.ingredient_id = ingredient_pantry.ingredient_id
+join user_pantry on user_pantry.user_id = users.user_id
+join ingredient on ingredient.ingredient_id = user_pantry.ingredient_id
 join recipe_ingredient on recipe_ingredient.ingredient_id = ingredient.ingredient_id
-join recipe on recipe.recipe_id = recipe_ingredient.recipe_id;
+join recipe on recipe.recipe_id = recipe_ingredient.recipe_id
+join recipe on meal_recipe.recipe_id = recipe.recipe_id 
+join meal on meal.meal_id = meal_recipe.meal_id;
 */
 
 
 COMMIT;
+
+
+
+
+
+
