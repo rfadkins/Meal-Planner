@@ -43,20 +43,20 @@ public class UserPantryService {
 /*
 **** DID NOT TEST - GET
  */
-    public Map<Long, Ingredient> getIngredientsInUserPantry(Long userId) {
-        Map<Long, Ingredient> userPantryStock = new HashMap<>();
-
-        try {
-            if(userRepository.findByUserId(userId) == null) {
-                throw new UserNotFoundException();
-            } else {
-                userPantryStock = ingredientRepository.findAllByUserId(userId);
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return userPantryStock;
-    }
+//    public Map<Long, Ingredient> getIngredientsInUserPantry(Long userId) {
+//        Map<Long, Ingredient> userPantryStock = new HashMap<>();
+//
+//        try {
+//            if(userRepository.findByUserId(userId) == null) {
+//                throw new UserNotFoundException();
+//            } else {
+//                userPantryStock = ingredientRepository.findAllByUserId(userId);
+//            }
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return userPantryStock;
+//    }
 
 
 
