@@ -100,8 +100,8 @@ public class User {
       String[] roles = authorities.split(",");
       for(String role : roles) {
          this.authorities.add(new Authority("ROLE_" + role));
-//         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
-//         this.authorities.add(new Authority(authority));
+         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
+         this.authorities.add(new Authority(authority));
       }
    }
 

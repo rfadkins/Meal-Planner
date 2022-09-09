@@ -1,9 +1,11 @@
 package com.techelevator.business;
 
 import com.techelevator.exceptions.IngredientNotFoundException;
+import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.User;
 import com.techelevator.repository.IngredientRepository;
+import com.techelevator.repository.UserRepository;
 import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,17 +18,12 @@ import java.util.Map;
 @Service
 public class UserPantryService {
 
-
     @Autowired
     IngredientRepository ingredientRepository;
 
+    @Autowired
+    UserRepository userRepository;
 
-//    public UserPantry create(Long userId) {
-//        UserPantry userPantry = new UserPantry();
-//        userPantry.setUserId(userId);
-//        userPantryRepository.saveAndFlush(userPantry);
-//        return userPantry;
-//    }
 
     public Map<Long, Ingredient> addIngredientToUserPantry(Long userId, Long ingredientId) {
         Map<Long, Ingredient> userPantryStock = new HashMap<>();
@@ -43,19 +40,23 @@ public class UserPantryService {
     }
 
 
+/*
+**** DID NOT TEST - GET
+ */
+    public Map<Long, Ingredient> getIngredientsInUserPantry(Long userId) {
+        Map<Long, Ingredient> userPantryStock = new HashMap<>();
 
-//    public List<Ingredient> getIngredientsInUserPantry(Long userId) {
-//        List<UserPantry> userPantryList = new ArrayList<>();
-//        userPantryList = userPantryRepository.findAllByUserId(userId);
-//        List<Ingredient> ingredientsInUserPantry = new ArrayList<>();
-//
-//        for(UserPantry userPantry: userPantryList) {
-//            Ingredient ingredient = ingredientRepository.findByIngredientId(userPantry.getIngredientId());
-//            ingredientsInUserPantry.add(ingredient);
-//        }
-//
-//        return ingredientsInUserPantry;
-//    }
+        try {
+            if(userRepository.findByUserId(userId) == null) {
+                throw new UserNotFoundException();
+            } else {
+                userPantryStock = ingredientRepository.findAllByUserId(userId);
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return userPantryStock;
+    }
 
 
 

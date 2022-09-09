@@ -31,12 +31,6 @@ public class UserModelDetailsService implements UserDetailsService {
     public UserModelDetailsService(UserService userService) { this.userService = userService;}
 
 
-//    private final UserDao userDao;
-//
-//    public UserModelDetailsService(UserDao userDao) {
-//        this.userDao = userDao;
-//    }
-
     @Override
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating user '{}'", login);

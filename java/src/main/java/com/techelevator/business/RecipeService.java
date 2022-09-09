@@ -13,6 +13,8 @@ import com.techelevator.repository.UserRepository;
 import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +33,7 @@ public class RecipeService {
     @Autowired
     private MealRepository mealRepository;
 
-    public Recipe createRecipe (String name, String instructions, String category) {
+    public Recipe createRecipe(String name, String instructions, String category) {
         Recipe recipe = new Recipe();
 
         recipe.setRecipeName(name);
@@ -44,9 +46,9 @@ public class RecipeService {
     }
 
 
-    public void deleteRecipe (Long recipeId) {
+    public void deleteRecipe(Long recipeId) {
         try {
-            if(recipeRepository.findByRecipeId(recipeId) == null) {
+            if (recipeRepository.findByRecipeId(recipeId) == null) {
                 throw new RecipeNotFoundException();
             } else {
                 recipeRepository.delete(recipeRepository.findByRecipeId(recipeId));
@@ -122,7 +124,28 @@ public class RecipeService {
     }
 
 
+//TODO displayRecipe()
+    /*--------------------
+    displayRecipe()
+    GET
+    PATH: /recipe/{recipe_id}
+    --------------------*/
 
+
+// TODO displayAllRecipes()
+        /*--------------------
+        displayAllRecipes()
+        GET
+        PATH: /recipe/
+        --------------------*/
+
+
+    //TODO displayRecipeByCategory()
 
 
 }
+
+
+
+
+
