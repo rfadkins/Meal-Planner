@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.techelevator.business.UserService;
 import com.techelevator.repository.UserRepository;
+import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,15 @@ public class AuthenticationController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDTO loginDto) {
+        User user = null;
+
+        try {
+            user = userService.findByUsername(loginDto.getUsername());
+            user.setAuthorities("USER");
+        } catch (UsernameNotFoundException | NullPointerException e) {
+            BasicLogger.log("Failed login: " + e.getMessage() + " username: " + loginDto.getUsername());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
@@ -54,11 +64,9 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = tokenProvider.createToken(authentication, false);
 
-        User user = userService.findByUsername(loginDto.getUsername());
-//        User user = userDao.findByUsername(loginDto.getUsername());
-
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        
         return new ResponseEntity<>(new LoginResponse(jwt, user), httpHeaders, HttpStatus.OK);
     }
 
@@ -73,7 +81,7 @@ public class AuthenticationController {
 //            User user = userDao.findByUsername(newUser.getUsername());
             throw new UserAlreadyExistsException();
         } catch (UsernameNotFoundException e) {
-            userService.create(newUser.getUsername(),newUser.getPassword());
+            userService.create(newUser.getUsername(),newUser.getPassword() );
 //            userDao.create(newUser.getUsername(),newUser.getPassword(), newUser.getRole());
         }
     }
