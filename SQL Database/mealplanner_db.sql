@@ -21,6 +21,7 @@ CREATE TABLE users (
     user_id int NOT NULL DEFAULT nextval('mp_user_id'),
     username varchar(50) NOT NULL,
     password varchar(200) NOT NULL,
+	role varchar(50) NOT NULL,
     CONSTRAINT PK_users PRIMARY KEY (user_id)
 );
 
@@ -197,8 +198,8 @@ CONSTRAINT FK_user_meal_plan_meal_plan FOREIGN KEY (meal_plan_id) REFERENCES mea
 
 /* DEMO USERS 
 IDs 1 - 3 */ 
-INSERT INTO users (username, password)
-VALUES ('George', 'password'), ('Lizzie','password'), ('Ralph', 'password'); 
+INSERT INTO users (username, password, role)
+VALUES ('George', 'password', 'user'), ('Lizzie','password', 'user'), ('Ralph', 'password', 'user'); 
 
 /*Demo Ingredients 
 ID 1-6 */
