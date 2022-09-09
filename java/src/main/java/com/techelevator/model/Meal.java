@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,13 +33,9 @@ public class Meal {
             @JoinColumn(name="meal_id"),
             inverseJoinColumns =
             @JoinColumn(name="recipe_id"))
-    private Map<Long, Recipe> mealRecipes;
+    private Set<Recipe> mealRecipes;
 
-//    @ManyToMany(mappedBy="userMeals")
-//    private User user;
-//
-//    @ManyToMany(mappedBy="mealsForMealPlan")
-//    private MealPlan mealPlan;
+
 
 
 }

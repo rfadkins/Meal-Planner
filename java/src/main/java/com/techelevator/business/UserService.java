@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,21 +21,19 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    User findByUserId(Long userId){
-        return userRepository.findByUserId(userId);
-    }
 
     List<User> findAll(){
         return userRepository.findAll();
     }
 
-    public User create(String username, String password ) {
+    public User create(String username, String password, String role) {
         boolean userCreated = false;
         User newUser = new User();
         String password_hash = new BCryptPasswordEncoder().encode(password);
         newUser.setUsername(username);
         newUser.setPassword(password_hash);
-        //newUser.setAuthorities("USER");
+        newUser.setAuthorities(role);
+        userRepository.saveAndFlush(newUser);
         try {
             userRepository.saveAndFlush(newUser);
             userCreated = true;
@@ -46,15 +45,31 @@ public class UserService {
         return newUser;
     }
 
+    public List<User> findAllUsers() {
+        List<User> allTheUsers = userRepository.findAll();
+        for(User user: allTheUsers) {
+            user.setAuthorities(user.getRole());
+            user.setActivated(true);
+        }
+        return allTheUsers;
+    }
 
+    public User findByUserId(Long userId) {
+        User user = userRepository.findByUserId(userId);
+        user.setAuthorities(user.getRole());
+        user.setActivated(true);
+        return user;
+    }
 
     public User findByUsername(String username) throws UsernameNotFoundException {
-        try {
-            return userRepository.findByUsername(username);
-        } catch (Exception e) {
+        for (User user : this.findAllUsers()) {
+            if (user.getUsername().toLowerCase().equals(username.toLowerCase())) {
+                return user;
+            }
+        }
             throw new UsernameNotFoundException("User '" + username + "' was not found.");
         }
-    }
+
 
 }
 

@@ -25,43 +25,8 @@ public class User {
    @JsonIgnore
    private String password;
 
-
-
-   /*
-   **** USER-PANTRY ****
-    */
-   @ManyToMany(cascade = CascadeType.ALL)
-   @JoinTable(name = "user_pantry",
-         joinColumns = @JoinColumn(name = "user_id"),
-         inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-   Map<Long, Ingredient> userPantry = new HashMap<>();
-
-   /*
-    **** USER-RECIPES ****
-    */
-   @ManyToMany(cascade = CascadeType.ALL)
-   @JoinTable(name = "user_recipe",
-         joinColumns = @JoinColumn(name = "user_id"),
-         inverseJoinColumns = @JoinColumn(name = "recipe_id"))
-   Map<Long, Recipe> userRecipes = new HashMap<>();
-
-   /*
-    **** USER-MEALS ****
-    */
-   @ManyToMany(cascade = CascadeType.ALL)
-   @JoinTable(name = "user_meals",
-         joinColumns = @JoinColumn(name = "user_id"),
-         inverseJoinColumns = @JoinColumn(name = "meal_id"))
-   Map<Long, Meal> userMeals = new HashMap<>();
-
-   /*
-    **** USER-MEAL PLANS ****
-    */
-   @ManyToMany(cascade = CascadeType.ALL)
-   @JoinTable(name = "user_meal_plan",
-         joinColumns = @JoinColumn(name = "user_id"),
-         inverseJoinColumns = @JoinColumn(name = "meal_plan_id"))
-   Map<Long, MealPlan> userMealPlans = new HashMap<>();
+   @Column(name = "ROLE", nullable = false)
+   private String role;
 
    @JsonIgnore
    @Transient
@@ -70,6 +35,12 @@ public class User {
    @Transient
    private Set<Authority> authorities = new HashSet<>();
 
+   public User (Long userID, String username, String password, String role) {
+       this.userId = userID;
+       this.username = username;
+       this.password = password;
+       this.role = role;
+   }
    public User(Long userId, String username, String password, Set<Authority> authorities) {
       this.userId = userId;
       this.username = username;
@@ -78,23 +49,49 @@ public class User {
       this.activated = true;
    }
 
-
-
    public boolean isActivated() {
       return activated;
    }
 
-   public void setActivated(boolean activated) {
-      this.activated = activated;
-   }
 
-   public Set<Authority> getAuthorities() {
-      return authorities;
-   }
+   /*
+   ##### JOINS  #####
+   */
+   /*
+   **** USER-PANTRY ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_pantry",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+   private Set<Ingredient> userPantry = new HashSet<>();
 
-   public void setAuthorities(Set<Authority> authorities) {
-      this.authorities = authorities;
-   }
+   /*
+    **** USER-RECIPES ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_recipe",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "recipe_id"))
+   private Set<Recipe> userRecipes = new HashSet<>();
+
+   /*
+    **** USER-MEALS ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_meals",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "meal_id"))
+   private Set<Meal> userMeals = new HashSet<>();
+
+   /*
+    **** USER-MEAL PLANS ****
+    */
+   @ManyToMany(cascade = CascadeType.ALL)
+   @JoinTable(name = "user_meal_plan",
+         joinColumns = @JoinColumn(name = "user_id"),
+         inverseJoinColumns = @JoinColumn(name = "meal_plan_id"))
+   private Set<MealPlan> userMealPlans = new HashSet<>();
 
    public void setAuthorities(String authorities) {
       String[] roles = authorities.split(",");
@@ -130,5 +127,84 @@ public class User {
                ", activated=" + activated +
                ", authorities=" + authorities +
                '}';
+   }
+
+/*
+##### GETTERS AND SETTERS #####
+ */
+   public void setActivated(boolean activated) {
+      this.activated = activated;
+   }
+
+   public Set<Authority> getAuthorities() {
+      return authorities;
+   }
+
+   public Long getUserId() {
+      return userId;
+   }
+
+   public void setUserId(Long userId) {
+      this.userId = userId;
+   }
+
+   public String getUsername() {
+      return username;
+   }
+
+   public void setUsername(String username) {
+      this.username = username;
+   }
+
+   public String getPassword() {
+      return password;
+   }
+
+   public void setPassword(String password) {
+      this.password = password;
+   }
+
+   public Set<Ingredient> getUserPantry() {
+      return userPantry;
+   }
+
+   public void setUserPantry(Set<Ingredient> userPantry) {
+      this.userPantry = userPantry;
+   }
+
+   public Set<Recipe> getUserRecipes() {
+      return userRecipes;
+   }
+
+   public void setUserRecipes(Set<Recipe> userRecipes) {
+      this.userRecipes = userRecipes;
+   }
+
+   public Set<Meal> getUserMeals() {
+      return userMeals;
+   }
+
+   public void setUserMeals(Set<Meal> userMeals) {
+      this.userMeals = userMeals;
+   }
+
+   public Set<MealPlan> getUserMealPlans() {
+      return userMealPlans;
+   }
+
+   public void setUserMealPlans(Set<MealPlan> userMealPlans) {
+      this.userMealPlans = userMealPlans;
+   }
+
+   public void setAuthorities(Set<Authority> authorities) {
+      this.authorities = authorities;
+   }
+
+   public String getRole() {
+      return role;
+   }
+
+   public void setRole(String role) {
+      this.role = role;
    }
 }

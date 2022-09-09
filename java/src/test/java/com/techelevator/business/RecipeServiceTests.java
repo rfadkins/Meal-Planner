@@ -46,62 +46,63 @@ public class RecipeServiceTests {
         Assertions.assertThat(recipe.getRecipeId()).isNotNull();
     }
 
-    @Test
-    public void recipeIngredientsIdIsNotNull() {
-        Recipe recipe = Recipe.builder()
-                .recipeName("TestRecipeName")
-                .recipeInstructions("TestRecipeInstructions")
-                .category("TestCategory")
-                .build();
-        Ingredient ingredient = Ingredient.builder()
-                .ingredientName("TestIngredient")
-                .ingredientCategory("TestCategory")
-                .build();
+//    @Test
+//    public void recipeIngredientsIdIsNotNull() {
+//        Recipe recipe = Recipe.builder()
+//                .recipeName("TestRecipeName")
+//                .recipeInstructions("TestRecipeInstructions")
+//                .category("TestCategory")
+//                .build();
+//        Ingredient ingredient = Ingredient.builder()
+//                .ingredientName("TestIngredient")
+//                .ingredientCategory("TestCategory")
+//                .build();
+//
+//        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+//        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+//
+//        Map<Long, Ingredient> testRecipeIngredients = recipeService.addIngredientToRecipe(recipe.getRecipeId(), ingredient.getIngredientId());
+//
+//        Assertions.assertThat(testRecipeIngredients.get(recipe.getRecipeId())).isNotNull();
+//    }
 
-        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+//    @Test
+//    public void userRecipeIdIsNotNull() {
+//        User user = User.builder()
+//                .username("TestUsername")
+//                .password("TestPassword")
+//                .build();
+//        Recipe recipe = Recipe.builder()
+//                .recipeName("TestRecipeName")
+//                .recipeInstructions("TestRecipeInstructions")
+//                .category("TestCategory")
+//                .build();
+//
+//        user = userService.create(user.getUsername(), user.getPassword());
+//        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+//
+//        Map<Long, Recipe> testUserRecipes = recipeService.addRecipeToUserRecipes(user.getUserId(), recipe.getRecipeId());
+//
+//        Assertions.assertThat(testUserRecipes.get(user.getUserId())).isNotNull();
+//    }
 
-        Map<Long, Ingredient> testRecipeIngredients = recipeService.addIngredientToRecipe(recipe.getRecipeId(), ingredient.getIngredientId());
-
-        Assertions.assertThat(testRecipeIngredients.get(recipe.getRecipeId())).isNotNull();
-    }
-
-    @Test
-    public void userRecipeIdIsNotNull() {
-        User user = User.builder()
-                .username("TestUsername")
-                .password("TestPassword")
-                .build();
-        Recipe recipe = Recipe.builder()
-                .recipeName("TestRecipeName")
-                .recipeInstructions("TestRecipeInstructions")
-                .category("TestCategory")
-                .build();
-
-        user = userService.create(user.getUsername(), user.getPassword());
-        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-
-        Map<Long, Recipe> testUserRecipes = recipeService.addRecipeToUserRecipes(user.getUserId(), recipe.getRecipeId());
-
-        Assertions.assertThat(testUserRecipes.get(user.getUserId())).isNotNull();
-    }
-
-    @Test
-    public void mealRecipeIdIsNotNull() {
-        Meal meal = Meal.builder()
-                .mealName("TestMealName")
-                .build();
-        Recipe recipe = Recipe.builder()
-                .recipeName("TestRecipeName")
-                .recipeInstructions("TestRecipeInstructions")
-                .category("TestCategory")
-                .build();
-        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-        meal = mealService.createMeal(meal.getMealName());
-        Map<Long, Recipe> testMealRecipes = recipeService.addRecipeToMeal(meal.getMealId(), recipe.getRecipeId());
-
-        Assertions.assertThat(testMealRecipes.get(meal.getMealId())).isNotNull();
-    }
+//    @Test
+//    public void mealRecipeIdIsNotNull() {
+//        Meal meal = Meal.builder()
+//                .mealName("TestMealName")
+//                .build();
+//        Recipe recipe = Recipe.builder()
+//                .recipeName("TestRecipeName")
+//                .recipeInstructions("TestRecipeInstructions")
+//                .category("TestCategory")
+//                .build();
+//        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+//        meal = mealService.createMeal(meal.getMealName());
+//        Set<Recipe> testMealRecipes = mealService.
+////        Map<Long, Recipe> testMealRecipes = recipeService.addRecipeToMeal(meal.getMealId(), recipe.getRecipeId());
+//
+//        Assertions.assertThat(testMealRecipes.get(meal.getMealId())).isNotNull();
+//    }
 
     @Test
     public void deletedRecipeIsNull() {

@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class RecipeService {
@@ -95,13 +92,13 @@ public class RecipeService {
         return ingredientsInRecipe;
     }
 
-    public Map<Long, Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
+    public Set<Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
 
         User user = userRepository.findByUserId(userId);
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
 
-        Map<Long, Recipe> userRecipes = new HashMap<>();
-        userRecipes.put(user.getUserId(), recipe);
+        Set<Recipe> userRecipes = new HashSet<>();
+        userRecipes.add(recipeRepository.findByRecipeId(recipeId));
 
         user.setUserRecipes(userRecipes);
         userRepository.save(user);
@@ -109,13 +106,13 @@ public class RecipeService {
         return userRecipes;
     }
 
-    public Map<Long, Recipe> addRecipeToMeal(Long mealId, Long recipeId) {
+    public Set<Recipe> addRecipeToMeal(Long mealId, Long recipeId) {
 
         Meal meal = mealRepository.findByMealId(mealId);
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
 
-        Map<Long, Recipe> mealRecipes = new HashMap<>();
-        mealRecipes.put(meal.getMealId(), recipe);
+        Set<Recipe> mealRecipes = new HashSet<>();
+        mealRecipes.add(recipeRepository.findByRecipeId(recipeId));
 
         meal.setMealRecipes(mealRecipes);
         mealRepository.save(meal);

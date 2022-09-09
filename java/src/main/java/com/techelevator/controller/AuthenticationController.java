@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import javax.annotation.security.PermitAll;
 import javax.validation.Valid;
 
 import com.techelevator.business.UserService;
@@ -45,17 +46,15 @@ public class AuthenticationController {
           this.userService = userService;
     }
 
+    @PermitAll
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginDTO loginDto) {
         User user = null;
 
-        try {
+//TODO authorities issue ?? _postman login not working
+
             user = userService.findByUsername(loginDto.getUsername());
             user.setAuthorities("USER");
-        } catch (UsernameNotFoundException | NullPointerException e) {
-            BasicLogger.log("Failed login: " + e.getMessage() + " username: " + loginDto.getUsername());
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
@@ -73,17 +72,22 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public void register(@Valid @RequestBody RegisterUserDTO newUser) {
+
         try {
             User user = userService.findByUsername(newUser.getUsername());
-            if(user == null){
-                throw new UsernameNotFoundException("");
-            }
-//            User user = userDao.findByUsername(newUser.getUsername());
             throw new UserAlreadyExistsException();
         } catch (UsernameNotFoundException e) {
-            userService.create(newUser.getUsername(),newUser.getPassword() );
-//            userDao.create(newUser.getUsername(),newUser.getPassword(), newUser.getRole());
+            userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getRole());
         }
+//        try {
+//            User user = userService.findByUsername(newUser.getUsername());
+//            if(user == null){
+//                throw new UsernameNotFoundException("");
+//            }
+//            throw new UserAlreadyExistsException();
+//        } catch (UsernameNotFoundException e) {
+//            userService.create(newUser.getUsername(),newUser.getPassword(), newUser.getRole());
+//        }
     }
 
     /**

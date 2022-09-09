@@ -32,9 +32,21 @@ public class UserRepositoryTests {
                 .username("TestUsername")
                 .password("TestPassword")
                 .build();
-        user = userService.create(user.getUsername(), user.getPassword());
+        user = userService.create(user.getUsername(), user.getPassword(), user.getRole());
 
         Assertions.assertThat(user.getUserId()).isGreaterThan(0);
+    }
+
+    @Test
+    public void userHasRole() {
+        User user = User.builder()
+                .username("TestUsername")
+                .password("TestPassword")
+                .role("USER")
+                .build();
+        user = userService.create(user.getUsername(), user.getPassword(), user.getRole());
+
+        Assertions.assertThat(user.getAuthorities()).isNotNull();
     }
 
     @Test
@@ -43,7 +55,7 @@ public class UserRepositoryTests {
                 .username("TestUsername")
                 .password("TestPassword")
                 .build();
-        user = userService.create(user.getUsername(), user.getPassword());
+        user = userService.create(user.getUsername(), user.getPassword(), user.getRole());
 
         Assertions.assertThat(user.getUserId()).isNotNull();
     }

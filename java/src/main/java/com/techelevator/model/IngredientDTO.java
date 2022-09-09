@@ -13,6 +13,9 @@ public class IngredientDTO {
     @JsonProperty("ingredientCategory")
     private String ingredientCategory;
 
+
+
+
     public Long getIngredientId() {
         return ingredientId;
     }
