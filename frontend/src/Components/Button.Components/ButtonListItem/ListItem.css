@@ -1,0 +1,15 @@
+.List-item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aqua;
+    border-radius: 20px;
+    height: 50px;
+    width: 130px;
+    margin-bottom: -25px;
+}
+
+.shopping_icon{
+    height: 50px;
+    width: 60px;
+}

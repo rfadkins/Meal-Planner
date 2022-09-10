@@ -7,7 +7,7 @@ body{
 /* css for phone app */
 @media (max-width: 500px){
   body{ /* defualt*/
-    background-color: #9747FF;
+    background-color: #105F63;
     margin:0;
   }
 }

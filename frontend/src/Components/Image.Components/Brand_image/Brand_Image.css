@@ -1,0 +1,8 @@
+@media (max-width: 500px){
+.Brand_Image{
+    background-color: #E0BE76;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+  }
+}

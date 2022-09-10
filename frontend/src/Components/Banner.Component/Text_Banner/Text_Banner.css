@@ -1,0 +1,9 @@
+@media (max-width: 500px){
+.text_banner{
+    grid-area: welcome-Descritpuon;
+    background-color: #49B092;
+    border-radius: 20px;
+    padding: 50px;
+    width: 300px;
+  }
+}

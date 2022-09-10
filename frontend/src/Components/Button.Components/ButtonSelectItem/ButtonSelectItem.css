@@ -1,0 +1,32 @@
+
+.Pantry-item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
+  border-radius: 20px;
+  height: 70px;
+  width: 70px;
+  margin-bottom: 0px;
+  margin-top: 5px;
+}
+
+.ingrediant_img{
+  height: 50px;
+  width: 50px;
+}
+
+.Item-Count{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e0fff6;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+  margin-bottom: -15px;
+  margin-top: -10px;
+  margin-left: 60px;
+}
+

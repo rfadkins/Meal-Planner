@@ -1,0 +1,13 @@
+@media (max-width: 500px){
+  .Help-Button{
+      grid-area: welcome-Help;
+      background-color: #e0fff6;
+      height: 25px;
+      width: 100px;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+}

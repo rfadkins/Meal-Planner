@@ -6,11 +6,16 @@ export default function RecipeCardPart(){
     <div className="RecipeCard">
         
         <p className="RecipeCard-text">
-            <strong>recipe name</strong>
+            <strong>-recipe name-</strong>
         </p>
         <p className="RecipeCard-text">
-        recipe description - recipe description <br/>
-        recipe description - recipe description
+            description of dish
+        </p>
+        <p className="RecipeCard-text">
+        ingredient - messure ~ ingredient - messure <br/>
+        ingredient - messure ~ ingredient - messure<br/>
+        ingredient - messure ~ ingredient - messure <br/>
+        ingredient - messure ~ ingredient - messure<br/>
         </p>
     </div>
     )
