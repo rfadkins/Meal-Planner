@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -24,15 +25,35 @@ public class MealService {
     @Autowired
     private MealRepository mealRepository;
     @Autowired
-    MealPlanRepository mealPlanRepository;
+    private MealPlanRepository mealPlanRepository;
 
 
     public Meal createMeal (String name) {
         Meal meal = new Meal();
-        meal.setMealName(name);
+        try {
+            if (name == null) {
+                throw new MealNotFoundException();
+            } else {
+                meal.setMealName(name);
+                mealRepository.saveAndFlush(meal);
 
-        mealRepository.saveAndFlush(meal);
+            }
+        } catch (MealNotFoundException e) {
+            BasicLogger.log("Meal name cannot be null");
+        }
+        return meal;
+    }
 
+    public Meal editMeal (Meal meal) {
+        try {
+            if (meal == null) {
+                throw new MealNotFoundException();
+            } else {
+                mealRepository.saveAndFlush(meal);
+            }
+        } catch (MealNotFoundException e) {
+            BasicLogger.log("Meal cannot be null");
+        }
         return meal;
     }
 
@@ -49,7 +70,23 @@ public class MealService {
         }
     }
 
-    //TODO update meal
+    public Meal displayMeal (Long mealId) {
+        try {
+            if (mealRepository.findByMealId(mealId) == null) {
+                throw new MealNotFoundException();
+            } else {
+                return mealRepository.findByMealId(mealId);
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Meal> displayAllMeals() {
+        return mealRepository.findAll();
+    }
+
 
     //TODO add meal to meal plan
 
