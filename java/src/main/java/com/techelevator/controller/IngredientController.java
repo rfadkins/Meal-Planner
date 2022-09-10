@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/ingredient")
 //@PreAuthorize("isAuthenticated()")
 public class IngredientController extends IngredientService{
-    //This controller handles the Indredient table
+    //This controller handles the Ingredient table
 
     UserService userService;
     IngredientService ingredientService;
