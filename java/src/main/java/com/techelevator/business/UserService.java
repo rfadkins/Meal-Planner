@@ -32,7 +32,9 @@ public class UserService {
         String password_hash = new BCryptPasswordEncoder().encode(password);
         newUser.setUsername(username);
         newUser.setPassword(password_hash);
+        newUser.setRole(role);
         newUser.setAuthorities(role);
+
         userRepository.saveAndFlush(newUser);
         try {
             userRepository.saveAndFlush(newUser);

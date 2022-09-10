@@ -75,6 +75,9 @@ public class AuthenticationController {
 
         try {
             User user = userService.findByUsername(newUser.getUsername());
+            if(user == null){
+                throw new UsernameNotFoundException("");
+            }
             throw new UserAlreadyExistsException();
         } catch (UsernameNotFoundException e) {
             userService.create(newUser.getUsername(), newUser.getPassword(), newUser.getRole());
