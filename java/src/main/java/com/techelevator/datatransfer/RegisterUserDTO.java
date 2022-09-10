@@ -1,4 +1,4 @@
-package com.techelevator.model;
+package com.techelevator.datatransfer;
 
 import javax.validation.constraints.NotEmpty;
 

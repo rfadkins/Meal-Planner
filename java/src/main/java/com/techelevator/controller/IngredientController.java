@@ -2,6 +2,8 @@ package com.techelevator.controller;
 
 import com.techelevator.business.IngredientService;
 import com.techelevator.business.UserService;
+import com.techelevator.datatransfer.IngredientDTO;
+import com.techelevator.datatransfer.Mapper;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class IngredientController extends IngredientService{
 
     UserService userService;
     IngredientService ingredientService;
+    Mapper mapper;
 
     @Autowired
     public IngredientController(UserService userService, IngredientService ingredientService) {
@@ -36,7 +39,8 @@ public class IngredientController extends IngredientService{
     PATH: /ingredient/
     --------------------*/
     @PostMapping ("/")
-    public void createIngredient(@RequestBody Ingredient ingredient) {
+    public void createIngredient(@RequestBody IngredientDTO ingredientDTO) {
+        Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
         ingredientService.createIngredient(ingredient.getIngredientName(),ingredient.getIngredientCategory());
     }
 
