@@ -13,8 +13,6 @@ import com.techelevator.repository.UserRepository;
 import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.*;
 
@@ -55,42 +53,48 @@ public class RecipeService {
         }
     }
 
-    public Map<Long, Ingredient> addIngredientToRecipe(Long recipeId, Long ingredientId) {
+    public Set<Ingredient> addIngredientToRecipe(Long recipeId, Long ingredientId) {
 
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
 
-        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
-        recipeIngredients.put(recipe.getRecipeId(), ingredient);
+        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
+        ingredientsInRecipe.add(ingredient);
 
-        recipe.setRecipeIngredients(recipeIngredients);
-        recipeRepository.save(recipe);
+        Set<Recipe> recipesWithIngredient = new HashSet<>();
+        recipesWithIngredient.add(recipe);
 
-        return recipeIngredients;
-    }
+        recipe.setIngredientsInRecipe(ingredientsInRecipe);
+        ingredient.setRecipesWithIngredient(recipesWithIngredient);
 
-    public List<Ingredient> listIngredientsInRecipe(Long recipeId) {
-        List<Ingredient> ingredientsInRecipe = new ArrayList<>();
-        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
-        try {
-            if (recipeRepository.findByRecipeId(recipeId) == null) {
-                throw new RecipeNotFoundException();
-            } else {
-                Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-                if (recipe.getRecipeIngredients() == null) {
-                    throw new RecipeIngredientsNotFoundException();
-                } else {
-                    recipeIngredients = recipe.getRecipeIngredients();
-                    for (Map.Entry<Long, Ingredient> entry : recipeIngredients.entrySet()) {
-                        ingredientsInRecipe.add(entry.getValue());
-                    }
-                }
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
+        ingredientRepository.saveAndFlush(ingredient);
+        recipeRepository.saveAndFlush(recipe);
+
         return ingredientsInRecipe;
     }
+//
+//    public List<Ingredient> listIngredientsInRecipe(Long recipeId) {
+//        List<Ingredient> ingredientsInRecipe = new ArrayList<>();
+//        Map<Long, Ingredient> recipeIngredients = new HashMap<>();
+//        try {
+//            if (recipeRepository.findByRecipeId(recipeId) == null) {
+//                throw new RecipeNotFoundException();
+//            } else {
+//                Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//                if (recipe.getIngredientsInRecipe() == null) {
+//                    throw new RecipeIngredientsNotFoundException();
+//                } else {
+//                    recipeIngredients = recipe.getIngredientsInRecipe();
+//                    for (Map.Entry<Long, Ingredient> entry : recipeIngredients.entrySet()) {
+//                        ingredientsInRecipe.add(entry.getValue());
+//                    }
+//                }
+//            }
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return ingredientsInRecipe;
+//    }
 
     public Set<Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
 
@@ -113,9 +117,9 @@ public class RecipeService {
 
         Set<Recipe> mealRecipes = new HashSet<>();
         mealRecipes.add(recipeRepository.findByRecipeId(recipeId));
-
-        meal.setMealRecipes(mealRecipes);
-        mealRepository.save(meal);
+        //TODO fix this setter
+//        meal.setMealRecipes(mealRecipes);
+//        mealRepository.save(meal);
 
         return mealRecipes;
     }

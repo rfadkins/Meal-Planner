@@ -31,11 +31,19 @@ public class recipe_IngredientController{
     addIngredientToRecipe()
     POST
     Ingredient/recipe/{ingredient_id}/{recipe_id}
+<<<<<<< Updated upstream
      --------------------*/
 
     @PostMapping ("/ingredient/recipe/{ingredientId}/{recipeId}")
     public String addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
         return("Post Received for "+ ingredientId + "/" +recipeId + " though addingredienttorecipe is not implemented yet.");
+=======
+     */
+
+    @PostMapping ("ingredient/recipe/{ingredient_id}/{recipe_id}")
+    public void addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
+        recipeService.addIngredientToRecipe(ingredientId, recipeId);
+>>>>>>> Stashed changes
     }
 
 
