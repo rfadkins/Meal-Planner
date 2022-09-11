@@ -93,13 +93,21 @@ public class User {
          inverseJoinColumns = @JoinColumn(name = "meal_plan_id"))
    private Set<MealPlan> userMealPlans = new HashSet<>();
 
-   public void setAuthorities(String authorities) {
-      String[] roles = authorities.split(",");
-      for(String role : roles) {
-         this.authorities.add(new Authority("ROLE_" + role));
-         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
-         this.authorities.add(new Authority(authority));
-      }
+//   public void setAuthorities(String authorities) {
+//      String[] roles = authorities.split(",");
+//      for(String role : roles) {
+//         this.authorities.add(new Authority("ROLE_" + role));
+//         String authority = role.contains("ROLE_") ? role : "ROLE_" + role;
+//         this.authorities.add(new Authority(authority));
+//         setAuthorities(authorities);
+//      }
+//
+//   }
+
+   public Set<Authority> addRoleToAuthorities(String role) {
+      this.authorities.add(new Authority("ROLE_" + role));
+      setAuthorities(authorities);
+      return authorities;
    }
 
    @Override

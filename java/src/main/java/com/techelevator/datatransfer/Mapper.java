@@ -4,7 +4,9 @@ import com.techelevator.model.Ingredient;
 import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
 import com.techelevator.model.Recipe;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Mapper {
 
     /*

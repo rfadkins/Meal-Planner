@@ -1,4 +1,5 @@
 package com.techelevator.business;
+import com.techelevator.model.Authority;
 import com.techelevator.util.BasicLogger;
 import com.techelevator.model.User;
 import com.techelevator.repository.UserRepository;
@@ -10,7 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Service
@@ -29,11 +32,15 @@ public class UserService {
     public User create(String username, String password, String role) {
         boolean userCreated = false;
         User newUser = new User();
+
         String password_hash = new BCryptPasswordEncoder().encode(password);
         newUser.setUsername(username);
         newUser.setPassword(password_hash);
         newUser.setRole(role);
-        newUser.setAuthorities(role);
+
+        Set<Authority> authorities = new HashSet<>();
+        authorities = newUser.addRoleToAuthorities(role);   // "setAuthorities" that took in the string
+        newUser.setAuthorities(authorities);                // setAuthorities taking in the effing Authority object
 
         userRepository.saveAndFlush(newUser);
         try {
@@ -50,7 +57,7 @@ public class UserService {
     public List<User> findAllUsers() {
         List<User> allTheUsers = userRepository.findAll();
         for(User user: allTheUsers) {
-            user.setAuthorities(user.getRole());
+            user.addRoleToAuthorities(user.getRole());
             user.setActivated(true);
         }
         return allTheUsers;
@@ -58,7 +65,7 @@ public class UserService {
 
     public User findByUserId(Long userId) {
         User user = userRepository.findByUserId(userId);
-        user.setAuthorities(user.getRole());
+        user.addRoleToAuthorities(user.getRole());
         user.setActivated(true);
         return user;
     }

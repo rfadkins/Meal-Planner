@@ -53,7 +53,7 @@ public class AuthenticationController {
 //TODO authorities issue ?? _postman login not working
 
             user = userService.findByUsername(loginDto.getUsername());
-            user.setAuthorities("USER");
+            user.addRoleToAuthorities("USER");
 
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());

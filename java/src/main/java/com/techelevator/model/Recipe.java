@@ -12,12 +12,6 @@ import java.util.*;
 @Setter
 @Entity
 @Table(name = "recipe")
-@NamedQueries({
-        @NamedQuery(name = "Recipe.updateByRecipeIngredients_IngredientIdEquals",
-                query = "update Recipe r set  inner" +
-                " join r.recipeIngredients recipeIngredients where " +
-                "recipeIngredients.ingredientId = :ingredientId")
-})
 public class Recipe {
 
     @Id
@@ -137,3 +131,9 @@ public class Recipe {
     }
 }
 
+//@NamedQueries({
+//        @NamedQuery(name = "Recipe.updateByRecipeIngredients_IngredientIdEquals",
+//                query = "update Recipe r set  inner" +
+//                " join r.recipeIngredients recipeIngredients where " +
+//                "recipeIngredients.ingredientId = :ingredientId")
+//})

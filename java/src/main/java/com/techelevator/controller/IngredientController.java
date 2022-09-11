@@ -38,11 +38,11 @@ public class IngredientController extends IngredientService{
     POST
     PATH: /ingredient/
     --------------------*/
-    @PostMapping ("/")
-    public void createIngredient(@RequestBody IngredientDTO ingredientDTO) {
-        Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
-        ingredientService.createIngredient(ingredient.getIngredientName(),ingredient.getIngredientCategory());
-    }
+//    @PostMapping ("/")
+//    public void createIngredient(@RequestBody IngredientDTO ingredientDTO) {
+//        Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
+//        ingredientService.createIngredient(ingredient.getIngredientName(),ingredient.getIngredientCategory());
+//    }
 
 
     /*--------------------

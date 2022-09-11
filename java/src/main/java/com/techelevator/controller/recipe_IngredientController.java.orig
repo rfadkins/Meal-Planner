@@ -37,7 +37,13 @@ public class recipe_IngredientController{
     @PostMapping ("/ingredient/recipe/{ingredientId}/{recipeId}")
     public String addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
         return("Post Received for "+ ingredientId + "/" +recipeId + " though addingredienttorecipe is not implemented yet.");
+=======
+     */
 
+    @PostMapping ("ingredient/recipe/{ingredient_id}/{recipe_id}")
+    public void addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
+        recipeService.addIngredientToRecipe(ingredientId, recipeId);
+>>>>>>> Stashed changes
     }
 
 

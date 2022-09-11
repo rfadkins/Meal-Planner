@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.business.UserService;
+import com.techelevator.model.Authority;
 import com.techelevator.model.User;
 import com.techelevator.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -10,6 +11,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.HashSet;
+import java.util.Set;
 
 
 @DataJpaTest
@@ -50,15 +54,28 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void userIdIsNotNull() {
+    public void userHasAuthorities() {
         User user = User.builder()
                 .username("TestUsername")
                 .password("TestPassword")
+                .role("USER")
                 .build();
         user = userService.create(user.getUsername(), user.getPassword(), user.getRole());
-
-        Assertions.assertThat(user.getUserId()).isNotNull();
+        Set<Authority> authorities = new HashSet<>();
+        authorities= user.getAuthorities();
+        Assertions.assertThat(authorities).isNotNull();
     }
+
+//    @Test
+//    public void userIdIsNotNull() {
+//        User user = User.builder()
+//                .username("TestUsername")
+//                .password("TestPassword")
+//                .build();
+//        user = userService.create(user.getUsername(), user.getPassword(), user.getRole());
+//
+//        Assertions.assertThat(user.getUserId()).isNotNull();
+//    }
 
 
 
