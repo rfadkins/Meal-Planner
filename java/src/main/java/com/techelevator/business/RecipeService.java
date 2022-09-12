@@ -28,6 +28,7 @@ public class RecipeService {
     @Autowired
     private MealRepository mealRepository;
 
+    //TODO try block w/ exception handling
     public Recipe createRecipe(String name, String instructions, String category) {
         Recipe recipe = new Recipe();
 
@@ -37,6 +38,15 @@ public class RecipeService {
 
         recipeRepository.saveAndFlush(recipe);
 
+        return recipe;
+    }
+    //TODO try block w/ exception handling
+    public Recipe editRecipe(Long recipeId, String newName, String newInstructions, String newCategory) {
+        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+        recipe.setRecipeName(newName);
+        recipe.setRecipeInstructions(newInstructions);
+        recipe.setCategory(newCategory);
+        recipeRepository.saveAndFlush(recipe);
         return recipe;
     }
 

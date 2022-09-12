@@ -22,13 +22,13 @@ public class MealPlanService {
     @Autowired
     private MealPlanRepository mealPlanRepository;
 
-    public MealPlan createMealPlan(Long mealPlanId){
+    public MealPlan createMealPlan(String name ){
         MealPlan mealPlan = new MealPlan();
         try {
-            if (mealPlanId == null) {
+            if (name == null) {
                 throw new MealPlanNotFoundException();
             } else {
-                mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+                mealPlan.setMealPlanName(name);
                 mealPlanRepository.saveAndFlush(mealPlan);
             }
 

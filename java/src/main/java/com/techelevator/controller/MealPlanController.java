@@ -42,7 +42,7 @@ public class MealPlanController {
     public void createMealPlan(@RequestBody MealPlanDTO mealPlanDTO) {
         MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
         this.mealPlanService = mealPlanService;
-        this.mealPlanService.createMealPlan(mealPlanDTO.getMealPlanId());
+        this.mealPlanService.createMealPlan(mealPlanDTO.getMealPlanName());
     }
 
     /*--------------------

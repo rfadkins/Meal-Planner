@@ -44,17 +44,20 @@ public class MealService {
         return meal;
     }
 
-    public Meal editMeal (Meal meal) {
+    public Meal editMeal (Long mealId, String newName) {
+        Meal editedMeal = new Meal();
         try {
-            if (meal == null) {
+            if (mealId == null) {
                 throw new MealNotFoundException();
             } else {
-                mealRepository.saveAndFlush(meal);
+                editedMeal = mealRepository.findByMealId(mealId);
+                editedMeal.setMealName(newName);
+                mealRepository.saveAndFlush(editedMeal);
             }
         } catch (MealNotFoundException e) {
             BasicLogger.log("Meal cannot be null");
         }
-        return meal;
+        return editedMeal;
     }
 
 

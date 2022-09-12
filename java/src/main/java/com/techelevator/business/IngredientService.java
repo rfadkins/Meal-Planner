@@ -36,6 +36,14 @@ public class IngredientService {
         return ingredient;
     }
 
+    public Ingredient editIngredient(Long ingredientId, String newName, String newCategory) {
+        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+        ingredient.setIngredientName(newName);
+        ingredient.setIngredientCategory(newCategory);
+        ingredientRepository.saveAndFlush(ingredient);
+        return ingredient;
+    }
+
     public void deleteIngredient(Long ingredientId) {
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
         try {
