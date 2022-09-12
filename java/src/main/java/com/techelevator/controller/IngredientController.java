@@ -84,8 +84,7 @@ public class IngredientController extends IngredientService{
     --------------------*/
     @GetMapping("/{ingredientId}")
     public Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
-        //Do I need a DTO?
-        return ingredientService.getIngredient(ingredientId);
+        return ingredientService.getIngredientById(ingredientId);
     }
 
     /*--------------------
