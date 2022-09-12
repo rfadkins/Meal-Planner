@@ -3,26 +3,33 @@ package com.techelevator.controller;
 import com.techelevator.business.IngredientService;
 import com.techelevator.business.RecipeService;
 import com.techelevator.business.UserService;
+import com.techelevator.datatransfer.Mapper;
 import com.techelevator.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import com.techelevator.datatransfer.RecipeDTO;
 
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.Collections;
 
 @RestController
+@CrossOrigin
 //@RequestMapping("/recipe")
 //@PreAuthorize("isAuthenticated()")
 public class RecipeController{
 //This controller handles the recipe table
 
     UserService userService;
+    @Autowired
     RecipeService recipeService;
+    @Autowired
+    Mapper mapper;
 
     @Autowired
     public RecipeController(UserService userService, RecipeService recipeService) {
@@ -35,9 +42,12 @@ public class RecipeController{
         POST
         PATH: /recipe/
         --------------------*/
+        @ResponseStatus(HttpStatus.CREATED)
         @PostMapping("/recipe/")
-        public void createRecipe(@RequestBody Recipe recipe) {
-            recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+        public void createRecipe(@RequestBody RecipeDTO recipeDTO) {
+            Recipe recipe = mapper.mapRecipeDTOToEntity(recipeDTO);
+            System.out.println(recipeDTO.getRecipeName() + recipeDTO.getRecipeInstructions() + recipeDTO.getCategory());
+            recipeService.createRecipe(recipeDTO.getRecipeName(), recipeDTO.getRecipeInstructions(), recipeDTO.getCategory());
         }
 
         /*--------------------

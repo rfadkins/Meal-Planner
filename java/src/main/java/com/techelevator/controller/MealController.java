@@ -3,18 +3,28 @@ package com.techelevator.controller;
 import com.techelevator.business.IngredientService;
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserService;
+import com.techelevator.datatransfer.IngredientDTO;
+import com.techelevator.datatransfer.MealDTO;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Meal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import com.techelevator.datatransfer.Mapper;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin
 //@PreAuthorize("isAuthenticated()")
 public class MealController {
     //This controller handles the meal table
 
     UserService userService;
+    @Autowired
     MealService mealService;
+    @Autowired
+    Mapper mapper;
 
     @Autowired
     public MealController(UserService userService, MealService mealService) {
@@ -27,10 +37,13 @@ public class MealController {
     POST
     Path: /meal/
     --------------------*/
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/meal/")
-    public void createIngredient(@RequestBody Meal meal) {
-        mealService.createMeal(meal.getMealName());
+    public void createIngredient(@RequestBody MealDTO mealDTO) {
+        Meal meal = mapper.mapMealDTOToEntity(mealDTO);
+        mealService.createMeal(mealDTO.getMealName());
     }
+
 
     /*--------------------
     editMeal()
@@ -38,8 +51,9 @@ public class MealController {
     Path: /meal/{id}
     --------------------*/
     @PutMapping ("/meal/{mealId}")
-    public String editMeal(@PathVariable("mealId") Long mealId) {
-        //Need put / edit by meal ID in service
+    public String editMeal(@PathVariable("mealId") Long mealId, @RequestBody MealDTO mealDTO) {
+        Meal meal = mapper.mapMealDTOToEntity(mealDTO);
+        // mealService.editMeal(Meal); Did not ask for Meal ID?
         return ("I have received a Put/Edit request for meal ID " + mealId + " but that is not implemented yet.");
     }
 
@@ -59,9 +73,8 @@ public class MealController {
     Path: /meal/{meal_id}
     --------------------*/
     @GetMapping ("/meal/{mealId}")
-    public String displayMeal(@PathVariable("mealId") Long mealId) {
-        //Need Get by meal ID in service
-        return ("I have received a get request for meal ID " + mealId + " but that is not implemented yet.");
+    public Meal displayMeal(@PathVariable("mealId") Long mealId) {
+        return mealService.displayMeal(mealId);
     }
 
 
@@ -71,12 +84,9 @@ public class MealController {
     Path: /meal/
     --------------------*/
     @GetMapping ("/meal/")
-    public String displayAllMeals() {
-        //Need Get by meal ID in service
-        return ("I have received a get request for all meals, but that is not implemented yet.");
+    public List<Meal> displayAllMeals() {
+        return mealService.displayAllMeals();
     }
-
-
 
 
 }
