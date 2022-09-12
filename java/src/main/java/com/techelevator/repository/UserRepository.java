@@ -19,4 +19,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     //Map<Long, Recipe> findAllRecipesByUserId(Long userId);
 
     List<User> findAll();
+
+    Ingredient findIngredientByUserId(Long userId);
 }
