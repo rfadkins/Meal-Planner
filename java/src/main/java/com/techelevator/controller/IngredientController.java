@@ -73,7 +73,7 @@ public class IngredientController extends IngredientService{
     --------------------*/
     @GetMapping("/{ingredientId}")
     public Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
-        return ingredientService.getIngredient(ingredientId);
+        return ingredientService.getIngredientById(ingredientId);
     }
 
     /*--------------------

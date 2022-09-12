@@ -2,7 +2,7 @@ package com.techelevator.datatransfer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MealDTO {
+public class MealDTO extends MealPlannerDTO{
 
     @JsonProperty("meal_id")
     private Long mealId;

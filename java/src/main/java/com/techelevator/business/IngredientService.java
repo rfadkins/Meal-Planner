@@ -49,7 +49,7 @@ public class IngredientService {
         }
     }
 
-    public Ingredient getIngredient(Long ingredientId) {
+    public Ingredient getIngredientById (Long ingredientId) {
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
         try {
             if (ingredient == null) {

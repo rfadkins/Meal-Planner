@@ -7,7 +7,7 @@ import com.techelevator.model.Recipe;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Mapper {
+public class Mapper extends MealPlannerDTO {
 
     /*
     #####  Entity to DTO  #####
@@ -53,7 +53,7 @@ public class Mapper {
 
 
 
-    public Ingredient mapIngredientDTOToEntity(IngredientDTO dto) {
+    public Ingredient mapIngredientDTOToEntity(MealPlannerDTO dto) {
         Ingredient ingredient = new Ingredient();
         ingredient.setIngredientId(dto.getIngredientId());
         ingredient.setIngredientName(dto.getIngredientName());
@@ -61,27 +61,37 @@ public class Mapper {
         return ingredient;
     }
 
-    public Recipe mapRecipeDTOToEntity(RecipeDTO dto) {
+    // "Cannot invoke \"com.techelevator.datatransfer.RecipeDTO.getRecipeId()\" because \"dto\" is null",
+    public Recipe mapRecipeDTOToEntity(MealPlannerDTO dto) {
         Recipe recipe = new Recipe();
         recipe.setRecipeId(dto.getRecipeId());
         recipe.setRecipeName(dto.getRecipeName());
-        recipe.setCategory(dto.getCategory());
+        recipe.setCategory(dto.getRecipeCategory());
         recipe.setRecipeInstructions(dto.getRecipeInstructions());
         return recipe;
     }
 
-    public Meal mapMealDTOToEntity(MealDTO dto) {
+    public Meal mapMealDTOToEntity(MealPlannerDTO dto) {
         Meal meal = new Meal();
         meal.setMealId(dto.getMealId());
         meal.setMealName(dto.getMealName());
         return meal;
     }
 
-    public MealPlan mapMealPlanDTOToEntity(MealPlanDTO dto) {
+    public MealPlan mapMealPlanDTOToEntity(MealPlannerDTO dto) {
         MealPlan mealPlan = new MealPlan();
         mealPlan.setMealPlanId(dto.getMealPlanId());
         mealPlan.setMealPlanName(dto.getMealPlanName());
         return mealPlan;
+    }
+    // Break down IngREc DTO to parts
+    public Ingredient ingredientRecipeDTOtoIngredientEntity (MealPlannerDTO mealPlannerDTO) {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setIngredientId(mealPlannerDTO.getIngredientDTO().getIngredientId());
+        ingredient.setIngredientName(mealPlannerDTO.getIngredientDTO().getIngredientName());
+        ingredient.setIngredientCategory(mealPlannerDTO.getIngredientDTO().getIngredientCategory());
+        return ingredient;
+
     }
 
 
