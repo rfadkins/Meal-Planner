@@ -141,7 +141,7 @@ public class RecipeService {
     GET
     PATH: /recipe/{recipe_id}
     --------------------*/
-    public Recipe getRecipeById (Long recipeId) {
+    public Recipe displayRecipe (Long recipeId) {
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
         return recipe;
     }

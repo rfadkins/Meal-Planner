@@ -22,6 +22,7 @@ public class MealPlanService {
     @Autowired
     private MealPlanRepository mealPlanRepository;
 
+    //TODO Test
     public MealPlan createMealPlan(String name ){
         MealPlan mealPlan = new MealPlan();
         try {
@@ -37,25 +38,52 @@ public class MealPlanService {
         }
             return mealPlan;
     }
-    /*--------------------
-    createMealPlan()
-    POST
-    Path: /mealplan/
-    --------------------*/
 
+    //TODO Test
+    public MealPlan editMealPlan(Long mealPlanId, String newName) {
+        MealPlan editedMealPlan = new MealPlan();
+        try {
+            if (mealPlanId == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                editedMealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+                editedMealPlan.setMealPlanName(newName);
+                mealPlanRepository.saveAndFlush(editedMealPlan);
+            }
+        } catch (MealPlanNotFoundException e) {
+            BasicLogger.log("Meal Plan ID cannot be null");
+        }
+        return editedMealPlan;
+    }
 
-    /*--------------------
-    editMealPlan()
-    PUT
-    Path: /mealplan/{meal_plan_id}
-    --------------------*/
+    //TODO Test
+    public void deleteMealPlan(Long mealPlanId) {
+        try {
+            if (mealPlanId == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                mealPlanRepository.deleteById(mealPlanId);
+            }
+        } catch (MealPlanNotFoundException e) {
+            BasicLogger.log("Meal Plan ID cannot be null");
+        }
+    }
 
+    //TODO Test
+    public MealPlan displayMealPlan(Long mealPlanId) {
+        MealPlan mealPlan = new MealPlan();
+        try {
+            if (mealPlanId == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+            }
+        } catch (MealPlanNotFoundException e) {
+            BasicLogger.log("Meal Plan ID cannot be null");
+        }
+        return mealPlan;
+    }
 
-    /*--------------------
-    deleteMealPlan()
-    DELETE
-    Path: /mealplan/{meal_plan_id}
-    --------------------*/
 
 
     /*--------------------

@@ -76,7 +76,7 @@ Status 200 = OK
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/alisontest/recipe/{recipeId}")
     public Recipe getRecipeById(@PathVariable("recipeId") Long recipeId) {
-        Recipe recipe = recipeService.getRecipeById(recipeId);
+        Recipe recipe = recipeService.displayRecipe(recipeId);
         return recipe;
     }
 
