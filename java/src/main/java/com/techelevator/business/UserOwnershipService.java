@@ -37,7 +37,7 @@ public class UserOwnershipService {
         Set<Ingredient> pantry = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
             } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
                 throw new IngredientNotFoundException();

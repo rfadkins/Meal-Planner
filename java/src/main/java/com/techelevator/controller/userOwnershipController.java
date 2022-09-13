@@ -2,7 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.business.IngredientService;
 import com.techelevator.business.MealService;
-import com.techelevator.business.UserPantryService;
+import com.techelevator.business.UserOwnershipService;
 import com.techelevator.business.UserService;
 import com.techelevator.model.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,13 @@ public class userOwnershipController{
     //This controller handles join tables related to user ownership
 
     UserService userService;
-    UserPantryService userPantryService;
+    UserOwnershipService userOwnershipService;
     MealService mealService;
 
     @Autowired
-    public void UserOwnershipController (UserService userService, UserPantryService userPantryService, MealService mealService) {
+    public void UserOwnershipController (UserService userService, UserOwnershipService userOwnershipService, MealService mealService) {
         this.userService = userService;
-        this.userPantryService = userPantryService;
+        this.userOwnershipService = userOwnershipService;
         this.mealService = mealService;
     }
 
