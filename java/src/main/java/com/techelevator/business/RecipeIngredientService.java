@@ -21,9 +21,9 @@ public class RecipeIngredientService {
 // TODO test addIngToRec  remIngFromRec
 
     public Recipe addIngredientToRecipe(Long recipeId, Long ingredientId) {
+        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
         try {
             if (recipe == null) {
                 throw new RecipeNotFoundException();
@@ -43,9 +43,9 @@ public class RecipeIngredientService {
     }
 
     public Recipe removeIngredientFromRecipe(Long recipeId, Long ingredientId) {
+        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
         try {
             if (recipe == null) {
                 throw new RecipeNotFoundException();

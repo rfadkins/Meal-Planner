@@ -23,6 +23,7 @@ public class MealPlanService {
     private MealPlanRepository mealPlanRepository;
 
     //TODO Test
+    //TODO perhaps different exceptions?
     public MealPlan createMealPlan(String name ){
         MealPlan mealPlan = new MealPlan();
         try {
