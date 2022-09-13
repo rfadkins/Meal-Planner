@@ -153,11 +153,19 @@ public class RecipeService {
         GET
         PATH: /recipe/
         --------------------*/
+    public List<Recipe> displayAllRecipes () {
+        List<Recipe> allRecipes = recipeRepository.findAll();
+        return allRecipes;
+    }
 
 
     //TODO displayRecipeByCategory()
+    public List<Recipe> displayRecipeByCategory (String category) {
+        List<Recipe> recipesByCategory = recipeRepository.findAllByRecipeCategory(category);
+        return recipesByCategory;
+    }
 
-
+//TODO display recipes by name-like
 }
 
 
