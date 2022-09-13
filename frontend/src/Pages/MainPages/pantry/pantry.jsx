@@ -9,11 +9,9 @@ import './pantry.css'
 export default function Pantry(){
     return(
         <div>
+
             <Bar/>
-        <div>
-            
-            {/* <input type="text" placeholder="search bar?"></input> */}
-        </div>
+        
         <div className="Pantry-body">
             
             <AddItemButtom buttonImage='+'/>
