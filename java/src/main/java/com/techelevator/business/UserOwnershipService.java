@@ -36,16 +36,14 @@ public class UserOwnershipService {
     public Set<Ingredient> addIngredientToUserPantry(Long userId, Long ingredientId) {
         Set<Ingredient> pantry = new HashSet<>();
         User user = userRepository.findByUserId(userId);
+        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
-            } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
+            } else if (ingredient == null) {
                 throw new IngredientNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
-                Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
                 pantry = user.getUserPantry();
-
                 pantry.add(ingredient);
                 user.setUserPantry(pantry);
 
@@ -62,15 +60,13 @@ public class UserOwnershipService {
     public Set<Ingredient> removeIngredientFromUserPantry(Long userId, Long ingredientId) {
         Set<Ingredient> pantry = new HashSet<>();
         User user = userRepository.findByUserId(userId);
+        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
-            } else if (ingredientRepository.findByIngredientId(ingredientId) == null) {
+            } else if (ingredient == null) {
                 throw new IngredientNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
-                Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-
                 pantry = user.getUserPantry();
                 pantry.remove(ingredient);
                 user.setUserPantry(pantry);
@@ -88,10 +84,9 @@ public class UserOwnershipService {
         Set<Ingredient> pantry = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
                 pantry = user.getUserPantry();
             }
         } catch (Exception e) {
@@ -104,15 +99,13 @@ public class UserOwnershipService {
     public Set<Meal> addMealToUser(Long userId, Long mealId) {
         Set<Meal> userMeals = new HashSet<>();
         User user = userRepository.findByUserId(userId);
+        Meal meal = mealRepository.findByMealId(mealId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
-            } else if (mealRepository.findByMealId(mealId) == null) {
+            } else if (meal == null) {
                 throw new MealNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
-                Meal meal = mealRepository.findByMealId(mealId);
-
                 userMeals = user.getUserMeals();
                 userMeals.add(meal);
                 user.setUserMeals(userMeals);
@@ -129,15 +122,13 @@ public class UserOwnershipService {
     Set<Meal> removeMealFromUser(Long userId, Long mealId)  {
         Set<Meal> userMeals = new HashSet<>();
         User user = userRepository.findByUserId(userId);
+        Meal meal = mealRepository.findByMealId(mealId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
-            } else if (mealRepository.findByMealId(mealId) == null) {
+            } else if (meal == null) {
                 throw new MealNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
-                Meal meal = mealRepository.findByMealId(mealId);
-
                 userMeals = user.getUserMeals();
                 userMeals.remove(meal);
                 user.setUserMeals(userMeals);
@@ -155,10 +146,9 @@ public class UserOwnershipService {
         Set<Meal> userMeals = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
                 userMeals = user.getUserMeals();
             }
         } catch (Exception e) {
@@ -171,15 +161,13 @@ public class UserOwnershipService {
     public Set<MealPlan> addMealPlanToUser(Long userId, Long mealPlanId) {
         Set<MealPlan> userMealPlans = new HashSet<>();
         User user = userRepository.findByUserId(userId);
+        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
-            } else if (mealPlanRepository.findByMealPlanId(mealPlanId) == null) {
+            } else if (mealPlan == null) {
                 throw new MealPlanNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
-                MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
-
                 userMealPlans = user.getUserMealPlans();
                 userMealPlans.add(mealPlan);
                 user.setUserMealPlans(userMealPlans);
@@ -196,15 +184,13 @@ public class UserOwnershipService {
     Set<MealPlan> removeMealPlanFromUser(Long userId, Long mealPlanId) {
         Set<MealPlan> userMealPlans = new HashSet<>();
         User user = userRepository.findByUserId(userId);
+        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
-            } else if (mealPlanRepository.findByMealPlanId(mealPlanId) == null) {
+            } else if (mealPlan == null) {
                 throw new MealPlanNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
-                MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
-
                 userMealPlans = user.getUserMealPlans();
                 userMealPlans.remove(mealPlan);
                 user.setUserMealPlans(userMealPlans);
@@ -223,10 +209,9 @@ public class UserOwnershipService {
         Set<MealPlan> userMealPlans = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         try {
-            if (userRepository.findByUserId(userId) == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
             } else {
-                user = userRepository.findByUserId(userId);
                 userMealPlans = user.getUserMealPlans();
             }
         } catch (Exception e) {

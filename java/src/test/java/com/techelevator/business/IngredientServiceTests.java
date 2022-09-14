@@ -38,7 +38,7 @@ public class IngredientServiceTests {
     RecipeService recipeService;
 
     @Autowired
-    UserPantryService userPantryService;
+    UserOwnershipService userOwnershipService;
 
 
     @Test

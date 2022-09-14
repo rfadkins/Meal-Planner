@@ -1,5 +1,4 @@
 package com.techelevator.repository;
-import com.techelevator.model.Ingredient;
 import com.techelevator.model.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,9 +9,9 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     Recipe findByRecipeId(Long recipeId);
 
-    Recipe findByRecipeCategory(String recipeCategory);
+    Recipe findByCategory(String recipeCategory);
 
-    List<Recipe> findAllByRecipeCategory(String recipeCategory);
+    List<Recipe> findAllByCategory(String recipeCategory);
 
     //List<Ingredient> findAllIngredientsByRecipeId();
 

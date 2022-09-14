@@ -24,7 +24,7 @@ public abstract class MealPlannerDTO {
     RecipeDTO recipeDTO;
     private Long recipeId;
     private String recipeName;
-    private String recipeCategory;
+    private String category;
     private String recipeInstructions;
 
     MealDTO mealDTO;
@@ -94,11 +94,11 @@ public abstract class MealPlannerDTO {
     }
 
     public String getRecipeCategory() {
-        return recipeCategory;
+        return category;
     }
 
-    public void setRecipeCategory(String recipeCategory) {
-        this.recipeCategory = recipeCategory;
+    public void setRecipeCategory(String category) {
+        this.category = category;
     }
 
     public String getRecipeInstructions() {

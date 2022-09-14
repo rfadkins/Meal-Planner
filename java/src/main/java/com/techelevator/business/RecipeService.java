@@ -1,6 +1,5 @@
 package com.techelevator.business;
 
-import com.techelevator.exceptions.RecipeIngredientsNotFoundException;
 import com.techelevator.exceptions.RecipeNotFoundException;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Meal;
@@ -161,7 +160,7 @@ public class RecipeService {
 
     //TODO displayRecipeByCategory()
     public List<Recipe> displayRecipeByCategory (String category) {
-        List<Recipe> recipesByCategory = recipeRepository.findAllByRecipeCategory(category);
+        List<Recipe> recipesByCategory = recipeRepository.findAllByCategory(category);
         return recipesByCategory;
     }
 

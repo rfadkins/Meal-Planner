@@ -16,17 +16,19 @@ export default function UserWelcomePage() {
 
     return (
       <div className='user-Welcome-Page'>
+
         <br/>
         <br/>
         <h1>Welcome, {formattedCurrentUser}!</h1>
         <br/>
         <Profile_Img_Large imageSorce={Profile_Img}/>
-        {/* <img src='../src/Images/placeHolder.png' alt='placeHolder' className='Brand-Img'/> */}
+        
         <br/>
         <Banner_Image />
-        <Link to="/user">
+        <Link to="/user-dash">
           <Button_Style_One buttonName="Lets get cooking!"/>
         </Link>
+      
       </div>
     )
   }
