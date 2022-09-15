@@ -9,10 +9,20 @@ export default function RecipeCard(){
         <div>
             <div>
                 <Bar/>
+                
+                <AddItemButtom buttonImage='Add Recipe' nameHandle="Recipe-add">
+                <h3 className="title">New Recipe</h3>
+                <p>Recipe -  <input type="text" className="textInputLong"/></p>
+                <p>Ingredient - <input type="text" className="textInputLong"/></p>
+                <div className="countAndDate">
+                <button className="addIngredientButton">+</button>
+                </div>
+                <button className="submitButton">submit</button>
+            </AddItemButtom>
             </div>
             <br/>
             <div className="card-List">
-                <AddItemButtom buttonImage='+'/>
+            
                 <RecipeCardPart/>
                 <RecipeCardPart/>
                 <RecipeCardPart/>

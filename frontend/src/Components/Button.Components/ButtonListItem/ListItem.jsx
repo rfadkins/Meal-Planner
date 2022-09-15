@@ -8,9 +8,10 @@ export default function ListItem(){
         <div>
             <br/>
             <div>
+                <p className="d">item name</p>
                 <button className="List-item">
-                    <img src={icon} alt="shopping image" className="shopping_icon"/>
                     
+                    <img src={icon} alt="shopping image" className="shopping_icon"/>
                     <input type="checkbox"/>
                 </button>
             </div>

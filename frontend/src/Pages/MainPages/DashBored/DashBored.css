@@ -1,0 +1,12 @@
+.mostRecent{
+    background-color: #162F33;
+    border-radius: 15px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 20px;
+    width: 155px;
+    margin-left: 10px;
+}

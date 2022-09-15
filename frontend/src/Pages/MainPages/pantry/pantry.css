@@ -7,7 +7,6 @@
     margin: 7.5px;
 }
 
-
 .Pantry-item{
     display: flex;
     align-items: center;
@@ -18,4 +17,8 @@
     width: 70px;
     margin-bottom: 0px;
     margin-top: 5px;
+}
+
+.s{
+    margin-top: -15px;
 }

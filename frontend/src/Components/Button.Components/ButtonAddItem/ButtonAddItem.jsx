@@ -11,16 +11,12 @@ export default function AddItemButtom(props){
     return(
         <div>
             <main>
-                <button className="Pantry-add"
+                <button className={props.nameHandle}
                     onClick={() => setButtonPopup(true)}
                 >{props.buttonImage}</button>
             </main>
             <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}>
-                {/*item name*/} <input type="text"/>
-                {/*item catagory*/} <input type="text"/>
-                {/*item count*/} <input type="text"/>
-                {/*date added*/} <input type="text"/>
-                <button>submit</button>
+                {props.children}
             </PopUp>
         </div>
     )

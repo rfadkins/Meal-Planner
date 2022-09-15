@@ -38,7 +38,7 @@
     .Main-content{
         grid-area: Main-content ;
         border-radius: 30px;
-        
+        margin-bottom: 50px;
     }      
 
     .Navbar-left{

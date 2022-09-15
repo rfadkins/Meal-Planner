@@ -1,13 +1,13 @@
 
-.Pantry-item{
+.Pantry-item-button{
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: aqua;
   border-radius: 20px;
-  height: 70px;
-  width: 70px;
+  height: 80px;
+  width: 80px;
   margin-bottom: 0px;
   margin-top: 5px;
 }
@@ -15,6 +15,7 @@
 .ingrediant_img{
   height: 50px;
   width: 50px;
+  margin-bottom: -15px;
 }
 
 .Item-Count{
@@ -25,7 +26,7 @@
   border-radius: 50%;
   height: 25px;
   width: 25px;
-  margin-bottom: -15px;
+  margin-bottom: -25px;
   margin-top: -10px;
   margin-left: 60px;
 }

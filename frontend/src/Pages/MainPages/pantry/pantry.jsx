@@ -14,9 +14,20 @@ export default function Pantry(){
         
         <div className="Pantry-body">
             
-            <AddItemButtom buttonImage='+'/>
+            <AddItemButtom buttonImage='+' nameHandle="Pantry-add">
+                <h3 className="title">Add ingredient</h3>
+                <p>Item name? <input type="text" className="textInputLong"/></p>
+                <p>Catagory? <input type="text" className="textInputLong"/></p>
+                <div className="countAndDate">
+                    <p className="E">How many? <input type="text" className="textInputShort"/></p>
+                    
+                    <p>Date added? <input type="text" className="textInputShort"/></p>
+                </div>
+                <button className="submitButton">submit</button>
+            </AddItemButtom>
             
             <ButtonSelectItem/>
+            
             
         </div>
         </div>

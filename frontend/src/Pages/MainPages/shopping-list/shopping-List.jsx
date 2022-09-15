@@ -11,15 +11,37 @@ export default function ShoppingList(){
         <div>
             <div>
                 <Bar/>
+                
+                <AddItemButtom buttonImage='+' nameHandle="Shopping-add">
+                    <h3 className="title">Add to Shopping List</h3>
+                    <p>Item name? <input type="text" className="textInputLong"/></p>
+                    <p>Catagory? <input type="text" className="textInputLong"/></p>
+                    <div className="countAndDate">
+                        <p className="E">How many? <input type="text" className="textInputShort"/></p>
+                        
+                        <p>Date added? <input type="text" className="textInputShort"/></p>
+                    </div>
+                    <button className="submitButton">submit</button>
+                </AddItemButtom>
             </div>
             <br/>
             <div className="shopping-List">
                 
-                <AddItemButtom buttonImage='+'/>
+                
                 
                 <ListItem/>
                 <ListItem/>
                 <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                <ListItem/>
+                
             </div>
         </div>
     )

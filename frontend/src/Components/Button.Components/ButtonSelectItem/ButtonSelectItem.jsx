@@ -6,7 +6,8 @@ import Ingrediant_Image from '../../../Images/ingredient_image_2.png'
 export default function ButtonSelectItem(props){
     return(
         <div className='Pantry-item-body'>
-            <button className="Pantry-item">
+            <p className="d">item name</p>
+            <button className="Pantry-item-button">
                 
                 <img src={Ingrediant_Image} alt='ingrediant image'
                     className='ingrediant_img'/>

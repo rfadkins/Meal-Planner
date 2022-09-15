@@ -9,3 +9,25 @@
   margin-bottom: 0px;
   margin-top: 5px;
 }
+
+.Shopping-add{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
+  border-radius: 20px;
+  height: 30px;
+  width: 70px;
+  margin: -25px 0 0 25px;
+}
+
+.Recipe-add{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: aqua;
+  border-radius: 20px;
+  height: 30px;
+  width: 70px;
+  margin: -25px 0 -15px 10px;
+}

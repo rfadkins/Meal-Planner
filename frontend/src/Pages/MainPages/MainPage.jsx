@@ -1,7 +1,7 @@
 import React from "react"
 import { Link, Routes, Route } from 'react-router-dom';
 
-import Dashbored from './DahsBored/DahsBored'
+import Dashbored from './DashBored/DashBored'
 import Pantry from './pantry/pantry'
 import Shopping_List from './shopping-list/shopping-List'
 import RecipeCard from "./recipe-card/recipe-card";
