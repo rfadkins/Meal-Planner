@@ -1,11 +1,8 @@
 package com.techelevator.controller;
 
-import com.techelevator.business.IngredientService;
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserService;
-import com.techelevator.datatransfer.IngredientDTO;
 import com.techelevator.datatransfer.MealDTO;
-import com.techelevator.model.Ingredient;
 import com.techelevator.model.Meal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +36,9 @@ public class MealController {
     --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/meal/")
-    public void createIngredient(@RequestBody MealDTO mealDTO) {
-        Meal meal = mapper.mapMealDTOToEntity(mealDTO);
-        mealService.createMeal(mealDTO.getMealName());
+    public void createIngredient(@RequestBody Meal meal) {
+        //Meal meal = mapper.mapMealDTOToEntity(mealDTO);
+        mealService.createMeal(meal.getMealName());
     }
 
 
@@ -51,10 +48,9 @@ public class MealController {
     Path: /meal/{id}
     --------------------*/
     @PutMapping ("/meal/{mealId}")
-    public String editMeal(@PathVariable("mealId") Long mealId, @RequestBody MealDTO mealDTO) {
-        Meal meal = mapper.mapMealDTOToEntity(mealDTO);
-        // mealService.editMeal(Meal); Did not ask for Meal ID?
-        return ("I have received a Put/Edit request for meal ID " + mealId + " but that is not implemented yet.");
+    public void editMeal(@PathVariable("mealId") Long mealId, @RequestBody Meal meal) {
+        //Meal meal = mapper.mapMealDTOToEntity(mealDTO);
+        mealService.editMeal(mealId, meal.getMealName());
     }
 
     /*--------------------

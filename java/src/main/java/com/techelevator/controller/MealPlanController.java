@@ -1,12 +1,8 @@
 package com.techelevator.controller;
 
-import com.techelevator.business.IngredientService;
 import com.techelevator.business.MealPlanService;
-import com.techelevator.business.MealService;
 import com.techelevator.business.UserService;
-import com.techelevator.datatransfer.IngredientDTO;
 import com.techelevator.datatransfer.MealPlanDTO;
-import com.techelevator.model.Ingredient;
 import com.techelevator.model.MealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +37,6 @@ public class MealPlanController {
     @PostMapping ("/mealplan/")
     public void createMealPlan(@RequestBody MealPlanDTO mealPlanDTO) {
         MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
-        this.mealPlanService = mealPlanService;
         this.mealPlanService.createMealPlan(mealPlanDTO.getMealPlanName());
     }
 
@@ -51,10 +46,9 @@ public class MealPlanController {
     Path: /mealplan/{meal_plan_id}
     --------------------*/
     @PutMapping ("/mealplan/{mealplanId}")
-    public void editeMealPlan(@PathVariable("mealplanId") Long mealplanID, @RequestBody MealPlanDTO mealPlanDTO) {
-        MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
-        this.mealPlanService = mealPlanService;
-        //Edit meal plan is not in service
+    public void editeMealPlan(@PathVariable("mealplanId") Long mealplanID, @RequestBody MealPlan mealPlan) {
+        //MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
+        mealPlanService.editMealPlan(mealplanID, mealPlan.getMealPlanName());
     }
 
     /*--------------------
@@ -64,8 +58,7 @@ public class MealPlanController {
     --------------------*/
     @DeleteMapping ("/mealplan/{mealplanId}")
     public void editMealPlan(@PathVariable("mealplanId") Long mealplanID) {
-        this.mealPlanService = mealPlanService;
-        //meal plan service delete is not in place
+        mealPlanService.deleteMealPlan(mealplanID);
     }
 
     /*--------------------
@@ -74,9 +67,8 @@ public class MealPlanController {
     Path: /mealplan/{meal_plan_id}
     --------------------*/
     @GetMapping ("/mealplan/{mealplanId}")
-    public void displayMealPlan(@PathVariable("mealplanId") Long mealplanID) {
-        this.mealPlanService = mealPlanService;
-        // get meal plan by ID is not in service
+    public MealPlan displayMealPlan(@PathVariable("mealplanId") Long mealplanID) {
+        return mealPlanService.displayMealPlan(mealplanID);
     }
 
 

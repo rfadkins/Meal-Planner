@@ -2,19 +2,13 @@ package com.techelevator.controller;
 
 import com.techelevator.business.IngredientService;
 import com.techelevator.business.UserService;
-import com.techelevator.datatransfer.IngredientDTO;
+//import com.techelevator.datatransfer.Ingredient;
 import com.techelevator.datatransfer.Mapper;
 import com.techelevator.model.Ingredient;
-import com.techelevator.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 
 @RestController
@@ -44,10 +38,10 @@ public class IngredientController extends IngredientService{
     --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/")
-    public void createIngredient(@RequestBody IngredientDTO ingredientDTO) {
-        Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
+    public void createIngredient(@RequestBody Ingredient ingredient) {
+        //com.techelevator.model.Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
         this.ingredientService = ingredientService;
-        this.ingredientService.createIngredient(ingredientDTO.getIngredientName(), ingredientDTO.getIngredientCategory());
+        this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
     }
 
 
@@ -58,10 +52,9 @@ public class IngredientController extends IngredientService{
     --------------------*/
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping ("/{ingredientId}")
-    public String editIngredient(@PathVariable("ingredientId") Long ingredientId, @RequestBody IngredientDTO ingredientDTO) {
-        Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
-        // need a this.ingredientService.editIngredient?
-        return ("Put/edit requests not working yet. However, I acknowledge to have received a put request for /ingredient/" + ingredientId);
+    public void editIngredient(@PathVariable("ingredientId") Long ingredientId, @RequestBody Ingredient ingredient) {
+        //Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
+        ingredientService.editIngredient(ingredientId, ingredient.getIngredientName(), ingredient.getIngredientCategory());
     }
 
 
@@ -73,7 +66,6 @@ public class IngredientController extends IngredientService{
     @ResponseStatus(HttpStatus.ACCEPTED)
     @DeleteMapping ("/{ingredientId}")
     public void deleteIngredient(@PathVariable("ingredientId") Long ingredientId) {
-        //We don't need a DTO to delete, right?
         ingredientService.deleteIngredient(ingredientId);
     }
 
@@ -83,7 +75,7 @@ public class IngredientController extends IngredientService{
     PATH: /Ingredient/{Ingredient_id}
     --------------------*/
     @GetMapping("/{ingredientId}")
-    public Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
+    public com.techelevator.model.Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
         return ingredientService.getIngredientById(ingredientId);
     }
 
@@ -98,7 +90,6 @@ public class IngredientController extends IngredientService{
     }
 
 
-    //Friendly reminder that a user's ingredient list is their Pantry, and is handled in userOwnershipController
 
 
 
