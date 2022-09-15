@@ -4,6 +4,7 @@ import com.techelevator.exceptions.IngredientNotFoundException;
 import com.techelevator.exceptions.RecipeNotFoundException;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Recipe;
+import com.techelevator.model.RecipeIngredient;
 import com.techelevator.repository.*;
 import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class RecipeIngredientService {
 // TODO test addIngToRec  remIngFromRec
 
     public Recipe addIngredientToRecipe(Long recipeId, Long ingredientId) {
-        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
+        Set<RecipeIngredient> ingredientsInRecipe = new HashSet<>();
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
         try {

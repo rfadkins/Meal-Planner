@@ -67,7 +67,7 @@ Status 200 = OK
 //
 //        MealPlannerDTO ingredientDTO = mealPlannerDTO.get(1);
 //        Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
-        recipeService.addIngredientToRecipe(recipeDTO.getRecipeId(), ingredientDTO.getIngredientId());
+//        recipeService.addIngredientToRecipe(recipeDTO.getRecipeId(), ingredientDTO.getIngredientId());
  //       recipeService.addIngredientToRecipe(Long.parseLong(recipeParts.get("recipeId")), Long.parseLong(recipeParts.get("ingredientId")));
     }
     /*

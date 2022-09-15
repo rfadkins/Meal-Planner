@@ -1,10 +1,7 @@
 package com.techelevator.business;
 
 import com.techelevator.exceptions.RecipeNotFoundException;
-import com.techelevator.model.Ingredient;
-import com.techelevator.model.Meal;
-import com.techelevator.model.Recipe;
-import com.techelevator.model.User;
+import com.techelevator.model.*;
 import com.techelevator.repository.IngredientRepository;
 import com.techelevator.repository.MealRepository;
 import com.techelevator.repository.RecipeRepository;
@@ -62,19 +59,21 @@ public class RecipeService {
         }
     }
 
-    public Set<Ingredient> addIngredientToRecipe(Long recipeId, Long ingredientId) {
+    public Set<RecipeIngredient> addIngredientToRecipe(Long recipeId, Long ingredientId, Long count) {
 
         Recipe recipe = recipeRepository.findByRecipeId(recipeId);
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
 
+        RecipeIngredient recipeIngredient = new RecipeIngredient(recipe, ingredient, count);
+
         Set<Ingredient> ingredientsInRecipe = new HashSet<>();
-        ingredientsInRecipe.add(ingredient);
+//        ingredientsInRecipe.add(ingredient);
 
-        Set<Recipe> recipesWithIngredient = new HashSet<>();
-        recipesWithIngredient.add(recipe);
+        Set<RecipeIngredient> recipesWithIngredient = new HashSet<>();
+//        recipesWithIngredient.add(recipe);
 
-        recipe.setIngredientsInRecipe(ingredientsInRecipe);
-        ingredient.setRecipesWithIngredient(recipesWithIngredient);
+//        recipe.setIngredientsInRecipe(ingredientsInRecipe);
+//        ingredient.setRecipesWithIngredient(recipesWithIngredient);
 
         ingredientRepository.saveAndFlush(ingredient);
         recipeRepository.saveAndFlush(recipe);

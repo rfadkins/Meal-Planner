@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Map;
+import java.util.Set;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -46,25 +47,29 @@ public class RecipeServiceTests {
         Assertions.assertThat(recipe.getRecipeId()).isNotNull();
     }
 
-//    @Test
-//    public void recipeIngredientsIdIsNotNull() {
-//        Recipe recipe = Recipe.builder()
-//                .recipeName("TestRecipeName")
-//                .recipeInstructions("TestRecipeInstructions")
-//                .category("TestCategory")
-//                .build();
-//        Ingredient ingredient = Ingredient.builder()
-//                .ingredientName("TestIngredient")
-//                .ingredientCategory("TestCategory")
-//                .build();
-//
-//        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-//        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
-//
-//        Map<Long, Ingredient> testRecipeIngredients = recipeService.addIngredientToRecipe(recipe.getRecipeId(), ingredient.getIngredientId());
-//
-//        Assertions.assertThat(testRecipeIngredients.get(recipe.getRecipeId())).isNotNull();
-//    }
+    @Test
+    public void recipeIngredientIdIsNotNull() {
+        Recipe recipe = Recipe.builder()
+                .recipeName("TestRecipeName")
+                .recipeInstructions("TestRecipeInstructions")
+                .category("TestCategory")
+                .build();
+        Ingredient ingredient = Ingredient.builder()
+                .ingredientName("TestIngredient")
+                .ingredientCategory("TestCategory")
+                .build();
+
+        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+
+        Set<Ingredient> testRecipeIngredients = recipe.getIngredientsInRecipe();
+        testRecipeIngredients.add(ingredient);
+        recipe.setIngredientsInRecipe(testRecipeIngredients);
+        recipeRepository.saveAndFlush(recipe);
+
+
+        Assertions.assertThat(testRecipeIngredients.contains(ingredient)).isTrue();
+    }
 
 //    @Test
 //    public void userRecipeIdIsNotNull() {

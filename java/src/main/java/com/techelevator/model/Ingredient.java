@@ -26,7 +26,7 @@ public class Ingredient {
 /*     *** RECIPE--INGREDIENTS ***
 */
     @ManyToMany(mappedBy = "ingredientsInRecipe")
-    Set<Recipe> RecipesWithIngredient = new HashSet<>();
+    Set<RecipeIngredient> RecipesWithIngredient = new HashSet<>();
 
 /*     *** USER--RECIPE ***
 */
@@ -61,11 +61,11 @@ public class Ingredient {
         this.ingredientCategory = ingredientCategory;
     }
 
-    public Set<Recipe> getRecipesWithIngredient() {
+    public Set<RecipeIngredient> getRecipesWithIngredient() {
         return RecipesWithIngredient;
     }
 
-    public void setRecipesWithIngredient(Set<Recipe> recipesWithIngredient) {
+    public void setRecipesWithIngredient(Set<RecipeIngredient> recipesWithIngredient) {
         RecipesWithIngredient = recipesWithIngredient;
     }
 

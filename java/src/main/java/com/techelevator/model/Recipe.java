@@ -31,10 +31,10 @@ public class Recipe {
 /*     ***  RECIPE--INGREDIENTS ***
 */
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "recipe_ingredients",
+    @JoinTable(name = "recipe_ingredient",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    Set<Ingredient> ingredientsInRecipe = new HashSet<>();
+    Set<RecipeIngredient> ingredientsInRecipe = new HashSet<>();
 
 /*     *** MEAL--RECIPE ***
 */
@@ -80,13 +80,13 @@ public class Recipe {
         this.recipeInstructions = recipeInstructions;
     }
 
-    public Set<Ingredient> getIngredientsInRecipe() {
-        return ingredientsInRecipe;
-    }
-
-    public void setIngredientsInRecipe(Set<Ingredient> ingredientsInRecipe) {
-        this.ingredientsInRecipe = ingredientsInRecipe;
-    }
+   // public Set<RecipeIngredient> getIngredientsInRecipe() {
+//        return ingredientsInRecipe;
+//    }
+//
+//    public void setIngredientsInRecipe(Set<RecipeIngredient> ingredientsInRecipe) {
+//        this.ingredientsInRecipe = ingredientsInRecipe;
+//    }
 
     public Set<Meal> getMealsWithRecipe() {
         return mealsWithRecipe;
