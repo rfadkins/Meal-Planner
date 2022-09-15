@@ -80,7 +80,7 @@ public class UserOwnershipService {
     }
 
     //todo list pantry
-    Set<Ingredient> listUserPantry(Long userId) {
+    public Set<Ingredient> listUserPantry(Long userId) {
         Set<Ingredient> pantry = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         try {
@@ -119,7 +119,7 @@ public class UserOwnershipService {
     }
 
     //todo remove user from meal
-    Set<Meal> removeMealFromUser(Long userId, Long mealId)  {
+    public Set<Meal> removeMealFromUser(Long userId, Long mealId)  {
         Set<Meal> userMeals = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         Meal meal = mealRepository.findByMealId(mealId);
@@ -142,7 +142,7 @@ public class UserOwnershipService {
     }
 
     //todo display users meals
-    Set<Meal> listUserMeals(Long userId) {
+    public Set<Meal> listUserMeals(Long userId) {
         Set<Meal> userMeals = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         try {
@@ -181,7 +181,7 @@ public class UserOwnershipService {
     }
 
     //todo remove user from meal plan
-    Set<MealPlan> removeMealPlanFromUser(Long userId, Long mealPlanId) {
+    public Set<MealPlan> removeMealPlanFromUser(Long userId, Long mealPlanId) {
         Set<MealPlan> userMealPlans = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
@@ -205,7 +205,7 @@ public class UserOwnershipService {
 
     //todo list/display meal plan
 
-    Set<MealPlan> listUserMealPlans(Long userId) {
+    public Set<MealPlan> listUserMealPlans(Long userId) {
         Set<MealPlan> userMealPlans = new HashSet<>();
         User user = userRepository.findByUserId(userId);
         try {
