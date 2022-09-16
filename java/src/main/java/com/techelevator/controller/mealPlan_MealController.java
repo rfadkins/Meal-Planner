@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.business.IngredientService;
+import com.techelevator.business.MealPlanMealService;
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserService;
 import com.techelevator.model.Ingredient;
@@ -16,14 +17,14 @@ public class mealPlan_MealController{
     //This controller handles join tables related to meals in meal plans
 
     //Uncomment when MealPlanMealService is implemented
- /*   UserService userService;
+    UserService userService;
     MealPlanMealService mealPlanMealService;
 
     @Autowired
-    public MealPlanMealController(UserService userService, MealPlanMealService mealPlanMealService) {
+    public void MealPlanMealController(UserService userService, MealPlanMealService mealPlanMealService) {
         this.userService = userService;
         this.mealPlanMealService = mealPlanMealService;
-    }*/
+    }
     /*--------------------
     addMealtoMealPlan()
     POST
@@ -31,8 +32,9 @@ public class mealPlan_MealController{
     --------------------*/
 
     @PostMapping ("/meal/mealplan/{mealId}/{mealPlanId}")
-    public String addMealToMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-        return("Post Received for "+ mealId + "/" +mealPlanId + " though addmealtoplan is not implemented yet.");
+    public void addMealToMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
+        mealPlanMealService.addMealToMealPlan(mealPlanId,mealId);
+
     }
 
     /*--------------------
@@ -42,8 +44,8 @@ public class mealPlan_MealController{
     --------------------*/
 
     @DeleteMapping("/meal/mealplan/{mealId}/{mealPlanId}")
-    public String removeMealFromMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-        return("Delete Received for "+ mealId + "/" +mealPlanId + " though removemealfrommealplan is not implemented yet.");
+    public void removeMealFromMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
+       mealPlanMealService.removeMealsFromMealPlan(mealPlanId,mealId);
     }
 
 }

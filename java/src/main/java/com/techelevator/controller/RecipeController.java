@@ -17,6 +17,8 @@ import com.techelevator.datatransfer.RecipeDTO;
 import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
 @RestController
 @CrossOrigin
@@ -44,10 +46,10 @@ public class RecipeController{
         --------------------*/
         @ResponseStatus(HttpStatus.CREATED)
         @PostMapping("/recipe/")
-        public void createRecipe(@RequestBody RecipeDTO recipeDTO) {
-            Recipe recipe = mapper.mapRecipeDTOToEntity(recipeDTO);
-            System.out.println(recipeDTO.getRecipeName() + recipeDTO.getRecipeInstructions() + recipeDTO.getCategory());
-            recipeService.createRecipe(recipeDTO.getRecipeName(), recipeDTO.getRecipeInstructions(), recipeDTO.getCategory());
+        public void createRecipe(@RequestBody Recipe recipe) {
+            //Recipe recipe = mapper.mapRecipeDTOToEntity(recipeDTO);
+            //System.out.println(recipeDTO.getRecipeName() + recipeDTO.getRecipeInstructions() + recipeDTO.getCategory());
+            recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
         }
 
         /*--------------------
@@ -56,8 +58,9 @@ public class RecipeController{
         PATH: /recipe/{recipe_id}
         --------------------*/
         @PutMapping("/recipe/{recipeId}")
-        public String editRecipe(@PathVariable("recipeId") Long recipeId, @RequestBody Recipe recipe) {
-            return ("Put/edit recipe by ID is not implemented yet. However, I have received a put request for /recipe/" +recipeId);
+        public void editRecipe(@PathVariable("recipeId") Long recipeId, @RequestBody Recipe recipe) {
+            //Recipe recipe = mapper.mapRecipeDTOToEntity(recipeDTO);
+            recipeService.editRecipe(recipeId, recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
         }
 
 
@@ -68,6 +71,7 @@ public class RecipeController{
         --------------------*/
         @DeleteMapping("/recipe/{recipeId}")
         public void deleteRecipe(@PathVariable("recipeId") Long recipeId) {
+
             recipeService.deleteRecipe(recipeId);
         }
 
@@ -78,9 +82,8 @@ public class RecipeController{
         PATH: /recipe/{recipe_id}
         --------------------*/
         @GetMapping("/recipe/{recipeId}")
-        public String displayRecipe(@PathVariable("recipeId") Long recipeId) {
-            return ("Get recipe by ID is not implemented yet. However, I have received a get request for /recipe/" +recipeId);
-
+        public Recipe displayRecipe(@PathVariable("recipeId") Long recipeId) {
+           return recipeService.displayRecipe(recipeId);
         }
 
 
@@ -92,9 +95,19 @@ public class RecipeController{
         --------------------*/
 
     @GetMapping("/recipe/")
-    public String displayAllRecipes(@PathVariable("recipeId") Long recipeId) {
-        return ("I have received a request to List all recipes, but it is not implemented yet.");
+    public List<Recipe> displayAllRecipes() {
+       return recipeService.displayAllRecipes();
+    }
 
+    /*--------------------
+        displayAllRecipesByCategory()
+        GET
+        PATH: /recipe/category/{category}
+        --------------------*/
+    @GetMapping("/recipe/category/{category}")
+    @ResponseBody
+    public List<Recipe> displayAllRecipesByCategory(@PathVariable String category) {
+        return recipeService.displayRecipeByCategory(category);
     }
 
 
