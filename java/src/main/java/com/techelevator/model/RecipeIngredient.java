@@ -1,26 +1,38 @@
 package com.techelevator.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RecipeIngredient {
 
     @EmbeddedId
-    private RecipeIngredientId recipeIngredientId;
+    private RecipeIngredientId recipeIngredientId = new RecipeIngredientId();
 
     @ManyToOne
+    //@MapsId("recipeId")
     @JoinColumn(name = "recipe_id", insertable = false, updatable = false)
     private Recipe recipe;
 
     @ManyToOne
+    //@MapsId("ingredientId")
     @JoinColumn(name = "ingredient_id", insertable = false, updatable = false)
     private Ingredient ingredient;
 
     @Column(name="count")
     private Long count;
 
+    @Autowired
     public RecipeIngredient(Recipe recipe, Ingredient ingredient, Long count) {
 
         //create PK from FKs
@@ -32,9 +44,16 @@ public class RecipeIngredient {
         this.count = count;
 
         recipe.getIngredientsInRecipe().add(this);
-        ingredient.getRecipesWithIngredient().add(this);
+       ingredient.getRecipesWithIngredient().add(this);
 
     }
+
+//    public RecipeIngredient(RecipeIngredientId recipeIngredientId, Recipe recipe, Ingredient ingredient, Long count) {
+//        this.recipeIngredientId = recipeIngredientId;
+//        this.recipe = recipe;
+//        this.ingredient = ingredient;
+//        this.count = count;
+//    }
 
     public RecipeIngredientId getRecipeIngredientId() {
         return recipeIngredientId;
@@ -68,49 +87,7 @@ public class RecipeIngredient {
         this.count = count;
     }
 
-    @Embeddable
-    public static class RecipeIngredientId implements Serializable {
-        @Column(name="recipe_id")
-        private Long recipeId;
 
-        @Column(name="ingredient_id")
-        private Long ingredientId;
-
-        public RecipeIngredientId(Long recipeId, Long ingredientId) {
-            this.recipeId = recipeId;
-            this.ingredientId = ingredientId;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(recipeId, ingredientId);
-        }
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            RecipeIngredientId other = (RecipeIngredientId) obj;
-
-            if (recipeId == null) {
-                if (other.recipeId != null)
-                    return false;
-            } else if (!recipeId.equals(other.recipeId))
-                return false;
-
-            if (ingredientId == null) {
-                if (other.ingredientId != null)
-                    return false;
-            } else if (!ingredientId.equals(other.ingredientId))
-                return false;
-
-            return true;
-        }
-
-    }
 
 
 }

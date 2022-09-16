@@ -1,10 +1,8 @@
 package com.techelevator.business;
 
-import com.techelevator.model.Ingredient;
-import com.techelevator.model.Meal;
-import com.techelevator.model.Recipe;
-import com.techelevator.model.User;
+import com.techelevator.model.*;
 import com.techelevator.repository.IngredientRepository;
+import com.techelevator.repository.RecipeIngredientRepository;
 import com.techelevator.repository.RecipeRepository;
 import com.techelevator.repository.UserRepository;
 import org.assertj.core.api.Assertions;
@@ -12,11 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Map;
 import java.util.Set;
 
-@DataJpaTest
+//@DataJpaTest
+@SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class RecipeServiceTests {
 
@@ -34,6 +34,10 @@ public class RecipeServiceTests {
     RecipeService recipeService;
     @Autowired
     MealService mealService;
+    @Autowired
+    RecipeIngredientRepository recipeIngredientRepository;
+    @Autowired
+    RecipeIngredientService recipeIngredientService;
 
     @Test
     public void recipeIdIsNotNull() {
@@ -59,16 +63,29 @@ public class RecipeServiceTests {
                 .ingredientCategory("TestCategory")
                 .build();
 
-        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
 
-        Set<Ingredient> testRecipeIngredients = recipe.getIngredientsInRecipe();
-        testRecipeIngredients.add(ingredient);
-        recipe.setIngredientsInRecipe(testRecipeIngredients);
+        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
         recipeRepository.saveAndFlush(recipe);
 
+        ingredient = ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+        ingredientRepository.saveAndFlush(ingredient);
 
-        Assertions.assertThat(testRecipeIngredients.contains(ingredient)).isTrue();
+        RecipeIngredient recipeIngredient = RecipeIngredient.builder()
+                .recipe(recipe)
+                .ingredient(ingredient)
+                .count(1L)
+                .build();
+
+        recipeIngredient = recipeIngredientService.createRecipeIngredient(recipeIngredient.getRecipe().getRecipeId(), recipeIngredient.getIngredient().getIngredientId(), 1L);
+        recipeIngredientRepository.saveAndFlush(recipeIngredient);
+
+        Set<RecipeIngredient> testRecipeIngredients = recipe.getIngredientsInRecipe();
+        testRecipeIngredients.add(recipeIngredient);
+
+
+
+
+        Assertions.assertThat(testRecipeIngredients.contains(recipeIngredient)).isTrue();
     }
 
 //    @Test

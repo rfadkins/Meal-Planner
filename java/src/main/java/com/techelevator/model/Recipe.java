@@ -30,11 +30,12 @@ public class Recipe {
 
 /*     ***  RECIPE--INGREDIENTS ***
 */
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "recipe_ingredient",
-            joinColumns = @JoinColumn(name = "recipe_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    Set<RecipeIngredient> ingredientsInRecipe = new HashSet<>();
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "recipe_ingredient",
+//            joinColumns = @JoinColumn(name = "recipe_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
+    @ManyToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+    Set<RecipeIngredient> ingredientsInRecipe = new HashSet<RecipeIngredient>();
 
 /*     *** MEAL--RECIPE ***
 */

@@ -59,27 +59,27 @@ public class RecipeService {
         }
     }
 
-    public Set<RecipeIngredient> addIngredientToRecipe(Long recipeId, Long ingredientId, Long count) {
-
-        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-
-        RecipeIngredient recipeIngredient = new RecipeIngredient(recipe, ingredient, count);
-
-        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
-//        ingredientsInRecipe.add(ingredient);
-
-        Set<RecipeIngredient> recipesWithIngredient = new HashSet<>();
-//        recipesWithIngredient.add(recipe);
-
-//        recipe.setIngredientsInRecipe(ingredientsInRecipe);
-//        ingredient.setRecipesWithIngredient(recipesWithIngredient);
-
-        ingredientRepository.saveAndFlush(ingredient);
-        recipeRepository.saveAndFlush(recipe);
-
-        return ingredientsInRecipe;
-    }
+//    public Set<RecipeIngredient> addIngredientToRecipe(Long recipeId, Long ingredientId, Long count) {
+//
+//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+//
+//        RecipeIngredient recipeIngredient = new RecipeIngredient(recipe, ingredient, count);
+//
+//        Set<RecipeIngredient> ingredientsInRecipe = new HashSet<>();
+////        ingredientsInRecipe.add(ingredient);
+//
+//        Set<RecipeIngredient> recipesWithIngredient = new HashSet<>();
+////        recipesWithIngredient.add(recipe);
+//
+////        recipe.setIngredientsInRecipe(ingredientsInRecipe);
+////        ingredient.setRecipesWithIngredient(recipesWithIngredient);
+//
+//        ingredientRepository.saveAndFlush(ingredient);
+//        recipeRepository.saveAndFlush(recipe);
+//
+//        return ingredientsInRecipe;
+//    }
 //
 //    public List<Ingredient> listIngredientsInRecipe(Long recipeId) {
 //        List<Ingredient> ingredientsInRecipe = new ArrayList<>();

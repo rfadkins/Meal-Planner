@@ -1,0 +1,9 @@
+2022-09-15T17:47:47.3291793: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T17:50:05.728101: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T17:51:11.5234129: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T18:00:12.1479484: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T18:01:18.6009744: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T18:02:19.49399: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T18:05:43.687352: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T18:07:18.337542: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
+2022-09-15T18:09:19.8225254: failed to lazily initialize a collection of role: com.techelevator.model.Recipe.ingredientsInRecipe, could not initialize proxy - no Session
