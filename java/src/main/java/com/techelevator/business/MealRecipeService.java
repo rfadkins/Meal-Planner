@@ -6,10 +6,12 @@ import com.techelevator.model.Meal;
 import com.techelevator.model.Recipe;
 import com.techelevator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class MealRecipeService {
     @Autowired
     private RecipeRepository recipeRepository;

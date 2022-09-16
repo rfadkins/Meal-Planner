@@ -7,10 +7,12 @@ import com.techelevator.model.MealPlan;
 import com.techelevator.repository.MealPlanRepository;
 import com.techelevator.repository.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class MealPlanMealService {
 
     @Autowired

@@ -27,6 +27,8 @@ public class AlisonsTestController {
     @Autowired
     MealPlanService mealPlanService;
     @Autowired
+    RecipeIngredientService recipeIngredientService;
+    @Autowired
     Mapper mapper;
 
     /*
@@ -87,9 +89,9 @@ Status 200 = OK
         return ingredient;
     }
 
+
+    public void addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
+        recipeIngredientService.addIngredientToRecipe(ingredientId, recipeId);
+
+    }
 }
-//    public void addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
-//        recipeService.addIngredientToRecipe(ingredientId, recipeId);
-//
-//    }
-//}
