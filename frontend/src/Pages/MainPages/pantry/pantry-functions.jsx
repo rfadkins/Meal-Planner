@@ -1,10 +1,24 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+/*api*/
+import { baseUrl } from "../../../api/baseUrl";
 import axios from "axios";
 
 /* File contains functional code for pantry */
 
-const getAllPantryIngredients = async (e) => {
-  e.preventDefault();
+export function getAllPantryIngredients(userId){
+  //ALPHABETIZE LIST
+  const testIngredients = [
+    {id: 1, name: "egg", count: 3},
+    {id: 2, name: "bread", count: 1},
+    {id: 3, name: "milk", count: 2},
+    {id: 4, name: "cheddar cheese", count: 1}
+]
+
+//const data = { username: username, password: password };
+//const userPantryIngredients = await axios.post(`${baseUrl}/pantry/user/${currentUserId}`, data);
+
+return testIngredients;
 };
 
 const getIngredientsByCategory = async (e) => {

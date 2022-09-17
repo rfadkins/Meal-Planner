@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { Link, Routes, Route } from 'react-router-dom';
 
 import AddItemButtom from "../../../Components/Button.Components/ButtonAddItem/ButtonAddItem";
@@ -6,7 +6,15 @@ import ButtonSelectItem from "../../../Components/Button.Components/ButtonSelect
 import Bar from "../../../Components/Input.Component/search_bar/search_bar";
 import './pantry.css'
 
+import { getAllPantryIngredients } from "./pantry-functions";
+
+/*redux*/
+import { useSelector } from 'react-redux';
+
 export default function Pantry(){
+    const currentUserId = useSelector((state) => state.user.id)
+    const [userPantry, setUserPantry] = useState(getAllPantryIngredients(currentUserId));
+
     return(
         <div>
             <Bar/>
@@ -24,7 +32,7 @@ export default function Pantry(){
                 <button className="submitButton">submit</button>
             </AddItemButtom>
             
-            <ButtonSelectItem/>
+            <ButtonSelectItem items={userPantry}/>
             
         </div>
         </div>
