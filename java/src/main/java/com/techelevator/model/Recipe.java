@@ -1,4 +1,5 @@
 package com.techelevator.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -30,21 +31,24 @@ public class Recipe {
 
     /*     ***  RECIPE--INGREDIENTS ***
      */
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "recipe_ingredients",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
-    Set<Ingredient> ingredientsInRecipe = new HashSet<>();
+    private Set<Ingredient> ingredientsInRecipe = new HashSet<>();
 
     /*     *** MEAL--RECIPE ***
      */
-    @ManyToMany(mappedBy = "recipesInMeal", cascade = CascadeType.ALL)
-    Set<Meal> mealsWithRecipe = new HashSet<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "recipesInMeal")
+    private Set<Meal> mealsWithRecipe = new HashSet<>();
 
     /*     *** USER--RECIPE ***
      */
+    @JsonIgnore
     @ManyToMany(mappedBy = "userRecipes", cascade = CascadeType.ALL)
-    Set<User> usersWithRecipe = new HashSet<>();
+    private Set<User> usersWithRecipe = new HashSet<>();
 
     /*    ##### GETTERS AND SETTERS #####
      */
@@ -88,13 +92,13 @@ public class Recipe {
         this.ingredientsInRecipe = ingredientsInRecipe;
     }
 
-    public Set<Meal> getMealsWithRecipe() {
-        return mealsWithRecipe;
-    }
-
-    public void setMealsWithRecipe(Set<Meal> mealsWithRecipe) {
-        this.mealsWithRecipe = mealsWithRecipe;
-    }
+//    public Set<Meal> getMealsWithRecipe() {
+//        return mealsWithRecipe;
+//    }
+//
+//    public void setMealsWithRecipe(Set<Meal> mealsWithRecipe) {
+//        this.mealsWithRecipe = mealsWithRecipe;
+//    }
 
     public Set<User> getUsersWithRecipe() {
         return usersWithRecipe;

@@ -1,4 +1,4 @@
-package com.techelevator.datatransfer;
+package com.techelevator.model;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -45,3 +45,4 @@ public class RegisterUserDTO {
         this.role = role;
     }
 }
+

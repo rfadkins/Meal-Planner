@@ -2,12 +2,12 @@ package com.techelevator.controller;
 
 import com.techelevator.business.MealPlanService;
 import com.techelevator.business.UserService;
-import com.techelevator.datatransfer.MealPlanDTO;
+
 import com.techelevator.model.MealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.techelevator.datatransfer.Mapper;
+
 
 @RestController
 @CrossOrigin
@@ -20,8 +20,7 @@ public class MealPlanController {
     UserService userService;
     @Autowired
     MealPlanService mealPlanService;
-    @Autowired
-    Mapper mapper;
+
 
     @Autowired
     public MealPlanController(UserService userService, MealPlanService mealPlanService) {

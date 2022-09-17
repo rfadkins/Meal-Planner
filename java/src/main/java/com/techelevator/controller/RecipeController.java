@@ -1,24 +1,15 @@
 package com.techelevator.controller;
 
-import com.techelevator.business.IngredientService;
+
 import com.techelevator.business.RecipeService;
 import com.techelevator.business.UserService;
-import com.techelevator.datatransfer.Mapper;
 import com.techelevator.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
-import com.techelevator.datatransfer.RecipeDTO;
 
-import javax.annotation.Resource;
-import java.time.Duration;
-import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.RecursiveAction;
+
 
 @RestController
 @CrossOrigin
@@ -30,8 +21,6 @@ public class RecipeController{
     UserService userService;
     @Autowired
     RecipeService recipeService;
-    @Autowired
-    Mapper mapper;
 
     @Autowired
     public RecipeController(UserService userService, RecipeService recipeService) {

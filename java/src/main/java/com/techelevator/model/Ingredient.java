@@ -1,4 +1,5 @@
 package com.techelevator.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -25,13 +26,15 @@ public class Ingredient {
 
     /*     *** RECIPE--INGREDIENTS ***
      */
+    @JsonIgnore
     @ManyToMany(mappedBy = "ingredientsInRecipe")
     Set<Recipe> RecipesWithIngredient = new HashSet<>();
 
     /*     *** USER--RECIPE ***
      */
-//    @ManyToMany(mappedBy = "userPantry")
-//    Set<User> UsersWithIngredient = new HashSet<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "userPantry")
+    Set<User> UsersWithIngredient = new HashSet<>();
 
 
     /*     ##### GETTERS AND SETTERS #####
