@@ -33,7 +33,7 @@ public class recipe_IngredientController{
 
     @PostMapping ("/ingredient/recipe/{ingredientId}/{recipeId}")
     public void addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
-      recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId);
+        recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId);
     }
 
 

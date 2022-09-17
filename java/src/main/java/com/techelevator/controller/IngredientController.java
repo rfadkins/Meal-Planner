@@ -2,8 +2,6 @@ package com.techelevator.controller;
 
 import com.techelevator.business.IngredientService;
 import com.techelevator.business.UserService;
-//import com.techelevator.datatransfer.Ingredient;
-import com.techelevator.datatransfer.Mapper;
 import com.techelevator.model.Ingredient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,8 +19,7 @@ public class IngredientController extends IngredientService{
     UserService userService;
     @Autowired
     IngredientService ingredientService;
-    @Autowired
-    Mapper mapper;
+
 
     @Autowired
     public IngredientController(UserService userService, IngredientService ingredientService) {

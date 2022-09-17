@@ -1,4 +1,5 @@
 package com.techelevator.model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -24,22 +25,24 @@ public class Meal {
 
 
 /*     *** MEAL--RECIPE ***
-*/
+*/  @JsonIgnore
     @ManyToMany
     @JoinTable(name="meal_recipe",
-            joinColumns =
-            @JoinColumn(name="meal_id"),
-            inverseJoinColumns =
-            @JoinColumn(name="recipe_id"))
+            joinColumns = @JoinColumn(name="meal_id"),
+            inverseJoinColumns = @JoinColumn(name="recipe_id"))
     private Set<Recipe> recipesInMeal = new HashSet<>();
+
+
+    //Set<Meal> mealsWithRecipe = new HashSet<>();
 
 /*     *** MEAL.PLAN--MEAL ***
 */
+    @JsonIgnore
     @ManyToMany(mappedBy = "mealsInMealPlan", cascade = CascadeType.ALL)
     private Set<MealPlan> mealPlansWithMeal = new HashSet<>();
 
 /*     *** USER--MEAL ***
-*/
+*/  @JsonIgnore
     @ManyToMany(mappedBy = "userMeals", cascade = CascadeType.ALL)
     private Set<User> usersWithMeal = new HashSet<>();
 

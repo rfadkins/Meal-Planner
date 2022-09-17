@@ -2,11 +2,11 @@ package com.techelevator.controller;
 
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserService;
-import com.techelevator.datatransfer.MealDTO;
+
 import com.techelevator.model.Meal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import com.techelevator.datatransfer.Mapper;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +20,7 @@ public class MealController {
     UserService userService;
     @Autowired
     MealService mealService;
-    @Autowired
-    Mapper mapper;
+
 
     @Autowired
     public MealController(UserService userService, MealService mealService) {

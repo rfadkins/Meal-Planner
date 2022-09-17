@@ -2,12 +2,12 @@ package com.techelevator.controller;
 
 import com.techelevator.business.MealPlanService;
 import com.techelevator.business.UserService;
-import com.techelevator.datatransfer.MealPlanDTO;
+
 import com.techelevator.model.MealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import com.techelevator.datatransfer.Mapper;
+
 
 @RestController
 @CrossOrigin
@@ -16,11 +16,11 @@ public class MealPlanController {
     //This controller handles the meal_plan table
 
     //Uncomment when mealPlanService exists.
+    @Autowired
     UserService userService;
     @Autowired
     MealPlanService mealPlanService;
-    @Autowired
-    Mapper mapper;
+
 
     @Autowired
     public MealPlanController(UserService userService, MealPlanService mealPlanService) {
@@ -35,9 +35,8 @@ public class MealPlanController {
     --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/mealplan/")
-    public void createMealPlan(@RequestBody MealPlanDTO mealPlanDTO) {
-        MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
-        this.mealPlanService.createMealPlan(mealPlanDTO.getMealPlanName());
+    public void createMealPlan(@RequestBody MealPlan mealPlan) {
+        this.mealPlanService.createMealPlan(mealPlan.getMealPlanName());
     }
 
     /*--------------------
