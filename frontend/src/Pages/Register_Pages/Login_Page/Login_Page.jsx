@@ -37,28 +37,37 @@ export default function LoginPage(props) {
 
   return (
     <div className="login-page">
-      <h1 className="login-header">Welcome Back {username}!</h1>
-      <br />
-      <Brand_Image />
-      <br />
+      
+      <div className="Login_Banner">
+        <h1 className="login-header">Welcome Back {username}!</h1>
+      </div>
 
-      <Text_Input_One lableClassName="Username-label" name="Username"
+      <div className="Login_Icon">
+        <Brand_Image />
+      </div>
+      
+      <div className="Login_inputs">
+        <Text_Input_One lableClassName="Username-label" name="Username"
           id="username" type="text" inputClassName=""
-             placeholder="Username"
-            onChange={(value) => setUsername(value)}
-            required/>
-      <Text_Input_One lableClassName="Password-label" name="Password" 
+          placeholder="Username"
+          onChange={(value) => setUsername(value)}
+          required/>
+          <br/>
+        <Text_Input_One lableClassName="Password-label" name="Password" 
           id="password" type="password" inputClassName=""
-         placeholder="Password" 
-        onChange={(value) => setPassword(value)}
-            required/>
-
-      <br />
-      <Button_Style_One buttonName="Login" onClickHandler={handleSubmit}/>
-      <br />
-      <Forgot_Button buttonName="Forgot Password" />
-      <br />
-      <Help_Button buttonName="Help?" />
+          placeholder="Password" 
+          onChange={(value) => setPassword(value)}
+          required/>
+      </div>
+      <br/>
+      <div className="Login_Buttons">
+        <Button_Style_One buttonName="Login" onClickHandler={handleSubmit}/>
+        <br/>
+        <Forgot_Button buttonName="Forgot Password" />
+      </div>
+      <div className="Login_Help">
+        <Help_Button buttonName="Help?" />
+      </div>
     </div>
   );
 }

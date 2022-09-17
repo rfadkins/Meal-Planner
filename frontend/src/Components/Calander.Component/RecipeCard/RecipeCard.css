@@ -1,3 +1,31 @@
+@media (min-width: 501px){
+    .RecipeCard{
+        background-color: #2FB3CA;
+        border-radius: 20px;
+        text-align: left;
+        margin: 10px 10px 10px 10px;
+        padding-left: 10px;
+        padding-top: 2px;
+        padding-bottom: 5px;
+        padding-right: 6px;
+        width: 280px;
+    }
+
+    .RecipeCard-text{
+        color: black;
+    }
+
+    .Recipe_stack{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .card-List{
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
 @media (max-width: 500px){
     .RecipeCard{
         background-color: #2FB3CA;

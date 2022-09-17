@@ -51,68 +51,73 @@ export default function SignUpPage(props) {
 
   return (
     <div className="SignUp-Page">
-      <br />
-      <Banner_Image />
-      {/* <img src=" " alt="placeHolder" className="Brand-Border" /> */}
-      <Text_Banner text={`welcome _${username}_! lets get cooking`} />
-      <br />
+      
+      <div className="sign_up_banner">
+        <Banner_Image />
+      </div>
 
-      <Text_Input_One lableClassName="Username-label" name="Username"
-          id="username" type="text" inputClassName=""
-             placeholder="Username"
-            onChange={(value) => setUsername(value)}
-            required/>
+      <div className="sign_up_welcome">
+        <Text_Banner text={`welcome _${username}_! lets get cooking`} />
+      </div>
+      
+      <div className="sign_up_inputs-buttons">
+        <Text_Input_One lableClassName="Username-label" name="Username"
+            id="username" type="text" inputClassName=""
+              placeholder="Username"
+              onChange={(value) => setUsername(value)}
+              required/>
 
-      <Text_Input_One lableClassName="Password-label" name="Password" 
-          id="password" type="password" inputClassName=""
-         placeholder="Password" 
-        onChange={(value) => setPassword(value)}
-            required/>
+        <Text_Input_One lableClassName="Password-label" name="Password" 
+            id="password" type="password" inputClassName=""
+          placeholder="Password" 
+          onChange={(value) => setPassword(value)}
+              required/>
 
-      <Text_Input_One lableClassName="Password-label" name="confirmPassword" 
-          id="password-confirm" type="password" inputClassName=""
-         placeholder="Confirm Password" 
-        onChange={(value) => setConfirmPassword(value)}
-            required/>
+        <Text_Input_One lableClassName="Password-label" name="confirmPassword" 
+            id="password-confirm" type="password" inputClassName=""
+          placeholder="Confirm Password" 
+          onChange={(value) => setConfirmPassword(value)}
+              required/>
 
-      {/* <label className="SignUp-label">Username</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        className="SignUp-input"
-        placeholder="Username"
-        onChange={(event) => setUsername(event.target.value)}
-        required
-      />
-      <label className="SignUp-label">Password</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        className="SignUp-input"
-        placeholder="Password"
-        onChange={(event) => setPassword(event.target.value)}
-        required
-      />
-      <input
-        type="password"
-        id="password-confirm"
-        name="confirmPassword"
-        className="SignUp-input"
-        placeholder="Confirm Password"
-        onChange={(event) => setConfirmPassword(event.target.value)}
-        required
-      /> */}
+        {/* <label className="SignUp-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          className="SignUp-input"
+          placeholder="Username"
+          onChange={(event) => setUsername(event.target.value)}
+          required
+        />
+        <label className="SignUp-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          className="SignUp-input"
+          placeholder="Password"
+          onChange={(event) => setPassword(event.target.value)}
+          required
+        />
+        <input
+          type="password"
+          id="password-confirm"
+          name="confirmPassword"
+          className="SignUp-input"
+          placeholder="Confirm Password"
+          onChange={(event) => setConfirmPassword(event.target.value)}
+          required
+        /> */}
 
-      <br/>
-      <Button_Style_One buttonName="Sign-up" onClickHandler={handleSubmit}/>
-      {/* <button className="SignUp-button" onClick={handleSubmit}>
-        Sign-up
-      </button> */}
+        <br/>
+        <Button_Style_One buttonName="Sign-up" onClickHandler={handleSubmit}/>
+        {/* <button className="SignUp-button" onClick={handleSubmit}>
+          Sign-up
+        </button> */}
 
-      <br />
-      <Help_Button buttonName="Help?" />
+        <br />
+        <Help_Button buttonName="Help?" />
+      </div>
     </div>
   );
 }

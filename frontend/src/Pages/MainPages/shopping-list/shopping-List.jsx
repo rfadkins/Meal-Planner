@@ -11,7 +11,8 @@ export default function ShoppingList(){
         <div>
             <div>
                 <Bar/>
-                
+                <br/>
+                <br/>
                 <AddItemButtom buttonImage='+' nameHandle="Shopping-add">
                     <h3 className="title">Add to Shopping List</h3>
                     <p>Item name? <input type="text" className="textInputLong"/></p>

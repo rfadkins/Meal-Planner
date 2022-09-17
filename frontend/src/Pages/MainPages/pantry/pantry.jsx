@@ -9,9 +9,7 @@ import './pantry.css'
 export default function Pantry(){
     return(
         <div>
-
             <Bar/>
-        
         <div className="Pantry-body">
             
             <AddItemButtom buttonImage='+' nameHandle="Pantry-add">
@@ -27,7 +25,6 @@ export default function Pantry(){
             </AddItemButtom>
             
             <ButtonSelectItem/>
-            
             
         </div>
         </div>

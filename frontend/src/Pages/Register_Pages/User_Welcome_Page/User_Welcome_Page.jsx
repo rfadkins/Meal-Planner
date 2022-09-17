@@ -19,12 +19,15 @@ export default function UserWelcomePage() {
 
         <br/>
         <br/>
-        <h1>Welcome, {formattedCurrentUser}!</h1>
-        <br/>
         <Profile_Img_Large imageSorce={Profile_Img}/>
         
+        <h1>Welcome, {formattedCurrentUser}!</h1>
+        <br/>
         <br/>
         <Banner_Image />
+        <br/>
+        <br/>
+        <br/>
         <Link to="/user-dash">
           <Button_Style_One buttonName="Lets get cooking!"/>
         </Link>

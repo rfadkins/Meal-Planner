@@ -12,9 +12,11 @@ export default function Dashbored(){
                 <h4>Last viewed recipes-</h4>
             </header>
             {/*  */}
-            <RecipeCard/>
-            <RecipeCard/>
-            <RecipeCard/>
+            <div className="Recipe_stack">
+                <RecipeCard/>
+                <RecipeCard/>
+                <RecipeCard/>
+            </div>
         </div>
     )
 }
