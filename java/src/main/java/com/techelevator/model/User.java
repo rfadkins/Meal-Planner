@@ -60,6 +60,7 @@ public class User {
    /*
    **** USER-PANTRY ****
     */
+   @JsonIgnore
    @ManyToMany(cascade = CascadeType.ALL)
    @JoinTable(name = "user_pantry",
          joinColumns = @JoinColumn(name = "user_id"),
@@ -69,6 +70,7 @@ public class User {
    /*
     **** USER-RECIPES ****
     */
+   @JsonIgnore
    @ManyToMany(cascade = CascadeType.ALL)
    @JoinTable(name = "user_recipe",
          joinColumns = @JoinColumn(name = "user_id"),
@@ -78,6 +80,7 @@ public class User {
    /*
     **** USER-MEALS ****
     */
+   @JsonIgnore
    @ManyToMany(cascade = CascadeType.ALL)
    @JoinTable(name = "user_meals",
          joinColumns = @JoinColumn(name = "user_id"),
@@ -87,6 +90,7 @@ public class User {
    /*
     **** USER-MEAL PLANS ****
     */
+   @JsonIgnore
    @ManyToMany(cascade = CascadeType.ALL)
    @JoinTable(name = "user_meal_plan",
          joinColumns = @JoinColumn(name = "user_id"),
@@ -215,4 +219,6 @@ public class User {
    public void setRole(String role) {
       this.role = role;
    }
+
+
 }
