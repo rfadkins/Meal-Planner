@@ -1,22 +1,28 @@
 import React from "react"
 import './RecipeCard.css'
 
-export default function RecipeCardPart(){
-    return(
-    <div className="RecipeCard">
-        
-        <p className="RecipeCard-text">
-            <strong>-recipe name-</strong>
-        </p>
-        <p className="RecipeCard-text">
-            description of dish
-        </p>
-        <p className="RecipeCard-text">
-        ingredient - messure ~ ingredient - messure <br/>
-        ingredient - messure ~ ingredient - messure<br/>
-        ingredient - messure ~ ingredient - messure <br/>
-        ingredient - messure ~ ingredient - messure<br/>
-        </p>
-    </div>
+export default function RecipeCardPart(props) {
+    const recipeList = props.recipeList
+    console.log(`RecipeCardPart list: ${recipeList}`)
+
+
+    return (
+        recipeList.map((recipe, index) =>
+            <div key={index} className="RecipeCard">
+                <p className="RecipeCard-text">
+                    {recipe.name}
+                </p>
+                <p className="RecipeCard-text">
+                    Ingredients:
+                    {recipe.ingredients.map((ingredient, index) =>
+                        <li key={index}>{ingredient.count} {ingredient.measurement} {ingredient.name}</li>
+                    )}
+                </p>
+                <p className="RecipeCard-text">
+                    Instructions:<br></br>
+                    {recipe.instructions}
+                </p>
+            </div>
+        )
     )
 }

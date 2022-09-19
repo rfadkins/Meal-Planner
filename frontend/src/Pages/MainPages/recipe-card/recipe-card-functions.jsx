@@ -1,11 +1,22 @@
 import React from "react";
 import axios from "axios";
+import { TaskAbortError } from "@reduxjs/toolkit";
 
 /* File contains functional code for recipe-card */
 
-const getAllUserRecipes = async (e) => {
-  e.preventDefault();
-};
+
+export function getAllUserRecipes(userId){
+    //ALPHABETIZE LIST
+    const testRecipes = [
+      {id: 1, name: "Baked Potato", ingredients: [{count: 1, measurement: "whole", name: "potato"}, {count: 2, measurement: "tbs", name: "butter"}, {count: 1, measurement: "pinch", name: "salt"}], instructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt."},
+      {id: 2, name: "Baked Potato", ingredients: [{count: 1, measurement: "whole", name: "potato"}, {count: 2, measurement: "tbs", name: "butter"}, {count: 1, measurement: "pinch", name: "salt"}], instructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt."}
+  ]
+  
+  //const data = { username: username, password: password };
+  //const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${currentUserId}`, data);
+  
+  return testRecipes;
+  };
 
 const getRecipesByCategory = async (e) => {
     e.preventDefault();
