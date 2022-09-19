@@ -16,10 +16,22 @@ export function getAllPantryIngredients(userId){
 ]
 
 //const data = { username: username, password: password };
-//const userPantryIngredients = await axios.post(`${baseUrl}/pantry/user/${currentUserId}`, data);
+//const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${currentUserId}`, data);
 
 return testIngredients;
 };
+
+export async function getAllIngredients(token){
+    const api = `${baseUrl}/ingredients/`
+    const data = { headers: {"Authorization" : `Bearer ${token}`} }
+
+    try {
+        const ingredients = await axios.get(api, data);
+        console.log(ingredients);
+      } catch (err) {
+        alert(err);
+      }
+}
 
 const getIngredientsByCategory = async (e) => {
     e.preventDefault();
@@ -45,4 +57,8 @@ const addNewIngredient = async (e) => {
     e.preventDefault();
 
     //have a drop down that is based of what is being typed, if there are no ingredients found, add new
+}
+
+export const getIngredient = async (e) => {
+
 }
