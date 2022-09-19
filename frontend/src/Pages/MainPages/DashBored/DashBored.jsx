@@ -13,9 +13,7 @@ export default function Dashbored(){
             </header>
             {/*  */}
             <div className="Recipe_stack">
-                <RecipeCard/>
-                <RecipeCard/>
-                <RecipeCard/>
+                {/*recipe cards here*/}
             </div>
         </div>
     )

@@ -17,16 +17,21 @@
 
     .Navbar-header{
         grid-area: Navbar-header ;
+        display: flex;
         background-color: #162F33;
         border-radius: 30px;
+        color: white;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px;
     }
 
             .Profile-Img-Small{
                 height: 60px;
                 width: 60px;
                 border-radius: 50%;
-                padding: 18px;
-                float: right;
+                /*padding: 18px;
+                float: right;*/
             }
 
     .Navbar-right{
@@ -86,6 +91,11 @@
 
     .Navbar-header{
         grid-area: Navbar-header ;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        color: white;
         background-color: #162F33;
         border-radius: 30px;
     }
@@ -94,8 +104,8 @@
                 height: 60px;
                 width: 60px;
                 border-radius: 50%;
-                padding: 18px;
-                float: right;
+                /*padding: 18px;
+                float: right;*/
             }
 
     .Navbar-right{

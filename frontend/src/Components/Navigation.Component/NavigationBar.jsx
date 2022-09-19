@@ -13,10 +13,18 @@ import Pantry_Img from '../../Images/ingredient_image_3.png'
 import Recipe_Img from '../../Images/meal_image_2.png'
 import Shopping_Img from '../../Images/grocery_image_2.png'
 
+/*redux*/
+import { useSelector } from 'react-redux';
+
+
 export default function NavigationBar(props){
+    const currentUser = useSelector((state)=>state.user.username)
+  const formattedCurrentUser = currentUser.substring(0,1).toUpperCase() + currentUser.substring(1)
+
     return(
         <div className="Navbar-body">
             <header className="Navbar-header">
+                <h3>{formattedCurrentUser}'s Kitchen Helper</h3>
                 <Profile_Img_Small imageSorce={Profile_Img}/>
             </header>
             <section className="Navbar-right">
