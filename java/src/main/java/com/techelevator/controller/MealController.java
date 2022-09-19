@@ -35,7 +35,7 @@ public class MealController {
     --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/meal/")
-    public void createIngredient(@RequestBody Meal meal) {
+    public void createMeal(@RequestBody Meal meal) {
         //Meal meal = mapper.mapMealDTOToEntity(mealDTO);
         mealService.createMeal(meal.getMealName());
     }
@@ -58,7 +58,7 @@ public class MealController {
     Path: /meal/{meal_id}
     --------------------*/
     @DeleteMapping ("/meal/{mealId}")
-    public void createIngredient(@PathVariable("mealId") Long mealId) {
+    public void deleteMeal(@PathVariable("mealId") Long mealId) {
         mealService.deleteMeal(mealId);
     }
 

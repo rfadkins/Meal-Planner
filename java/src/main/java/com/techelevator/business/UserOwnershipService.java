@@ -1,13 +1,7 @@
 package com.techelevator.business;
 
-import com.techelevator.exceptions.IngredientNotFoundException;
-import com.techelevator.exceptions.MealNotFoundException;
-import com.techelevator.exceptions.MealPlanNotFoundException;
-import com.techelevator.exceptions.UserNotFoundException;
-import com.techelevator.model.Ingredient;
-import com.techelevator.model.Meal;
-import com.techelevator.model.MealPlan;
-import com.techelevator.model.User;
+import com.techelevator.exceptions.*;
+import com.techelevator.model.*;
 import com.techelevator.repository.*;
 import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +24,7 @@ public class UserOwnershipService {
     private MealRepository mealRepository;
     @Autowired
     private MealPlanRepository mealPlanRepository;
+
 
 
     //TODO test
@@ -93,6 +88,43 @@ public class UserOwnershipService {
             BasicLogger.log(e.getMessage());
         }
         return pantry;
+    }
+
+    public Set<Recipe> addRecipeToUser (Long userId, Long recipeId) {
+        Set<Recipe> userRecipes = new HashSet<>();
+        User user = userRepository.findByUserId(userId);
+        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+        try {
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else if (recipe == null) {
+                throw new RecipeNotFoundException();
+            } else {
+                userRecipes = user.getUserRecipes();
+                userRecipes.add(recipe);
+                user.setUserRecipes(userRecipes);
+
+                userRepository.saveAndFlush(user);
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return userRecipes;
+    }
+
+    public Set<Recipe> listUserRecipes(Long userId) {
+        Set<Recipe> userRecipes = new HashSet<>();
+        User user = userRepository.findByUserId(userId);
+        try {
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else {
+                userRecipes = user.getUserRecipes();
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return userRecipes;
     }
 
     //todo add user to meal
@@ -218,6 +250,16 @@ public class UserOwnershipService {
             BasicLogger.log(e.getMessage());
         }
         return userMealPlans;
+    }
+
+    public List<User> listAllUsers() {
+        List<User> users = new ArrayList<>();
+        try {
+            users = userRepository.findAll();
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return users;
     }
 
 

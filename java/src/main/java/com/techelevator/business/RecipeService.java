@@ -10,6 +10,7 @@ import com.techelevator.util.BasicLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.bind.SchemaOutputResolver;
 import java.util.*;
 
 @Service
@@ -31,6 +32,14 @@ public class RecipeService {
         recipe.setRecipeName(name);
         recipe.setRecipeInstructions(instructions);
         recipe.setCategory(category);
+
+        try {
+            recipeRepository.saveAndFlush(recipe);
+            System.out.println("Recipe  : " + recipe.getRecipeName() + " has been created.");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            BasicLogger.log(e.getMessage());
+        }
 
         recipeRepository.saveAndFlush(recipe);
 

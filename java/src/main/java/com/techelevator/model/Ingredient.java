@@ -6,6 +6,10 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.*;
 
+@NamedNativeQuery(name="findIngredientsInRecipe",
+                    query="SELECT * FROM ingredient " +
+                    "JOIN recipe_ingredients ON ingredient.ingredient_id = recipe_ingredients.ingredient_id " +
+                    "WHERE recipe_ingredients.recipe_id = ?")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,15 +28,21 @@ public class Ingredient {
     @Column(name = "category")
     private String ingredientCategory;
 
+    @Column(name="count_measure")
+    private String countMeasure;
+
+    @Column(name="unit_measure")
+    private String unitMeasure;
+
     /*     *** RECIPE--INGREDIENTS ***
      */
-    @JsonIgnore
+
     @ManyToMany(mappedBy = "ingredientsInRecipe")
     Set<Recipe> RecipesWithIngredient = new HashSet<>();
 
     /*     *** USER--RECIPE ***
      */
-    @JsonIgnore
+
     @ManyToMany(mappedBy = "userPantry")
     Set<User> UsersWithIngredient = new HashSet<>();
 
@@ -68,17 +78,35 @@ public class Ingredient {
         return RecipesWithIngredient;
     }
 
+    public String getCountMeasure() {
+        return countMeasure;
+    }
+
+    public void setCountMeasure(String countMeasure) {
+        this.countMeasure = countMeasure;
+    }
+
+    public String getUnitMeasure() {
+        return unitMeasure;
+    }
+
+    public void setUnitMeasure(String unitMeasure) {
+        this.unitMeasure = unitMeasure;
+    }
+
+    public Set<User> getUsersWithIngredient() {
+        return UsersWithIngredient;
+    }
+
+    public void setUsersWithIngredient(Set<User> usersWithIngredient) {
+        UsersWithIngredient = usersWithIngredient;
+    }
+
     public void setRecipesWithIngredient(Set<Recipe> recipesWithIngredient) {
         RecipesWithIngredient = recipesWithIngredient;
     }
 
-//    public Set<User> getUsersWithIngredient() {
-//        return UsersWithIngredient;
-//    }
-//
-//    public void setUsersWithIngredient(Set<User> usersWithIngredient) {
-//        UsersWithIngredient = usersWithIngredient;
-//    }
+
 
     /*     ##### EQUALS AND HASHCODE #####
      */

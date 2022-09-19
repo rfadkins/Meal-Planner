@@ -47,4 +47,6 @@ public class recipe_IngredientController{
     public void removeIngredientFromRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
        recipeIngredientService.removeIngredientFromRecipe(recipeId,ingredientId);
     }
+
+
 }

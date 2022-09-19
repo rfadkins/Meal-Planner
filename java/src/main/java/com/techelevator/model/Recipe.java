@@ -33,20 +33,20 @@ public class Recipe {
      */
     @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "recipe_ingredients",
+    @JoinTable(name = "recipe_ingredient",
             joinColumns = @JoinColumn(name = "recipe_id"),
             inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private Set<Ingredient> ingredientsInRecipe = new HashSet<>();
 
     /*     *** MEAL--RECIPE ***
      */
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(mappedBy = "recipesInMeal")
     private Set<Meal> mealsWithRecipe = new HashSet<>();
 
     /*     *** USER--RECIPE ***
      */
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(mappedBy = "userRecipes", cascade = CascadeType.ALL)
     private Set<User> usersWithRecipe = new HashSet<>();
 
@@ -92,13 +92,13 @@ public class Recipe {
         this.ingredientsInRecipe = ingredientsInRecipe;
     }
 
-//    public Set<Meal> getMealsWithRecipe() {
-//        return mealsWithRecipe;
-//    }
-//
-//    public void setMealsWithRecipe(Set<Meal> mealsWithRecipe) {
-//        this.mealsWithRecipe = mealsWithRecipe;
-//    }
+    public Set<Meal> getMealsWithRecipe() {
+        return mealsWithRecipe;
+    }
+
+    public void setMealsWithRecipe(Set<Meal> mealsWithRecipe) {
+        this.mealsWithRecipe = mealsWithRecipe;
+    }
 
     public Set<User> getUsersWithRecipe() {
         return usersWithRecipe;

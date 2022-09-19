@@ -37,12 +37,13 @@ public class Meal {
 
 /*     *** MEAL.PLAN--MEAL ***
 */
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToMany(mappedBy = "mealsInMealPlan", cascade = CascadeType.ALL)
     private Set<MealPlan> mealPlansWithMeal = new HashSet<>();
 
 /*     *** USER--MEAL ***
-*/  @JsonIgnore
+*/
+//@JsonIgnore
     @ManyToMany(mappedBy = "userMeals", cascade = CascadeType.ALL)
     private Set<User> usersWithMeal = new HashSet<>();
 
