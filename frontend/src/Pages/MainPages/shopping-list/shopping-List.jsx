@@ -1,12 +1,20 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link, Routes, Route } from 'react-router-dom';
 import ListItem from "../../../Components/Button.Components/ButtonListItem/ListItem";
 import Bar from "../../../Components/Input.Component/search_bar/search_bar";
 import AddItemButtom from "../../../Components/Button.Components/ButtonAddItem/ButtonAddItem";
 
 import './shopping-List.css'
+/*redux*/
+import { useSelector } from 'react-redux';
+import { getShoppingList } from "./shopping-list-functions";
 
 export default function ShoppingList(){
+    const currentUserId = useSelector((state) => state.user.id)
+    const currentUserToken = useSelector((state) => state.token.token)
+    const [shoppingList, setShoppingList] = useState(getShoppingList(currentUserId))
+
+    console.log(shoppingList)
     return(
         <div>
             <div>
@@ -25,24 +33,9 @@ export default function ShoppingList(){
                     <button className="submitButton">submit</button>
                 </AddItemButtom>
             </div>
-            <br/>
+            
             <div className="shopping-List">
-                
-                
-                
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                <ListItem/>
-                
+                <ListItem shoppingList = {shoppingList}/>
             </div>
         </div>
     )
