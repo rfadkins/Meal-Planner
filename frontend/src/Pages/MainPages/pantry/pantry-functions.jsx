@@ -25,12 +25,16 @@ export async function getAllIngredients(token){
     const api = `${baseUrl}/ingredients/`
     const data = { headers: {"Authorization" : `Bearer ${token}`} }
 
+    console.log(data)
+
     try {
         const ingredients = await axios.get(api, data);
         console.log(ingredients);
       } catch (err) {
         alert(err);
       }
+
+      return ("test")
 }
 
 const getIngredientsByCategory = async (e) => {
