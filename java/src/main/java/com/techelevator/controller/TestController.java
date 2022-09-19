@@ -33,10 +33,10 @@ public class TestController {
 //        return userOwnershipService.listAllUsers();
 //    }
 //
-//    @GetMapping("/test/ingredient")
-//    public List<Ingredient> listIngredients() {
-//        return ingredientService.getAllIngredients();
-//    }
+    @GetMapping("/test/ingredient")
+    public List<Ingredient> listIngredients() {
+        return ingredientService.getAllIngredients();
+    }
 //
 //    @PostMapping("/recipe/user/{recipeId}/{userId}")
 //    public void addRecipeToUser (@PathVariable("recipeId") Long recipeId, @PathVariable("userId") Long userId) {
