@@ -3,16 +3,20 @@ package com.techelevator.controller;
 import com.techelevator.business.IngredientService;
 import com.techelevator.business.UserService;
 import com.techelevator.model.Ingredient;
+import com.techelevator.security.jwt.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins="*")
 @RequestMapping("/ingredient")
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class IngredientController extends IngredientService{
     //This controller handles the Ingredient table
 
@@ -83,7 +87,13 @@ public class IngredientController extends IngredientService{
     --------------------*/
     @GetMapping("/")
     public List<Ingredient> listIngredients() {
+
         return ingredientService.getAllIngredients();
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        //httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+//
+//        httpHeaders.add("Access-Control-Allow-Origin:","*");
+//        return new ResponseEntity<>(ingredientService.getAllIngredients(), httpHeaders, HttpStatus.OK);
     }
 
 
