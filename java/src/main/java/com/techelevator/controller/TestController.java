@@ -13,19 +13,16 @@ public class TestController {
 
     @Autowired
     UserOwnershipService userOwnershipService;
-
     @Autowired
     IngredientService ingredientService;
-
     @Autowired
     MealService mealService;
-
     @Autowired
     MealRecipeService mealRecipeService;
-
-
     @Autowired
     RecipeIngredientService recipeIngredientService;
+    @Autowired
+    MealPlanService mealPlanService;
 
 
 //    @GetMapping("/user/")
@@ -37,6 +34,21 @@ public class TestController {
     public List<Ingredient> listIngredients() {
         return ingredientService.getAllIngredients();
     }
+
+    @GetMapping("/test/mealplan/")
+    public List<MealPlan> listMealPlans() {
+        return mealPlanService.displayAllMealPlans();
+    }
+
+    @GetMapping("/test/user/pantry/{userId}")
+    public List<Ingredient> displayUserPantry (Long userId) {
+        return userOwnershipService.displayUserPantry(userId);
+    }
+
+//    @GetMapping
+//    public List<MealPlan> listMealPlansByUserId(@RequestParam Long userId) {
+//        return mealPlanService.displayAllMealPlansByUser(userId);
+//    }
 //
 //    @PostMapping("/recipe/user/{recipeId}/{userId}")
 //    public void addRecipeToUser (@PathVariable("recipeId") Long recipeId, @PathVariable("userId") Long userId) {

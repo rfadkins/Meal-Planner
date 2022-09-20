@@ -9,7 +9,9 @@ import com.techelevator.repository.MealRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -20,16 +22,23 @@ public class MealPlanMealService {
     @Autowired
     MealPlanRepository mealPlanRepository;
 
-    public MealPlan addMealToMealPlan(Long mealPlanId, Long mealId) {
-        Set<Meal> mealsInMealPlan = new HashSet<>();
+    public MealPlan addMealToMealPlan(int mealOrder,  Long mealId, Long mealPlanId) {
         MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
         Meal meal = mealRepository.findByMealId(mealId);
+
+        Set<Meal> mealsInMealPlan = new HashSet<>();
+        Long[] mealOrderArray = new Long[30];
         try {
             if (mealPlan == null) {
                 throw new MealPlanNotFoundException();
             } else if (meal == null) {
                 throw new MealNotFoundException();
             } else {
+                if (mealOrder > 0) {
+                    mealOrderArray[mealOrder] = mealId;
+                    mealPlan.setMealOrder(mealOrderArray);
+                }
+
                 mealsInMealPlan = mealPlan.getMealsInMealPlan();
                 mealsInMealPlan.add(meal);
                 mealPlan.setMealsInMealPlan(mealsInMealPlan);
@@ -62,5 +71,20 @@ public class MealPlanMealService {
 
         }
         return mealPlan;
+    }
+
+    public List<Meal> displayMealsInMealPlan(Long mealPlanId) {
+        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+        List<Meal> mealsInMealPlan = new ArrayList<>();
+        try {
+            if (mealPlan == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                mealsInMealPlan = mealPlanRepository.findAllMealsByMealPlanId(mealPlanId);
+            }
+        } catch (Exception e) {
+
+        }
+        return mealsInMealPlan;
     }
 }

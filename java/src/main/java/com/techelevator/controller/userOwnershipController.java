@@ -60,10 +60,10 @@ public class userOwnershipController{
     GET
     pantry/user/{user_id}
     --------------------*/
-    @GetMapping ("/pantry/user/{userId}")
-    public Set<Ingredient> listUserPantry(@PathVariable ("userId") Long userId) {
-        return userOwnershipService.listUserPantry(userId);
-    }
+//    @GetMapping ("/pantry/user/{userId}")
+//    public Set<Ingredient> listUserPantry(@PathVariable ("userId") Long userId) {
+//        return userOwnershipService.listUserPantry(userId);
+//    }
 
 
     //------------------------------MEAL------------------------------

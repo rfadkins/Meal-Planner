@@ -15,6 +15,10 @@ import java.util.Set;
 @Table(name = "meal")
 public class Meal {
 
+    public enum mealOrder {
+
+    }
+
     @Id
     @Column(name = "meal_id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_meal_id")
@@ -22,6 +26,8 @@ public class Meal {
 
     @Column(name = "meal_name", nullable = false)
     private String mealName;
+
+
 
 
 /*     *** MEAL--RECIPE ***
@@ -90,6 +96,8 @@ public class Meal {
     public void setUsersWithMeal(Set<User> usersWithMeal) {
         this.usersWithMeal = usersWithMeal;
     }
+
+
 
 /*     ##### EQUALS AND HASHCODE #####
 */
