@@ -3,12 +3,16 @@ package com.techelevator.controller;
 import com.techelevator.business.*;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
 @RestController
+@CrossOrigin
+@PreAuthorize("isAuthenticated()")
 public class TestController {
 
     @Autowired
@@ -24,16 +28,24 @@ public class TestController {
     @Autowired
     MealPlanService mealPlanService;
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping ("/test/ingredient")
+    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
+        //com.techelevator.model.Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
+        this.ingredientService = ingredientService;
+        return this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+    }
+
 
 //    @GetMapping("/user/")
 //    public List<User> getAllUsers() {
 //        return userOwnershipService.listAllUsers();
 //    }
 //
-    @GetMapping("/test/ingredient")
-    public List<Ingredient> listIngredients() {
-        return ingredientService.getAllIngredients();
-    }
+//    @GetMapping("/test/ingredient")
+//    public List<Ingredient> listIngredients() {
+//        return ingredientService.getAllIngredients();
+//    }
 
     @GetMapping("/test/mealplan/")
     public List<MealPlan> listMealPlans() {

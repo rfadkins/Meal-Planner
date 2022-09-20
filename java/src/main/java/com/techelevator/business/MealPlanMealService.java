@@ -34,10 +34,6 @@ public class MealPlanMealService {
             } else if (meal == null) {
                 throw new MealNotFoundException();
             } else {
-                if (mealOrder > 0) {
-                    mealOrderArray[mealOrder] = mealId;
-                    mealPlan.setMealOrder(mealOrderArray);
-                }
 
                 mealsInMealPlan = mealPlan.getMealsInMealPlan();
                 mealsInMealPlan.add(meal);

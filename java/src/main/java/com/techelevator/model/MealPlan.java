@@ -26,8 +26,7 @@ public class MealPlan {
     @Column(name = "meal_plan_name", nullable = false)
     private String mealPlanName;
 
-    @Column(name="meal_order")
-    private Long[] mealOrder;
+
 
 
 
@@ -86,14 +85,6 @@ public class MealPlan {
         mealsInMealPlan.add(meal);
     }
 
-
-    public Long[] getMealOrder() {
-        return mealOrder;
-    }
-
-    public void setMealOrder(Long[] mealOrder) {
-        this.mealOrder = mealOrder;
-    }
 
     /*     ##### EQUALS AND HASHCODE #####
 */

@@ -8,13 +8,15 @@ import com.techelevator.model.Ingredient;
 import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Set;
 
 @RestController
-//@PreAuthorize("isAuthenticated()")
+@CrossOrigin
+@PreAuthorize("isAuthenticated()")
 public class userOwnershipController{
     //This controller handles join tables related to user ownership
 
@@ -60,10 +62,10 @@ public class userOwnershipController{
     GET
     pantry/user/{user_id}
     --------------------*/
-//    @GetMapping ("/pantry/user/{userId}")
-//    public Set<Ingredient> listUserPantry(@PathVariable ("userId") Long userId) {
-//        return userOwnershipService.listUserPantry(userId);
-//    }
+    @GetMapping ("/pantry/user/{userId}")
+    public Set<Ingredient> listUserPantry(@PathVariable ("userId") Long userId) {
+        return userOwnershipService.listUserPantry(userId);
+    }
 
 
     //------------------------------MEAL------------------------------

@@ -34,10 +34,6 @@ public class MealPlanService {
             } else {
                 mealPlan.setMealPlanName(name);
 
-                Long[] mealOrder = new Long[30];
-                fillMealOrderArray(mealOrder);
-                mealPlan.setMealOrder(mealOrder);
-
                 mealPlanRepository.saveAndFlush(mealPlan);
             }
 
