@@ -15,7 +15,7 @@ import { useEffect } from "react";
 export default function Pantry() {
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    const [userPantry, setUserPantry] = useState(null);
+    const [userPantry, setUserPantry] = useState([]);
     //const [userPantry, setUserPantry] = useState(testIngredientList);
     
     //add new ingredients

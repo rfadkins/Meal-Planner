@@ -53,8 +53,8 @@ export async function addNewIngredient(userId, token, ingredient) {
     const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
 
     //add new ingredient to ingredient table
-    //const addIngredientTable = `${baseUrl}/ingredients/`
-    const addIngredientTable = `${baseUrl}/test/ingredient/`
+    const addIngredientTable = `${baseUrl}/ingredient/`
+    //const addIngredientTable = `${baseUrl}/test/ingredient`
     const addIngredientTableResponse = await axios.post(addIngredientTable, ingredient, authHeader)
     const ingredientId = addIngredientTableResponse.data.ingredientId
     console.log(`Successfully added into Ingredient Table`)

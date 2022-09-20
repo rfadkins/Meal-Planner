@@ -5,7 +5,7 @@ import Ingrediant_Image from '../../../Images/ingredient_image_2.png'
 
 export default function ButtonSelectItem(props) {
     const items = props.items;
-    if (items == null){
+    if (items.length === 0){
         return(
             <p>Please start by adding ingredients</p>
         )
