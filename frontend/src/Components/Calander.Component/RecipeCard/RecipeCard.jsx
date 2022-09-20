@@ -3,9 +3,7 @@ import './RecipeCard.css'
 
 export default function RecipeCardPart(props) {
     const recipeList = props.recipeList
-    console.log(`RecipeCardPart list: ${recipeList}`)
-
-
+    
     return (
         recipeList.map((recipe, index) =>
             <div key={index} className="RecipeCard">
