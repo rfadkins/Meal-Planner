@@ -6,6 +6,7 @@ import com.techelevator.business.UserService;
 import com.techelevator.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 //@RequestMapping("/recipe")
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class RecipeController{
 //This controller handles the recipe table
 
@@ -35,10 +36,10 @@ public class RecipeController{
         --------------------*/
         @ResponseStatus(HttpStatus.CREATED)
         @PostMapping("/recipe/")
-        public void createRecipe(@RequestBody Recipe recipe) {
+        public Recipe createRecipe(@RequestBody Recipe recipe) {
             //Recipe recipe = mapper.mapRecipeDTOToEntity(recipeDTO);
             //System.out.println(recipeDTO.getRecipeName() + recipeDTO.getRecipeInstructions() + recipeDTO.getCategory());
-            recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+            return recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
         }
 
         /*--------------------
