@@ -31,9 +31,9 @@ public class mealPlan_MealController{
     meal/meaplan/{meal_id}/{mealplan_id}
     --------------------*/
 
-    @PostMapping ("/meal/mealplan/{mealId}/{mealPlanId}")
-    public void addMealToMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-        mealPlanMealService.addMealToMealPlan(mealPlanId,mealId);
+    @PostMapping ("/meal/mealplan/{mealOrder}/{mealId}/{mealPlanId}")
+    public void addMealToMealPlan(@PathVariable ("mealOrder")int mealOrder, @PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
+        mealPlanMealService.addMealToMealPlan(mealOrder, mealId, mealPlanId);
 
     }
 

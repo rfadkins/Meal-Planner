@@ -75,20 +75,34 @@ public class UserOwnershipService {
     }
 
     //todo list pantry
-    public Set<Ingredient> listUserPantry(Long userId) {
-        Set<Ingredient> pantry = new HashSet<>();
+    public List<Ingredient> displayUserPantry(Long userId) {
         User user = userRepository.findByUserId(userId);
+        List<Ingredient> pantry = new ArrayList<>();
         try {
             if (user == null) {
                 throw new UserNotFoundException();
-            } else {
-                pantry = user.getUserPantry();
             }
-        } catch (Exception e) {
+            pantry = displayUserPantry(userId);
+        }  catch (Exception e) {
             BasicLogger.log(e.getMessage());
         }
+
         return pantry;
     }
+//    public Set<Ingredient> listUserPantry(Long userId) {
+//        Set<Ingredient> pantry = new HashSet<>();
+//        User user = userRepository.findByUserId(userId);
+//        try {
+//            if (user == null) {
+//                throw new UserNotFoundException();
+//            } else {
+//                pantry = user.getUserPantry();
+//            }
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return pantry;
+//    }
 
     public Set<Recipe> addRecipeToUser (Long userId, Long recipeId) {
         Set<Recipe> userRecipes = new HashSet<>();

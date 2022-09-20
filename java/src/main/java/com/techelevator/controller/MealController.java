@@ -7,13 +7,14 @@ import com.techelevator.model.Meal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class MealController {
     //This controller handles the meal table
 
@@ -35,9 +36,9 @@ public class MealController {
     --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/meal/")
-    public void createMeal(@RequestBody Meal meal) {
+    public Meal createMeal(@RequestBody Meal meal) {
         //Meal meal = mapper.mapMealDTOToEntity(mealDTO);
-        mealService.createMeal(meal.getMealName());
+        return mealService.createMeal(meal.getMealName());
     }
 
 

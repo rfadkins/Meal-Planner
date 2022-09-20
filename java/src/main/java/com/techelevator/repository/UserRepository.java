@@ -1,7 +1,5 @@
 package com.techelevator.repository;
-import com.techelevator.model.Ingredient;
-import com.techelevator.model.Recipe;
-import com.techelevator.model.User;
+import com.techelevator.model.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -14,11 +12,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUserId(Long id);
 
-    //Map<Long, Ingredient> findAllIngredientsByUserId(Long userId);
+    List<Ingredient> findUserPantryByUserId(Long userId);
 
-    //Map<Long, Recipe> findAllRecipesByUserId(Long userId);
+    List<Recipe> findUserRecipesByUserId(Long userId);
+
+    List<Meal> findUserMealsByUserId(Long userId);
+
+    List<MealPlan> findUserMealPlansByUserId(Long userId);
 
     List<User> findAll();
 
-    Ingredient findIngredientByUserId(Long userId);
 }

@@ -1,4 +1,5 @@
 package com.techelevator.model;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -23,6 +25,9 @@ public class MealPlan {
 
     @Column(name = "meal_plan_name", nullable = false)
     private String mealPlanName;
+
+    @Column(name="meal_order")
+    private Long[] mealOrder;
 
 
 
@@ -82,9 +87,15 @@ public class MealPlan {
     }
 
 
+    public Long[] getMealOrder() {
+        return mealOrder;
+    }
 
+    public void setMealOrder(Long[] mealOrder) {
+        this.mealOrder = mealOrder;
+    }
 
-/*     ##### EQUALS AND HASHCODE #####
+    /*     ##### EQUALS AND HASHCODE #####
 */
     @Override
     public boolean equals(Object o) {

@@ -5,9 +5,7 @@ import com.techelevator.business.UserService;
 import com.techelevator.model.Ingredient;
 import com.techelevator.security.jwt.JWTFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,10 +37,10 @@ public class IngredientController extends IngredientService{
     --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/")
-    public void createIngredient(@RequestBody Ingredient ingredient) {
+    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
         //com.techelevator.model.Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
         this.ingredientService = ingredientService;
-        this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+        return this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
     }
 
 
