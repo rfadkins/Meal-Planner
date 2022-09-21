@@ -1,4 +1,4 @@
-package com.techelevator.model.test;
+package com.techelevator.model;
 
 
 import lombok.*;
@@ -24,11 +24,13 @@ public class Meal {
     private String mealName;
 
     @OneToMany(mappedBy = "meal")
-    private Set<MealsInMealPlan> mealPlanMeals = new HashSet<>();
+    private Set<MealsInMealPlan> mealsInMealPlan = new HashSet<>();
 
     @OneToMany(mappedBy = "meal")
     private Set<UserSavedMeals> userSavedMeals = new HashSet<>();
 
+    @OneToMany(mappedBy = "meal")
+    private Set<RecipesInMeal> recipesInMeal = new HashSet<>();
 
 
 

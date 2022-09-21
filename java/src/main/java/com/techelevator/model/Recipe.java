@@ -1,9 +1,8 @@
-package com.techelevator.model.test;
+package com.techelevator.model;
 
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -34,6 +33,9 @@ public class Recipe {
 
     @OneToMany
     private Set<RecipesInMeal>  recipesInMeal;
+
+    @OneToMany
+    private Set<IngredientsInRecipe> ingredientsInRecipe;
 
 
 }

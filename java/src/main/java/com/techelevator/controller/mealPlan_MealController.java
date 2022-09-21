@@ -31,11 +31,11 @@ public class mealPlan_MealController{
     meal/meaplan/{meal_id}/{mealplan_id}
     --------------------*/
 
-    @PostMapping ("/meal/mealplan/{mealOrder}/{mealId}/{mealPlanId}")
-    public void addMealToMealPlan(@PathVariable ("mealOrder")int mealOrder, @PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-        mealPlanMealService.addMealToMealPlan(mealOrder, mealId, mealPlanId);
-
-    }
+//    @PostMapping ("/meal/mealplan/{mealOrder}/{mealId}/{mealPlanId}")
+//    public void addMealToMealPlan(@PathVariable ("mealOrder")int mealOrder, @PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
+//        mealPlanMealService.addMealToMealPlan(mealOrder, mealId, mealPlanId);
+//
+//    }
 
     /*--------------------
     removeMealFromMealPlan()
@@ -43,9 +43,9 @@ public class mealPlan_MealController{
     meal/meaplan/{meal_id}/{mealplan_id}
     --------------------*/
 
-    @DeleteMapping("/meal/mealplan/{mealId}/{mealPlanId}")
-    public void removeMealFromMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-       mealPlanMealService.removeMealsFromMealPlan(mealPlanId,mealId);
-    }
+//    @DeleteMapping("/meal/mealplan/{mealId}/{mealPlanId}")
+//    public void removeMealFromMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
+//       mealPlanMealService.removeMealsFromMealPlan(mealPlanId,mealId);
+//    }
 
 }

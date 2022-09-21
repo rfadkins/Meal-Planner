@@ -7,6 +7,7 @@ import com.techelevator.business.UserService;
 import com.techelevator.model.LoginDTO;
 import com.techelevator.model.RegisterUserDTO;
 import com.techelevator.repository.UserRepository;
+import com.techelevator.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 //import com.techelevator.dao.UserDao;
 
 
-import com.techelevator.model.User;
+//import com.techelevator.model.User;
 import com.techelevator.exceptions.UserAlreadyExistsException;
 import com.techelevator.security.jwt.JWTFilter;
 import com.techelevator.security.jwt.TokenProvider;

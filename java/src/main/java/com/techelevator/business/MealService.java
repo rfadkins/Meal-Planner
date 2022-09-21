@@ -93,18 +93,18 @@ public class MealService {
 
     //TODO add meal to meal plan
 
-//    public MealPlan addMealToMealPlan (Long userId, Long mealId, Long mealPlanId) {
-//        User user = userRepository.findByUserId(userId);
-//        Meal meal = mealRepository.findByMealId(mealId);
-//        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+    public MealPlan addMealToMealPlan (Long userId, Long mealId, Long mealPlanId) {
+        User user = userRepository.findByUserId(userId);
+        Meal meal = mealRepository.findByMealId(mealId);
+        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+
+//        mealPlan.put(meal.getMealId(), meal);
 //
-////        mealPlan.put(meal.getMealId(), meal);
-////
-////        user.setMealPlan(mealPlan);
-//
-//        //mealPlan.addMeal(meal);
-//        mealPlanRepository.save(mealPlan);
-//
-//        return mealPlan;
-//    }
+//        user.setMealPlan(mealPlan);
+
+        //mealPlan.addMeal(meal);
+        mealPlanRepository.save(mealPlan);
+
+        return mealPlan;
+    }
 }

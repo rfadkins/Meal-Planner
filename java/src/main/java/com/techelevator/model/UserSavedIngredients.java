@@ -1,4 +1,4 @@
-package com.techelevator.model.test;
+package com.techelevator.model;
 
 
 import lombok.*;
@@ -6,11 +6,12 @@ import lombok.*;
 import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @Builder
 @Entity
+@Table(name="user_saved_ingredients")
 public class UserSavedIngredients {
 
     @Id

@@ -1,7 +1,6 @@
-package com.techelevator.model.test;
+package com.techelevator.model;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -9,11 +8,12 @@ import javax.persistence.ManyToOne;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @Builder
 @Entity
+@Table(name="user_saved_meal_plans")
 public class UserSavedMealPlans {
 
     @Id

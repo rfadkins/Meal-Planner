@@ -1,4 +1,4 @@
-package com.techelevator.model.test;
+package com.techelevator.model;
 
 import lombok.*;
 //import org.springframework.data.annotation.Id;
@@ -9,7 +9,7 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Getter
 @Setter
 @Builder
@@ -25,10 +25,10 @@ public class MealPlan {
     @Column(name="meal_plan_name", nullable = false)
     String mealPlanName;
 
-    @OneToMany(mappedBy = "meal")
+    @OneToMany(mappedBy = "mealPlan")
     private Set<MealsInMealPlan> mealPlanMeals = new HashSet<>();
 
-    @OneToMany(mappedBy = "meal")
-    private Set<UserSavedMeals> userSavedMeals = new HashSet<>();
+    @OneToMany(mappedBy = "mealPlan")
+    private Set<UserSavedMealPlans> userSavedMealPlans = new HashSet<>();
 
 }

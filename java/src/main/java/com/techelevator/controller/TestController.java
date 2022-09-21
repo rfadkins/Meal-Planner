@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.business.*;
 import com.techelevator.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,20 +31,30 @@ public class TestController {
 //        return userOwnershipService.listAllUsers();
 //    }
 //
-    @GetMapping("/test/ingredient")
-    public List<Ingredient> listIngredients() {
-        return ingredientService.getAllIngredients();
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping ("/test/ingredient")
+    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
+        //com.techelevator.model.Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
+        this.ingredientService = ingredientService;
+        return this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
     }
 
-    @GetMapping("/test/mealplan/")
-    public List<MealPlan> listMealPlans() {
-        return mealPlanService.displayAllMealPlans();
-    }
-
-    @GetMapping("/test/user/pantry/{userId}")
-    public List<Ingredient> displayUserPantry (Long userId) {
-        return userOwnershipService.displayUserPantry(userId);
-    }
+//
+//    @GetMapping("/test/ingredient")
+//    public List<Ingredient> listIngredients() {
+//        return ingredientService.getAllIngredients();
+//    }
+//
+//    @GetMapping("/test/mealplan/")
+//    public List<MealPlan> listMealPlans() {
+//        return mealPlanService.displayAllMealPlans();
+//    }
+//
+//    @GetMapping("/test/user/pantry/{userId}")
+//    public List<Ingredient> displayUserPantry (Long userId) {
+//        return userOwnershipService.displayUserPantry(userId);
+//    }
 
 //    @GetMapping
 //    public List<MealPlan> listMealPlansByUserId(@RequestParam Long userId) {

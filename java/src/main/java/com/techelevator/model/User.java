@@ -1,7 +1,6 @@
-package com.techelevator.model.test;
+package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.techelevator.model.Authority;
 import lombok.*;
 import javax.persistence.*;
 import java.util.*;
@@ -87,7 +86,7 @@ Constructors, ToString, etc below
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        com.techelevator.model.test.User user = (com.techelevator.model.test.User) o;
+        User user = (User) o;
         return userId == user.userId &&
                 activated == user.activated &&
                 Objects.equals(username, user.username) &&

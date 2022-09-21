@@ -2,6 +2,7 @@ package com.techelevator.controller;
 
 import com.techelevator.business.*;
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.IngredientsInRecipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,21 +33,21 @@ public class recipe_IngredientController{
      --------------------*/
 
     @PostMapping ("/ingredient/recipe/{ingredientId}/{recipeId}")
-    public void addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
-        recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId);
+    public IngredientsInRecipe addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId, String ingredientMeasurement, int ingredientQuantity) {
+        return recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId, ingredientMeasurement, ingredientQuantity);
     }
-
-
-    /*--------------------
-    removeIngredientFromRecipe()
-    DELETE
-    ingredient/recipe/{ingredient_id}/{recipe_id}
-    --------------------*/
-
-    @DeleteMapping("/ingredient/recipe/{ingredientId}/{recipeId}")
-    public void removeIngredientFromRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
-       recipeIngredientService.removeIngredientFromRecipe(recipeId,ingredientId);
-    }
+//
+//
+//    /*--------------------
+//    removeIngredientFromRecipe()
+//    DELETE
+//    ingredient/recipe/{ingredient_id}/{recipe_id}
+//    --------------------*/
+//
+//    @DeleteMapping("/ingredient/recipe/{ingredientId}/{recipeId}")
+//    public void removeIngredientFromRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
+//       recipeIngredientService.removeIngredientFromRecipe(recipeId,ingredientId);
+//    }
 
 
 }

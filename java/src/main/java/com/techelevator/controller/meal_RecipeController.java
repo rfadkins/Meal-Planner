@@ -25,20 +25,20 @@ public class meal_RecipeController{
     POST
     recipe/meal/{recipe_id}/{meal_id}
     --------------------*/
-    @PostMapping ("/recipe/meal/{recipeId}/{mealId}")
-    public void addRecipeToMeal(@PathVariable("recipeId") Long recipeId, @PathVariable("mealId") Long mealId) {
-      mealRecipeService.addRecipeToMeal(mealId,recipeId);
-    }
-
-
-    /*--------------------
-    removeRecipeFromMeal()
-    DELETE
-    recipe/meal/{recipe_id}/{meal_id}
-    --------------------*/
-    @DeleteMapping("/recipe/meal/{recipeId}/{mealId}")
-    public void removeRecipeFromMeal(@PathVariable("recipeId") Long recipeId, @PathVariable("mealId") Long mealId) {
-        mealRecipeService.removeRecipeFromMeal(mealId,recipeId);
-    }
+//    @PostMapping ("/recipe/meal/{recipeId}/{mealId}")
+//    public void addRecipeToMeal(@PathVariable("recipeId") Long recipeId, @PathVariable("mealId") Long mealId) {
+//      mealRecipeService.addRecipeToMeal(mealId,recipeId);
+//    }
+//
+//
+//    /*--------------------
+//    removeRecipeFromMeal()
+//    DELETE
+//    recipe/meal/{recipe_id}/{meal_id}
+//    --------------------*/
+//    @DeleteMapping("/recipe/meal/{recipeId}/{mealId}")
+//    public void removeRecipeFromMeal(@PathVariable("recipeId") Long recipeId, @PathVariable("mealId") Long mealId) {
+//        mealRecipeService.removeRecipeFromMeal(mealId,recipeId);
+//    }
 
 }

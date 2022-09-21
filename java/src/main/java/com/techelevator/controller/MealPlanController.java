@@ -44,31 +44,31 @@ public class MealPlanController {
     PUT
     Path: /mealplan/{meal_plan_id}
     --------------------*/
-    @PutMapping ("/mealplan/{mealplanId}")
-    public void editeMealPlan(@PathVariable("mealplanId") Long mealplanID, @RequestBody MealPlan mealPlan) {
-        //MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
-        mealPlanService.editMealPlan(mealplanID, mealPlan.getMealPlanName());
-    }
-
-    /*--------------------
-    deleteMealPlan()
-    DELETE
-    Path: /mealplan/{meal_plan_id}
-    --------------------*/
-    @DeleteMapping ("/mealplan/{mealplanId}")
-    public void editMealPlan(@PathVariable("mealplanId") Long mealplanID) {
-        mealPlanService.deleteMealPlan(mealplanID);
-    }
-
-    /*--------------------
-    displayMealPlan()
-    GET
-    Path: /mealplan/{meal_plan_id}
-    --------------------*/
-    @GetMapping ("/mealplan/{mealplanId}")
-    public MealPlan displayMealPlan(@PathVariable("mealplanId") Long mealplanID) {
-        return mealPlanService.displayMealPlan(mealplanID);
-    }
+//    @PutMapping ("/mealplan/{mealplanId}")
+//    public void editeMealPlan(@PathVariable("mealplanId") Long mealplanID, @RequestBody MealPlan mealPlan) {
+//        //MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
+//        mealPlanService.editMealPlan(mealplanID, mealPlan.getMealPlanName());
+//    }
+//
+//    /*--------------------
+//    deleteMealPlan()
+//    DELETE
+//    Path: /mealplan/{meal_plan_id}
+//    --------------------*/
+//    @DeleteMapping ("/mealplan/{mealplanId}")
+//    public void editMealPlan(@PathVariable("mealplanId") Long mealplanID) {
+//        mealPlanService.deleteMealPlan(mealplanID);
+//    }
+//
+//    /*--------------------
+//    displayMealPlan()
+//    GET
+//    Path: /mealplan/{meal_plan_id}
+//    --------------------*/
+//    @GetMapping ("/mealplan/{mealplanId}")
+//    public MealPlan displayMealPlan(@PathVariable("mealplanId") Long mealplanID) {
+//        return mealPlanService.displayMealPlan(mealplanID);
+//    }
 
 
 }

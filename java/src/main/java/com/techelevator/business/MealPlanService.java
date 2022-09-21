@@ -3,6 +3,7 @@ package com.techelevator.business;
 import com.techelevator.model.MealPlan;
 import com.techelevator.repository.*;
 import com.techelevator.util.BasicLogger;
+import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.techelevator.exceptions.MealPlanNotFoundException;
@@ -33,10 +34,6 @@ public class MealPlanService {
                 throw new MealPlanNotFoundException();
             } else {
                 mealPlan.setMealPlanName(name);
-
-                Long[] mealOrder = new Long[30];
-                fillMealOrderArray(mealOrder);
-                mealPlan.setMealOrder(mealOrder);
 
                 mealPlanRepository.saveAndFlush(mealPlan);
             }
@@ -113,9 +110,9 @@ public class MealPlanService {
 //    }
 
 
-    public Long[] fillMealOrderArray (Long[] mealOrder) {
+    public String[] fillMealOrderArray (String[] mealOrder) {
         for (int i = 1; i < 30; i++) {
-            mealOrder[i] = 0L;
+            mealOrder[i] = 'A' + String.valueOf(i);
         }
         return mealOrder;
     }
