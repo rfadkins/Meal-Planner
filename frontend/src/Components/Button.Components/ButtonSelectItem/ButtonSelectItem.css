@@ -10,12 +10,13 @@
     width: 80px;
     margin-bottom: 0px;
     margin-top: 5px;
+    font-weight: bold;
   }
 
-  .ingrediant_img{
-    height: 50px;
-    width: 50px;
-    margin-bottom: -15px;
+  .ingredient_img{
+    height: 30px;
+    width: 30px;
+    margin-bottom: 5px;
   }
 
   .Item-Count{
@@ -44,12 +45,13 @@
   width: 80px;
   margin-bottom: 0px;
   margin-top: 5px;
+  font-weight: bold;
 }
 
-.ingrediant_img{
-  height: 50px;
-  width: 50px;
-  margin-bottom: -15px;
+.ingredient_img{
+  height: 30px;
+  width: 30px;
+  margin-bottom: 5px;
 }
 
 .Item-Count{

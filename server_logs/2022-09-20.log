@@ -1,0 +1,1 @@
+2022-09-20T20:03:08.1765703: could not execute statement; SQL [n/a]; constraint [FKfxh7yxtvc3m1btm3jydtb8nk7]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement

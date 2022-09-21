@@ -1,3 +1,9 @@
+.popup-buttons{
+    display: flex;
+    justify-content: center;
+    column-gap: 10px;
+}
+
 @media (min-width: 501px){
     .popup{
         position: fixed;
@@ -47,8 +53,7 @@
         width: 50px;
     }
 
-    .submitButton{
-        position: fixed;
+    .submitButton, .deleteButton{
         width: 30%;
         border-radius: 20px;
         margin: 0 0 0 0;
@@ -115,11 +120,9 @@
         width: 50px;
     }
 
-    .submitButton{
-        position: fixed;
+    .submitButton, .deleteButton{
         width: 30%;
         border-radius: 20px;
-        margin: 0 0 0 70px;
     }
 
     .countAndDate{

@@ -1,11 +1,14 @@
+.pantry{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 @media (min-width: 501px){
     .Pantry-body{
-        display: inline-flex;
+        display:flex;
         flex-wrap: wrap;
-        gap: 10px;
-        align-items: center;
         justify-content: center;
-        margin: 7.5px;
+        gap: 10px;
     }
 
     .Pantry-item{
@@ -27,15 +30,14 @@
 
 @media (max-width: 500px){
     .Pantry-body{
-        display: inline-flex;
+        display:flex;
         flex-wrap: wrap;
-        gap: 10px;
-        align-items: center;
         justify-content: center;
-        margin: 7.5px;
+        gap: 10px;
     }
 
     .Pantry-item{
+        
         display: flex;
         align-items: center;
         justify-content: center;

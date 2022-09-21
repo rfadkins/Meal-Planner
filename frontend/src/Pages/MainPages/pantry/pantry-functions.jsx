@@ -1,20 +1,17 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-/*api*/
+/* api */
 import { baseUrl } from "../../../api/baseUrl";
 import axios from "axios";
 
 /* File contains functional code for pantry */
 
 export async function getAllPantryIngredients(userId, token) {
-  //ALPHABETIZE LIST?
-
-  const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
-
-  const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${userId}`, authHeader)
-  return userPantryIngredients.data
-
-  
+  try {
+    const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
+    const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${userId}`, authHeader)
+    return userPantryIngredients.data
+  } catch (err) {
+    alert(err);
+  }
 };
 
 export async function getAllIngredients(token) {
@@ -40,12 +37,34 @@ const getPantryIngredient = async (e) => {
   e.preventDefault();
 }
 
-const editPantryIngredient = async (e) => {
-  e.preventDefault();
+export async function editPantryIngredient(token, ingredient) {
+  try {
+    const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
+
+    //edit ingredient
+    const editIngredient = `${baseUrl}/ingredient/${ingredient.ingredientId}`
+    const editIngredientResponse = await axios.put(editIngredient, ingredient, authHeader)
+    console.log(`Successfully updated ingredient`)
+  } catch (err) {
+    alert(err);
+  }
 };
 
-const deletePantryIngredient = async (e) => {
-  e.preventDefault();
+export async function deletePantryIngredient(userId, token, ingredientId) {
+  try {
+    const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
+
+    //remove from pantry
+    const disjoinIngredientFromUser = `${baseUrl}/pantry/${userId}/${ingredientId}`
+    const disjoinIngredientFromUserResponse = await axios.delete(disjoinIngredientFromUser, authHeader)
+    console.log(`Successfully disjoined ingredient from user`)
+    //delete ingredient
+    const deleteIngredient = `${baseUrl}/ingredient/${ingredientId}`
+    const deleteIngredientResponse = await axios.delete(deleteIngredient, authHeader)
+    console.log(`Successfully deleted ingredient`)
+  } catch (err) {
+    alert(err);
+  }
 }
 
 export async function addNewIngredient(userId, token, ingredient) {
@@ -54,7 +73,6 @@ export async function addNewIngredient(userId, token, ingredient) {
 
     //add new ingredient to ingredient table
     const addIngredientTable = `${baseUrl}/ingredient/`
-    //const addIngredientTable = `${baseUrl}/test/ingredient`
     const addIngredientTableResponse = await axios.post(addIngredientTable, ingredient, authHeader)
     const ingredientId = addIngredientTableResponse.data.ingredientId
     console.log(`Successfully added into Ingredient Table`)
@@ -77,10 +95,10 @@ export const getIngredient = async (e) => {
 
 export function testIngredientList() {
   const testIngredients = [
-    { ingredientId: 1, ingredientName: "egg"},
-    { ingredientId: 2, ingredientName: "bread"},
-    { ingredientId: 3, ingredientName: "milk"},
-    { ingredientId: 4, ingredientName: "cheddar cheese"}
+    { ingredientId: 1, ingredientName: "egg" },
+    { ingredientId: 2, ingredientName: "bread" },
+    { ingredientId: 3, ingredientName: "milk" },
+    { ingredientId: 4, ingredientName: "cheddar cheese" }
   ]
   return testIngredients;
 };

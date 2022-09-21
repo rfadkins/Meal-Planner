@@ -4,10 +4,12 @@
   justify-content: center;
   background-color: aqua;
   border-radius: 20px;
-  height: 70px;
-  width: 70px;
+  height: 80px;
+  width: 80px;
   margin-bottom: 0px;
   margin-top: 5px;
+  font-weight: bolder;
+  font-size: xx-large;
 }
 
 .Shopping-add{
