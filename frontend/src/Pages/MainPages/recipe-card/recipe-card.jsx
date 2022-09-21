@@ -4,15 +4,14 @@ import RecipeCardPart from "../../../Components/Calander.Component/RecipeCard/Re
 import Bar from "../../../Components/Input.Component/search_bar/search_bar";
 import AddItemButtom from "../../../Components/Button.Components/ButtonAddItem/ButtonAddItem";
 import { useState } from "react";
-import { getAllUserRecipes } from "./recipe-card-functions";
+import { getAllUserRecipes, testRecipes } from "./recipe-card-functions";
 /*redux*/
 import { useSelector } from 'react-redux';
 
 export default function RecipeCard(){
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    const [recipeList, setRecipeList] = useState(getAllUserRecipes(currentUserId))
-    console.log(recipeList)
+    const [recipeList, setRecipeList] = useState(testRecipes())
 
     return(
         <div>
@@ -32,7 +31,6 @@ export default function RecipeCard(){
             </div>
             <br/>
             <div className="card-List">
-            
                 <RecipeCardPart recipeList = {recipeList}/>
             </div>
         </div>

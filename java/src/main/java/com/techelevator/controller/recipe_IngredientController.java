@@ -4,10 +4,12 @@ import com.techelevator.business.*;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.IngredientsInRecipe;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-//@PreAuthorize("isAuthenticated()")
+@CrossOrigin
+@PreAuthorize("isAuthenticated()")
 public class recipe_IngredientController{
 
 //This controller handles join tables related to ingredients in recipes

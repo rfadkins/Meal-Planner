@@ -75,6 +75,7 @@ public class UserOwnershipService {
 //    }
 
     //todo list pantry
+
 //    public List<Ingredient> displayUserPantry(Long userId) {
 //        User user = userRepository.findByUserId(userId);
 //        List<Ingredient> pantry = new ArrayList<>();
@@ -125,6 +126,7 @@ public class UserOwnershipService {
 //        }
 //        return userRecipes;
 //    }
+
 
 //    public Set<Recipe> listUserRecipes(Long userId) {
 //        Set<Recipe> userRecipes = new HashSet<>();

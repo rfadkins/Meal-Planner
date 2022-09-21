@@ -40,7 +40,6 @@ public class IngredientController extends IngredientService{
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/")
     public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
-        //com.techelevator.model.Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
         this.ingredientService = ingredientService;
         return this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
     }
@@ -106,7 +105,7 @@ public class IngredientController extends IngredientService{
 
 
 
-    //old code - may still be needed :)
+//old code - may still be needed :)
 
     /*UserService userService;
     IngredientService ingredientService;
@@ -124,8 +123,8 @@ public class IngredientController extends IngredientService{
         return ingredientService.createIngredient(name, category);
     }*/
 
-    //Edit an ingredient
+//Edit an ingredient
 
-    //Remove an ingredient
+//Remove an ingredient
 
 

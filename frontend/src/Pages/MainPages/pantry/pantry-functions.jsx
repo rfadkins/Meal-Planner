@@ -6,63 +6,81 @@ import axios from "axios";
 
 /* File contains functional code for pantry */
 
-export function getAllPantryIngredients(userId){
-  //ALPHABETIZE LIST
-  const testIngredients = [
-    {id: 1, name: "egg", count: 3},
-    {id: 2, name: "bread", count: 1},
-    {id: 3, name: "milk", count: 2},
-    {id: 4, name: "cheddar cheese", count: 1}
-]
+export async function getAllPantryIngredients(userId, token) {
+  //ALPHABETIZE LIST?
 
-//const data = { username: username, password: password };
-//const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${currentUserId}`, data);
+  const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
 
-return testIngredients;
+  const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${userId}`, authHeader)
+  return userPantryIngredients.data
+
+  
 };
 
-export async function getAllIngredients(token){
+export async function getAllIngredients(token) {
+  try {
     const api = `${baseUrl}/ingredients/`
-    const data = { headers: {"Authorization" : `Bearer ${token}`} }
-
-    console.log(data)
-
-    try {
-        const ingredients = await axios.get(api, data);
-        console.log(ingredients);
-      } catch (err) {
-        alert(err);
-      }
-
-      return ("test")
+    const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
+    const ingredients = await axios.get(api, authHeader);
+    return ingredients.data
+  } catch (err) {
+    alert(err);
+  }
 }
 
 const getIngredientsByCategory = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 }
 
 const getIngredientsByName = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 }
 
 const getPantryIngredient = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 }
 
 const editPantryIngredient = async (e) => {
-    e.preventDefault();
-  };
+  e.preventDefault();
+};
 
 const deletePantryIngredient = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 }
 
-const addNewIngredient = async (e) => {
-    e.preventDefault();
+export async function addNewIngredient(userId, token, ingredient) {
+  try {
+    const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
 
-    //have a drop down that is based of what is being typed, if there are no ingredients found, add new
+    //add new ingredient to ingredient table
+    const addIngredientTable = `${baseUrl}/ingredient/`
+    //const addIngredientTable = `${baseUrl}/test/ingredient`
+    const addIngredientTableResponse = await axios.post(addIngredientTable, ingredient, authHeader)
+    const ingredientId = addIngredientTableResponse.data.ingredientId
+    console.log(`Successfully added into Ingredient Table`)
+
+    //using response, join new ingredient to user
+    const joinIngredientToUser = `${baseUrl}/pantry/${userId}/${ingredientId}`
+    const joinIngredientToUserResponse = await axios.post(joinIngredientToUser, "", authHeader)
+    console.log(`Successfully joined to User Table`)
+  } catch (err) {
+    alert(err);
+  }
+
+  //Upgrades to functionality:
+  //have a drop down that is based of what is being typed, if there are no ingredients found, add new
 }
 
 export const getIngredient = async (e) => {
 
 }
+
+export function testIngredientList() {
+  const testIngredients = [
+    { ingredientId: 1, ingredientName: "egg"},
+    { ingredientId: 2, ingredientName: "bread"},
+    { ingredientId: 3, ingredientName: "milk"},
+    { ingredientId: 4, ingredientName: "cheddar cheese"}
+  ]
+  return testIngredients;
+};
