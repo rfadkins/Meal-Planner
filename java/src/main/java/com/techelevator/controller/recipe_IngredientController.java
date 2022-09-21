@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class recipe_IngredientController{
 
 //This controller handles join tables related to ingredients in recipes
@@ -35,8 +37,13 @@ public class recipe_IngredientController{
      --------------------*/
 
     @PostMapping ("/ingredient/recipe/{ingredientId}/{recipeId}")
-    public IngredientsInRecipe addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId, String ingredientMeasurement, int ingredientQuantity) {
-        return recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId, ingredientMeasurement, ingredientQuantity);
+    public IngredientsInRecipe addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId,  Integer ingredientQuantity, String ingredientMeasurement) {
+        return recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId,  ingredientQuantity, ingredientMeasurement);
+    }
+
+    @GetMapping("/ingredient/recipe/{recipeId}")
+    public List<IngredientsInRecipe> listIngredientsInRecipe(@PathVariable("recipeId") Long recipeId) {
+        return recipeIngredientService.listIngredientsInRecipe(recipeId);
     }
 //
 //

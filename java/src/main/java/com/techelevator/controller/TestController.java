@@ -12,7 +12,7 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class TestController {
 
     @Autowired

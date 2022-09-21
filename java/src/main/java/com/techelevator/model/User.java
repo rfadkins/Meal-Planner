@@ -37,17 +37,20 @@ public class User {
     @Transient
     private Set<Authority> authorities = new HashSet<>();
 
-
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<UserSavedMeals> userSavedMeals;
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<UserSavedMealPlans> userSavedMealPlans;
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<UserSavedRecipes> userSavedRecipes;
 
-    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<UserSavedIngredients> userSavedIngredients;
 
 

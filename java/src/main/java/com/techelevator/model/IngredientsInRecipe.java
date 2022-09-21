@@ -25,7 +25,7 @@ public class IngredientsInRecipe {
     Recipe recipe;
 
     @Column(name="ingredient_quantity")
-    int ingredientQuantity;
+    Integer ingredientQuantity;
 
     @Column(name="ingredient_measurement")
     String ingredientMeasurement;

@@ -50,50 +50,46 @@ public class IngredientController extends IngredientService{
     PUT
     PATH: /ingredient/{ingredient_id}
     --------------------*/
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    @PutMapping ("/{ingredientId}")
-//    public void editIngredient(@PathVariable("ingredientId") Long ingredientId, @RequestBody Ingredient ingredient) {
-//        //Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
-//        ingredientService.editIngredient(ingredientId, ingredient.getIngredientName(), ingredient.getIngredientCategory());
-//    }
-//
-//
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PutMapping ("/{ingredientId}")
+    public void editIngredient(@PathVariable("ingredientId") Long ingredientId, @RequestBody Ingredient ingredient) {
+        //Ingredient ingredient = mapper.mapIngredientDTOToEntity(ingredientDTO);
+        ingredientService.editIngredient(ingredientId, ingredient.getIngredientName(), ingredient.getIngredientCategory());
+    }
+
+
 //    /*--------------------
 //    deleteIngredient()
 //    DELETE
 //    PATH: /ingredient/{ingredient_id}
 //    --------------------*/
-//    @ResponseStatus(HttpStatus.ACCEPTED)
-//    @DeleteMapping ("/{ingredientId}")
-//    public void deleteIngredient(@PathVariable("ingredientId") Long ingredientId) {
-//        ingredientService.deleteIngredient(ingredientId);
-//    }
-//
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @DeleteMapping ("/{ingredientId}")
+    public void deleteIngredient(@PathVariable("ingredientId") Long ingredientId) {
+        ingredientService.deleteIngredient(ingredientId);
+    }
+
 //    /*--------------------
 //    getIngredient()
 //    GET
 //    PATH: /Ingredient/{Ingredient_id}
 //    --------------------*/
-//    @GetMapping("/{ingredientId}")
-//    public com.techelevator.model.Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
-//        return ingredientService.getIngredientById(ingredientId);
-//    }
-//
+    @GetMapping("/{ingredientId}")
+    public com.techelevator.model.Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
+        return ingredientService.getIngredientById(ingredientId);
+    }
+
 //    /*--------------------
 //    List listIngredients()
 //    GET
 //    PATH: /Ingredient/
 //    --------------------*/
-//    @GetMapping("/")
-//    public List<Ingredient> listIngredients() {
-//
-//        return ingredientService.getAllIngredients();
-////        HttpHeaders httpHeaders = new HttpHeaders();
-////        //httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-////
-////        httpHeaders.add("Access-Control-Allow-Origin:","*");
-////        return new ResponseEntity<List<Ingredient>>(ingredientService.getAllIngredients(), httpHeaders, HttpStatus.OK);
-//    }
+    @GetMapping("/")
+    public List<Ingredient> listIngredients() {
+
+        return ingredientService.getAllIngredients();
+
+    }
 
 
 
@@ -106,6 +102,17 @@ public class IngredientController extends IngredientService{
 
 
 //old code - may still be needed :)
+
+
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        //httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+//
+//        httpHeaders.add("Access-Control-Allow-Origin:","*");
+//        return new ResponseEntity<List<Ingredient>>(ingredientService.getAllIngredients(), httpHeaders, HttpStatus.OK);
+
+
+
+
 
     /*UserService userService;
     IngredientService ingredientService;

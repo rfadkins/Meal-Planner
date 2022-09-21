@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
@@ -25,11 +26,12 @@ public class Ingredient {
     @Column(name = "category")
     private String ingredientCategory;
 
-
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy="ingredient", fetch = FetchType.LAZY)
     private Set<IngredientsInRecipe> ingredientsInRecipe;
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy="ingredient", fetch = FetchType.LAZY)
     private Set<UserSavedIngredients> userSavedIngredients;
 
 
