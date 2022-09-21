@@ -47,58 +47,58 @@ public class RecipeController{
         PUT
         PATH: /recipe/{recipe_id}
         --------------------*/
-        @PutMapping("/recipe/{recipeId}")
-        public void editRecipe(@PathVariable("recipeId") Long recipeId, @RequestBody Recipe recipe) {
-            //Recipe recipe = mapper.mapRecipeDTOToEntity(recipeDTO);
-            recipeService.editRecipe(recipeId, recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-        }
-
-
-        /*--------------------
-        deleteRecipe()
-        DELETE
-        PATH: /recipe/{recipe_id}
-        --------------------*/
-        @DeleteMapping("/recipe/{recipeId}")
-        public void deleteRecipe(@PathVariable("recipeId") Long recipeId) {
-
-            recipeService.deleteRecipe(recipeId);
-        }
-
-
-        /*--------------------
-        displayRecipe()
-        GET
-        PATH: /recipe/{recipe_id}
-        --------------------*/
-        @GetMapping("/recipe/{recipeId}")
-        public Recipe displayRecipe(@PathVariable("recipeId") Long recipeId) {
-           return recipeService.displayRecipe(recipeId);
-        }
-
-
-
-        /*--------------------
-        displayAllRecipes()
-        GET
-        PATH: /recipe/
-        --------------------*/
-
-    @GetMapping("/recipe/")
-    public List<Recipe> displayAllRecipes() {
-       return recipeService.displayAllRecipes();
-    }
-
-    /*--------------------
-        displayAllRecipesByCategory()
-        GET
-        PATH: /recipe/category/{category}
-        --------------------*/
-    @GetMapping("/recipe/category/{category}")
-    @ResponseBody
-    public List<Recipe> displayAllRecipesByCategory(@PathVariable String category) {
-        return recipeService.displayRecipeByCategory(category);
-    }
+//        @PutMapping("/recipe/{recipeId}")
+//        public void editRecipe(@PathVariable("recipeId") Long recipeId, @RequestBody Recipe recipe) {
+//            //Recipe recipe = mapper.mapRecipeDTOToEntity(recipeDTO);
+//            recipeService.editRecipe(recipeId, recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+//        }
+//
+//
+//        /*--------------------
+//        deleteRecipe()
+//        DELETE
+//        PATH: /recipe/{recipe_id}
+//        --------------------*/
+//        @DeleteMapping("/recipe/{recipeId}")
+//        public void deleteRecipe(@PathVariable("recipeId") Long recipeId) {
+//
+//            recipeService.deleteRecipe(recipeId);
+//        }
+//
+//
+//        /*--------------------
+//        displayRecipe()
+//        GET
+//        PATH: /recipe/{recipe_id}
+//        --------------------*/
+//        @GetMapping("/recipe/{recipeId}")
+//        public Recipe displayRecipe(@PathVariable("recipeId") Long recipeId) {
+//           return recipeService.displayRecipe(recipeId);
+//        }
+//
+//
+//
+//        /*--------------------
+//        displayAllRecipes()
+//        GET
+//        PATH: /recipe/
+//        --------------------*/
+//
+//    @GetMapping("/recipe/")
+//    public List<Recipe> displayAllRecipes() {
+//       return recipeService.displayAllRecipes();
+//    }
+//
+//    /*--------------------
+//        displayAllRecipesByCategory()
+//        GET
+//        PATH: /recipe/category/{category}
+//        --------------------*/
+//    @GetMapping("/recipe/category/{category}")
+//    @ResponseBody
+//    public List<Recipe> displayAllRecipesByCategory(@PathVariable String category) {
+//        return recipeService.displayRecipeByCategory(category);
+//    }
 
 
 

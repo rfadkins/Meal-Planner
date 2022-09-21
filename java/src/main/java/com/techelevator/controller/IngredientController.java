@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins="*")
 @RequestMapping("/ingredient")
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class IngredientController extends IngredientService{
     //This controller handles the Ingredient table
 
@@ -58,41 +58,37 @@ public class IngredientController extends IngredientService{
     }
 
 
-    /*--------------------
-    deleteIngredient()
-    DELETE
-    PATH: /ingredient/{ingredient_id}
-    --------------------*/
+//    /*--------------------
+//    deleteIngredient()
+//    DELETE
+//    PATH: /ingredient/{ingredient_id}
+//    --------------------*/
     @ResponseStatus(HttpStatus.ACCEPTED)
     @DeleteMapping ("/{ingredientId}")
     public void deleteIngredient(@PathVariable("ingredientId") Long ingredientId) {
         ingredientService.deleteIngredient(ingredientId);
     }
 
-    /*--------------------
-    getIngredient()
-    GET
-    PATH: /Ingredient/{Ingredient_id}
-    --------------------*/
+//    /*--------------------
+//    getIngredient()
+//    GET
+//    PATH: /Ingredient/{Ingredient_id}
+//    --------------------*/
     @GetMapping("/{ingredientId}")
     public com.techelevator.model.Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
         return ingredientService.getIngredientById(ingredientId);
     }
 
-    /*--------------------
-    List listIngredients()
-    GET
-    PATH: /Ingredient/
-    --------------------*/
+//    /*--------------------
+//    List listIngredients()
+//    GET
+//    PATH: /Ingredient/
+//    --------------------*/
     @GetMapping("/")
     public List<Ingredient> listIngredients() {
 
         return ingredientService.getAllIngredients();
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        //httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-//
-//        httpHeaders.add("Access-Control-Allow-Origin:","*");
-//        return new ResponseEntity<>(ingredientService.getAllIngredients(), httpHeaders, HttpStatus.OK);
+
     }
 
 
@@ -106,6 +102,17 @@ public class IngredientController extends IngredientService{
 
 
 //old code - may still be needed :)
+
+
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        //httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+//
+//        httpHeaders.add("Access-Control-Allow-Origin:","*");
+//        return new ResponseEntity<List<Ingredient>>(ingredientService.getAllIngredients(), httpHeaders, HttpStatus.OK);
+
+
+
+
 
     /*UserService userService;
     IngredientService ingredientService;

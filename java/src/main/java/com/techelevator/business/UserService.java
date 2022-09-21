@@ -1,12 +1,12 @@
 package com.techelevator.business;
 import com.techelevator.model.Authority;
 import com.techelevator.util.BasicLogger;
+//import com.techelevator.model.User;
 import com.techelevator.model.User;
 import com.techelevator.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -39,10 +39,10 @@ public class UserService {
         newUser.setRole(role);
 
         Set<Authority> authorities = new HashSet<>();
-        authorities = newUser.addRoleToAuthorities(role);   // "setAuthorities" that took in the string
+        authorities = newUser.addRoleToAuthorities(newUser.getRole());   // "setAuthorities" that took in the string
         newUser.setAuthorities(authorities);                // setAuthorities taking in the effing Authority object
 
-        userRepository.saveAndFlush(newUser);
+        //userRepository.saveAndFlush(newUser);
         try {
             userRepository.saveAndFlush(newUser);
             userCreated = true;

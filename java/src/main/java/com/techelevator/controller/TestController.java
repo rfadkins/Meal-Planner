@@ -12,7 +12,7 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class TestController {
 
     @Autowired
@@ -42,20 +42,24 @@ public class TestController {
 //        return userOwnershipService.listAllUsers();
 //    }
 //
+
+
+
+//
 //    @GetMapping("/test/ingredient")
 //    public List<Ingredient> listIngredients() {
 //        return ingredientService.getAllIngredients();
 //    }
-
-    @GetMapping("/test/mealplan/")
-    public List<MealPlan> listMealPlans() {
-        return mealPlanService.displayAllMealPlans();
-    }
-
-    @GetMapping("/test/user/pantry/{userId}")
-    public List<Ingredient> displayUserPantry (Long userId) {
-        return userOwnershipService.displayUserPantry(userId);
-    }
+//
+//    @GetMapping("/test/mealplan/")
+//    public List<MealPlan> listMealPlans() {
+//        return mealPlanService.displayAllMealPlans();
+//    }
+//
+//    @GetMapping("/test/user/pantry/{userId}")
+//    public List<Ingredient> displayUserPantry (Long userId) {
+//        return userOwnershipService.displayUserPantry(userId);
+//    }
 
 //    @GetMapping
 //    public List<MealPlan> listMealPlansByUserId(@RequestParam Long userId) {

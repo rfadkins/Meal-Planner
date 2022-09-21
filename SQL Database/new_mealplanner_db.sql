@@ -136,4 +136,8 @@ VALUES ('Macaroni and Cheese Dinner', 'Pasta', 'Boil two cups of water. Add Past
 INSERT INTO meal (meal_name)
 VALUES ('Family Dinner'), ('Quick Lunch'), ('Healthy Breakfast'), ('Family Lunch');
 
+/* mealplans */
+INSERT INTO meal (meal_name)
+VALUES ('Weeknight Dinners'), ('Camping Meals'), ('Meals for lifting'), ('Date Weekend Meals');
+
 COMMIT;

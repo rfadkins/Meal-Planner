@@ -1,33 +1,33 @@
-package com.techelevator.business;
-
-import com.techelevator.exceptions.*;
-import com.techelevator.model.*;
-import com.techelevator.repository.*;
-import com.techelevator.util.BasicLogger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-@Service
-public class UserOwnershipService {
-    @Autowired
-    private RecipeRepository recipeRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private IngredientRepository ingredientRepository;
-    @Autowired
-    private MealRepository mealRepository;
-    @Autowired
-    private MealPlanRepository mealPlanRepository;
-
-
-
-    //TODO test
+//package com.techelevator.business.test;
+//
+//import com.techelevator.exceptions.*;
+//import com.techelevator.model.*;
+//import com.techelevator.repository.*;
+//import com.techelevator.util.BasicLogger;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//
+//import java.util.ArrayList;
+//import java.util.HashSet;
+//import java.util.List;
+//import java.util.Set;
+//
+//@Service
+//public class UserOwnershipService {
+//    @Autowired
+//    private RecipeRepository recipeRepository;
+//    @Autowired
+//    private UserRepository userRepository;
+//    @Autowired
+//    private IngredientRepository ingredientRepository;
+//    @Autowired
+//    private MealRepository mealRepository;
+//    @Autowired
+//    private MealPlanRepository mealPlanRepository;
+//
+//
+//
+//    //TODO test
 //    public Set<Ingredient> addIngredientToUserPantry(Long userId, Long ingredientId) {
 //        Set<Ingredient> pantry = new HashSet<>();
 //        User user = userRepository.findByUserId(userId);
@@ -49,9 +49,9 @@ public class UserOwnershipService {
 //        }
 //        return pantry;
 //    }
-
-
-    //TODO remove ing from pan
+//
+//
+//    //TODO remove ing from pan
 //    public Set<Ingredient> removeIngredientFromUserPantry(Long userId, Long ingredientId) {
 //        Set<Ingredient> pantry = new HashSet<>();
 //        User user = userRepository.findByUserId(userId);
@@ -73,9 +73,8 @@ public class UserOwnershipService {
 //        }
 //        return pantry;
 //    }
-
-    //todo list pantry
-
+//
+//    //todo list pantry
 //    public List<Ingredient> displayUserPantry(Long userId) {
 //        User user = userRepository.findByUserId(userId);
 //        List<Ingredient> pantry = new ArrayList<>();
@@ -90,20 +89,20 @@ public class UserOwnershipService {
 //
 //        return pantry;
 //    }
-//    public Set<Ingredient> listUserPantry(Long userId) {
-//        Set<Ingredient> pantry = new HashSet<>();
-//        User user = userRepository.findByUserId(userId);
-//        try {
-//            if (user == null) {
-//                throw new UserNotFoundException();
-//            } else {
-//                pantry = user.getUserPantry();
-//            }
-//        } catch (Exception e) {
-//            BasicLogger.log(e.getMessage());
-//        }
-//        return pantry;
-//    }
+////    public Set<Ingredient> listUserPantry(Long userId) {
+////        Set<Ingredient> pantry = new HashSet<>();
+////        User user = userRepository.findByUserId(userId);
+////        try {
+////            if (user == null) {
+////                throw new UserNotFoundException();
+////            } else {
+////                pantry = user.getUserPantry();
+////            }
+////        } catch (Exception e) {
+////            BasicLogger.log(e.getMessage());
+////        }
+////        return pantry;
+////    }
 //
 //    public Set<Recipe> addRecipeToUser (Long userId, Long recipeId) {
 //        Set<Recipe> userRecipes = new HashSet<>();
@@ -126,8 +125,7 @@ public class UserOwnershipService {
 //        }
 //        return userRecipes;
 //    }
-
-
+//
 //    public Set<Recipe> listUserRecipes(Long userId) {
 //        Set<Recipe> userRecipes = new HashSet<>();
 //        User user = userRepository.findByUserId(userId);
@@ -142,8 +140,8 @@ public class UserOwnershipService {
 //        }
 //        return userRecipes;
 //    }
-
-    //todo add user to meal
+//
+//    //todo add user to meal
 //    public Set<Meal> addMealToUser(Long userId, Long mealId) {
 //        Set<Meal> userMeals = new HashSet<>();
 //        User user = userRepository.findByUserId(userId);
@@ -165,8 +163,8 @@ public class UserOwnershipService {
 //        }
 //        return userMeals;
 //    }
-
-    //todo remove user from meal
+//
+//    //todo remove user from meal
 //    public Set<Meal> removeMealFromUser(Long userId, Long mealId)  {
 //        Set<Meal> userMeals = new HashSet<>();
 //        User user = userRepository.findByUserId(userId);
@@ -267,16 +265,16 @@ public class UserOwnershipService {
 //        }
 //        return userMealPlans;
 //    }
-
-    public List<User> listAllUsers() {
-        List<User> users = new ArrayList<>();
-        try {
-            users = userRepository.findAll();
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return users;
-    }
-
-
-}
+//
+//    public List<User> listAllUsers() {
+//        List<User> users = new ArrayList<>();
+//        try {
+//            users = userRepository.findAll();
+//        } catch (Exception e) {
+//            BasicLogger.log(e.getMessage());
+//        }
+//        return users;
+//    }
+//
+//
+//}

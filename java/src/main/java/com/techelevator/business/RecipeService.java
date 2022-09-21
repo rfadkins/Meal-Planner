@@ -113,33 +113,33 @@ public class RecipeService {
 //        return ingredientsInRecipe;
 //    }
 
-    public Set<Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
-
-        User user = userRepository.findByUserId(userId);
-        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-
-        Set<Recipe> userRecipes = new HashSet<>();
-        userRecipes.add(recipeRepository.findByRecipeId(recipeId));
-
-        user.setUserRecipes(userRecipes);
-        userRepository.save(user);
-
-        return userRecipes;
-    }
-
-    public Set<Recipe> addRecipeToMeal(Long mealId, Long recipeId) {
-
-        Meal meal = mealRepository.findByMealId(mealId);
-        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-
-        Set<Recipe> mealRecipes = new HashSet<>();
-        mealRecipes.add(recipeRepository.findByRecipeId(recipeId));
-        //TODO fix this setter
-//        meal.setMealRecipes(mealRecipes);
-//        mealRepository.save(meal);
-
-        return mealRecipes;
-    }
+//    public Set<Recipe> addRecipeToUserRecipes(Long userId, Long recipeId) {
+//
+//        User user = userRepository.findByUserId(userId);
+//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//
+//        Set<Recipe> userRecipes = new HashSet<>();
+//        userRecipes.add(recipeRepository.findByRecipeId(recipeId));
+//
+//        user.setUserRecipes(userRecipes);
+//        userRepository.save(user);
+//
+//        return userRecipes;
+//    }
+//
+//    public Set<Recipe> addRecipeToMeal(Long mealId, Long recipeId) {
+//
+//        Meal meal = mealRepository.findByMealId(mealId);
+//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+//
+//        Set<Recipe> mealRecipes = new HashSet<>();
+//        mealRecipes.add(recipeRepository.findByRecipeId(recipeId));
+//        //TODO fix this setter
+////        meal.setMealRecipes(mealRecipes);
+////        mealRepository.save(meal);
+//
+//        return mealRecipes;
+//    }
 
 
 //TODO displayRecipe()
