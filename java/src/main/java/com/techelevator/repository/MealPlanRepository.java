@@ -12,7 +12,4 @@ public interface MealPlanRepository extends JpaRepository<MealPlan, Long> {
     MealPlan findByMealPlanId(Long id);
 
 
-
-    List<Meal> findAllMealsByMealPlanId(Long mealPlanId);
-
 }

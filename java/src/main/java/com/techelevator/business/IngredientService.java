@@ -27,14 +27,38 @@ public class IngredientService {
 
     public Ingredient createIngredient(String name, String category) {
         Ingredient ingredient = new Ingredient();
-
-        ingredient.setIngredientName(name);
-        ingredient.setIngredientCategory(category);
-
-        ingredientRepository.saveAndFlush(ingredient);
-
+        try {
+            if (name == null) {
+                throw new IngredientNotFoundException();
+            } else {
+                ingredient.setIngredientName(name);
+                ingredient.setIngredientCategory(category);
+                ingredientRepository.saveAndFlush(ingredient);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return ingredient;
     }
+
+
+    public Ingredient getIngredientById (Long ingredientId) {
+        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+        try {
+            if (ingredient == null) {
+                throw new IngredientNotFoundException();
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return ingredient;
+    }
+
+
+    public List<Ingredient> getAllIngredients() {
+        return ingredientRepository.findAll();
+    }
+
 
     public Ingredient editIngredient(Long ingredientId, String newName, String newCategory) {
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
@@ -43,6 +67,7 @@ public class IngredientService {
         ingredientRepository.saveAndFlush(ingredient);
         return ingredient;
     }
+
 
     public void deleteIngredient(Long ingredientId) {
         Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
@@ -57,27 +82,7 @@ public class IngredientService {
         }
     }
 
-    public Ingredient getIngredientById (Long ingredientId) {
-        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-        try {
-            if (ingredient == null) {
-                throw new IngredientNotFoundException();
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return ingredient;
-    }
-
-    public List<Ingredient> getAllIngredients() {
-        return ingredientRepository.findAll();
-    }
-
-
-
-
 
     //TODO grocery list logic...
 
-    //TODO test listIngredientsInRecipe
 }

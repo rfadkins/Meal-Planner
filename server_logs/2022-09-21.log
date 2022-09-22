@@ -1,0 +1,4 @@
+2022-09-21T17:52:46.0133777: Meal Plan ID cannot be null
+2022-09-21T20:34:53.2575991: could not execute statement; SQL [n/a]; nested exception is org.hibernate.exception.DataException: could not execute statement
+2022-09-21T21:03:43.3230816: could not execute statement; SQL [n/a]; constraint [user_saved_ingredients_id" of relation "user_saved_ingredients]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement
+2022-09-21T22:32:09.2736564: could not execute statement; SQL [n/a]; constraint [FKgee8fhc2eoc5qxrdkjvs9768i]; nested exception is org.hibernate.exception.ConstraintViolationException: could not execute statement

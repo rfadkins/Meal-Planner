@@ -5,11 +5,12 @@ import com.techelevator.business.MealPlanMealService;
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserService;
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.MealPlan;
+import com.techelevator.model.MealsInMealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 //@PreAuthorize("isAuthenticated()")
@@ -31,21 +32,23 @@ public class mealPlan_MealController{
     meal/meaplan/{meal_id}/{mealplan_id}
     --------------------*/
 
-//    @PostMapping ("/meal/mealplan/{mealOrder}/{mealId}/{mealPlanId}")
-//    public void addMealToMealPlan(@PathVariable ("mealOrder")int mealOrder, @PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-//        mealPlanMealService.addMealToMealPlan(mealOrder, mealId, mealPlanId);
-//
-//    }
+    @PostMapping ("/meal/mealplan/{mealId}/{mealPlanId}/")
+    public MealsInMealPlan addMealToMealPlan(
+                        @PathVariable("mealId") Long mealId,
+                        @PathVariable("mealPlanId") Long mealPlanId,
+                        @RequestParam int mealOrder ) {
+        return this.mealPlanMealService.addMealToMealPlan(mealId, mealPlanId, mealOrder );
+    }
 
-    /*--------------------
-    removeMealFromMealPlan()
-    DELETE
-    meal/meaplan/{meal_id}/{mealplan_id}
-    --------------------*/
+    @GetMapping("/meal/mealplan/{mealPlanId}")
+    public List<MealsInMealPlan> displayMealsInMealPlan(@PathVariable("mealPlanId") Long mealPlanId) {
+        return this.mealPlanMealService.displayMealsInMealPlan(mealPlanId);
+    }
 
-//    @DeleteMapping("/meal/mealplan/{mealId}/{mealPlanId}")
-//    public void removeMealFromMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-//       mealPlanMealService.removeMealsFromMealPlan(mealPlanId,mealId);
-//    }
+
+    @DeleteMapping("/meal/mealplan/{mealsInMealPlanId}/")
+    public void removeMealFromMealPlan(@PathVariable("mealsInMealPlanId") Long mealsInMealPlanId) {
+        mealPlanMealService.deleteMealFromMealPlan(mealsInMealPlanId);
+    }
 
 }

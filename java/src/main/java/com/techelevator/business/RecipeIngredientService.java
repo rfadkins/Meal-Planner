@@ -35,9 +35,9 @@ public class RecipeIngredientService {
 
 
 
-    public IngredientsInRecipe addIngredientToRecipe (Long recipeId, Long ingredientId,  Integer ingredientQuantity, String ingredientMeasurement) {
-        IngredientsInRecipe ingredientInRecipe = new IngredientsInRecipe();
+    public IngredientsInRecipe addIngredientToRecipe (Long recipeId, Long ingredientId,  String ingredientQuantity, String ingredientMeasurement) {
 
+        IngredientsInRecipe ingredientInRecipe = new IngredientsInRecipe();
         try {
             Recipe recipe = recipeRepository.findByRecipeId(recipeId);
             Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
@@ -45,86 +45,53 @@ public class RecipeIngredientService {
                 throw new RecipeNotFoundException();
             } else if (ingredient == null) {
                 throw new IngredientNotFoundException();
-            } else if (ingredientInRecipe == null) {
-                ingredientInRecipe = new IngredientsInRecipe();
             } else {
                 ingredientInRecipe.setRecipe(recipe);
                 ingredientInRecipe.setIngredient(ingredient);
+                ingredientInRecipe.setRecipeName(recipe.getRecipeName());
+                ingredientInRecipe.setIngredientName(ingredient.getIngredientName());
                 ingredientInRecipe.setIngredientQuantity(ingredientQuantity);
                 ingredientInRecipe.setIngredientMeasurement(ingredientMeasurement);
                 ingredientsInRecipeRepository.saveAndFlush(ingredientInRecipe);
             }
         } catch(Exception e) {
-
+            e.printStackTrace();
         }
-
         return ingredientInRecipe;
     }
 
     public List<IngredientsInRecipe> listIngredientsInRecipe(Long recipeId) {
+
         List<IngredientsInRecipe> ingredientsInRecipe = new ArrayList<>();
         try {
             Recipe recipe = recipeRepository.findByRecipeId(recipeId);
             if (recipe == null) {
                 throw new RecipeNotFoundException();
             } else {
-                ingredientsInRecipe = ingredientsInRecipeRepository.findAllByRecipeRecipeId(recipeId);
+                ingredientsInRecipe = ingredientsInRecipeRepository.findAllByRecipe(recipe);
             }
-
         } catch(Exception e) {
-
+            e.printStackTrace();
         }
-
         return ingredientsInRecipe;
     }
 
 
-
-//    public Set<Ingredient> addIngredientToRecipe(Long recipeId, Long ingredientId) {
-//        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
-//        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-//        try {
-//            if (recipe == null) {
-//                throw new RecipeNotFoundException();
-//            } else if (ingredient == null) {
-//                throw new IngredientNotFoundException();
-//            } else {
-//                ingredientsInRecipe = recipe.getIngredientsInRecipe();
-//                ingredientsInRecipe.add(ingredient);
-//                recipe.setIngredientsInRecipe(ingredientsInRecipe);
-//
-//                recipeRepository.saveAndFlush(recipe);
-//            }
-//        } catch (Exception e) {
-//            BasicLogger.log(e.getMessage());
-//        }
-//        return ingredientsInRecipe;
-//    }
-
-//    public Recipe removeIngredientFromRecipe(Long recipeId, Long ingredientId) {
-//        Set<Ingredient> ingredientsInRecipe = new HashSet<>();
-//        Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-//        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-//        try {
-//            if (recipe == null) {
-//                throw new RecipeNotFoundException();
-//            } else if (ingredient == null) {
-//                throw new IngredientNotFoundException();
-//            } else {
-//                ingredientsInRecipe = recipe.getIngredientsInRecipe();
-//                ingredientsInRecipe.remove(ingredient);
-//                recipe.setIngredientsInRecipe(ingredientsInRecipe);
-//
-//                recipeRepository.saveAndFlush(recipe);
-//            }
-//        } catch (Exception e) {
-//            BasicLogger.log(e.getMessage());
-//        }
-//        return recipe;
-//    }
-
-
+    public String deleteIngredientFromRecipe(Long ingredientsInRecipeId) {
+        try {
+            IngredientsInRecipe ingredientInRecipe = ingredientsInRecipeRepository.findByIngredientsInRecipeId(ingredientsInRecipeId);
+            if (ingredientInRecipe == null) {
+                throw new IngredientNotFoundException();
+            } else {
+                String name = ingredientInRecipe.getIngredient().getIngredientName();
+                ingredientsInRecipeRepository.delete(ingredientInRecipe);
+                return (name + "Ingredient deleted from recipe");
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "Ingredient was not deleted";
+    }
 
 
 

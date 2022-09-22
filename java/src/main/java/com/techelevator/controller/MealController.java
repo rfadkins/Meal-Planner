@@ -16,7 +16,8 @@ import java.util.List;
 @CrossOrigin
 //@PreAuthorize("isAuthenticated()")
 public class MealController {
-    //This controller handles the meal table
+
+
 
     UserService userService;
     @Autowired
@@ -29,60 +30,41 @@ public class MealController {
         this.mealService = mealService;
     }
 
-    /*--------------------
-    createMeal()
-    POST
-    Path: /meal/
-    --------------------*/
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/meal/")
     public Meal createMeal(@RequestBody Meal meal) {
-        //Meal meal = mapper.mapMealDTOToEntity(mealDTO);
         return mealService.createMeal(meal.getMealName());
     }
 
+    @GetMapping ("/meal/")
+    public List<Meal> displayAllMeals() {
+        return this.mealService.displayAllMeals();
+    }
 
-    /*--------------------
-    editMeal()
-    PUT
-    Path: /meal/{id}
-    --------------------*/
+
+    @GetMapping ("/meal/{mealId}")
+    public Meal displayMeal(@PathVariable("mealId") Long mealId) {
+        return this.mealService.displayMeal(mealId);
+    }
+
+
     @PutMapping ("/meal/{mealId}")
-    public void editMeal(@PathVariable("mealId") Long mealId, @RequestBody Meal meal) {
-        //Meal meal = mapper.mapMealDTOToEntity(mealDTO);
+    public void editMeal(@PathVariable("mealId") Long mealId,
+                        @RequestBody Meal meal) {
         mealService.editMeal(mealId, meal.getMealName());
     }
 
-    /*--------------------
-    deleteMeal()
-    DELETE
-    Path: /meal/{meal_id}
-    --------------------*/
+
     @DeleteMapping ("/meal/{mealId}")
-    public void deleteMeal(@PathVariable("mealId") Long mealId) {
-        mealService.deleteMeal(mealId);
-    }
-
-    /*--------------------
-    displayMeal()
-    GET
-    Path: /meal/{meal_id}
-    --------------------*/
-    @GetMapping ("/meal/{mealId}")
-    public Meal displayMeal(@PathVariable("mealId") Long mealId) {
-        return mealService.displayMeal(mealId);
+    public String deleteMeal(@PathVariable("mealId") Long mealId) {
+        return this.mealService.deleteMeal(mealId);
     }
 
 
-    /*--------------------
-    List displayAllMeals()
-    GET
-    Path: /meal/
-    --------------------*/
-    @GetMapping ("/meal/")
-    public List<Meal> displayAllMeals() {
-        return mealService.displayAllMeals();
-    }
+
+
+
 
 
 }

@@ -36,13 +36,33 @@ public class MealService {
             } else {
                 meal.setMealName(name);
                 mealRepository.saveAndFlush(meal);
-
             }
         } catch (MealNotFoundException e) {
             BasicLogger.log("Meal name cannot be null");
         }
         return meal;
     }
+
+
+    public Meal displayMeal (Long mealId) {
+        try {
+            if (mealRepository.findByMealId(mealId) == null) {
+                throw new MealNotFoundException();
+            } else {
+                return mealRepository.findByMealId(mealId);
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+            return null;
+        }
+    }
+
+
+    public List<Meal> displayAllMeals() {
+
+        return this.mealRepository.findAll();
+    }
+
 
     public Meal editMeal (Long mealId, String newName) {
         Meal editedMeal = new Meal();
@@ -61,50 +81,19 @@ public class MealService {
     }
 
 
-    public void deleteMeal (Long mealId) {
+    public String deleteMeal (Long mealId) {
         try {
-            if (mealRepository.findByMealId(mealId) == null) {
+            Meal meal = mealRepository.findByMealId(mealId);
+            if (meal == null) {
                 throw new MealNotFoundException();
             } else {
-                mealRepository.delete(mealRepository.findByMealId(mealId));
+                mealRepository.delete(meal);
+                return (meal + " has been deleted");
             }
         } catch (Exception e) {
             BasicLogger.log(e.getMessage());
         }
+        return "Meal was not deleted";
     }
 
-    public Meal displayMeal (Long mealId) {
-        try {
-            if (mealRepository.findByMealId(mealId) == null) {
-                throw new MealNotFoundException();
-            } else {
-                return mealRepository.findByMealId(mealId);
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-            return null;
-        }
-    }
-
-    public List<Meal> displayAllMeals() {
-        return mealRepository.findAll();
-    }
-
-
-    //TODO add meal to meal plan
-
-    public MealPlan addMealToMealPlan (Long userId, Long mealId, Long mealPlanId) {
-        User user = userRepository.findByUserId(userId);
-        Meal meal = mealRepository.findByMealId(mealId);
-        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
-
-//        mealPlan.put(meal.getMealId(), meal);
-//
-//        user.setMealPlan(mealPlan);
-
-        //mealPlan.addMeal(meal);
-        mealPlanRepository.save(mealPlan);
-
-        return mealPlan;
-    }
 }

@@ -37,29 +37,29 @@ public class MealServiceTests {
     @Autowired
     MealRepository mealRepository;
 
-    @Test
-    public void mealIdIsNotNull() {
-        Meal meal = Meal.builder()
-                .mealName("TestMealName")
-                .build();
-        meal = mealService.createMeal(meal.getMealName());
-
-        Assertions.assertThat(meal.getMealId()).isNotNull();
-    }
-
-    @Test
-    public void deletedMealIsNull() {
-        Meal meal = Meal.builder()
-                .mealName("TestMealName")
-                .build();
-        meal = mealService.createMeal(meal.getMealName());
-
-        Long testMealId = meal.getMealId();
-        mealService.deleteMeal(meal.getMealId());
-
-        Meal testMeal = mealRepository.findByMealId(testMealId);
-
-        Assertions.assertThat(testMeal).isNull();
-    }
+//    @Test
+//    public void mealIdIsNotNull() {
+//        Meal meal = Meal.builder()
+//                .mealName("TestMealName")
+//                .build();
+//        meal = mealService.createMeal(meal.getMealName());
+//
+//        Assertions.assertThat(meal.getMealId()).isNotNull();
+//    }
+//
+//    @Test
+//    public void deletedMealIsNull() {
+//        Meal meal = Meal.builder()
+//                .mealName("TestMealName")
+//                .build();
+//        meal = mealService.createMeal(meal.getMealName());
+//
+//        Long testMealId = meal.getMealId();
+//        mealService.deleteMeal(meal.getMealId());
+//
+//        Meal testMeal = mealRepository.findByMealId(testMealId);
+//
+//        Assertions.assertThat(testMeal).isNull();
+//    }
 }
 

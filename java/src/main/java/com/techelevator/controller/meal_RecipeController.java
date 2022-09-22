@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 //@PreAuthorize("isAuthenticated()")
 public class meal_RecipeController{
-    //This controller handles join tables related to recipes in meals
 
-    //Uncomment when MealRecipeService is implemented.
-    UserService userService;
-    MealRecipeService mealRecipeService;
+    private UserService userService;
+    private MealRecipeService mealRecipeService;
 
     @Autowired
     public void MealRecipeController(UserService userService, MealRecipeService mealRecipeService) {
@@ -20,25 +18,23 @@ public class meal_RecipeController{
         this.mealRecipeService = mealRecipeService;
     }
 
-    /*--------------------
-    addRecipeToMeal()
-    POST
-    recipe/meal/{recipe_id}/{meal_id}
-    --------------------*/
+
     @PostMapping ("/recipe/meal/{recipeId}/{mealId}")
-    public void addRecipeToMeal(@PathVariable("recipeId") Long recipeId, @PathVariable("mealId") Long mealId) {
-      mealRecipeService.addRecipeToMeal(mealId,recipeId);
+    public void addRecipeToMeal(@PathVariable("recipeId") Long recipeId,
+                                @PathVariable("mealId") Long mealId) {
+        mealRecipeService.addRecipeToMeal(recipeId, mealId);
     }
-//
-//
-//    /*--------------------
-//    removeRecipeFromMeal()
-//    DELETE
-//    recipe/meal/{recipe_id}/{meal_id}
-//    --------------------*/
-//    @DeleteMapping("/recipe/meal/{recipeId}/{mealId}")
-//    public void removeRecipeFromMeal(@PathVariable("recipeId") Long recipeId, @PathVariable("mealId") Long mealId) {
-//        mealRecipeService.removeRecipeFromMeal(mealId,recipeId);
-//    }
+
+
+    @GetMapping ("/recipe/meal/{mealId}")
+    public void getRecipesInMeal(@PathVariable("mealId") Long mealId) {
+        mealRecipeService.getRecipesInMeal(mealId);
+    }
+
+
+    @DeleteMapping("/recipe/meal/{recipeId}/{mealId}")
+    public void removeRecipeFromMeal(@PathVariable("recipesInMealId") Long recipesInMealId) {
+        mealRecipeService.deleteRecipeInMeal(recipesInMealId);
+    }
 
 }

@@ -5,11 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Builder
+
 @Entity
 @Table(name="users")
 
@@ -110,5 +106,84 @@ Constructors, ToString, etc below
                 ", activated=" + activated +
                 ", authorities=" + authorities +
                 '}';
+    }
+
+    public User() {
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public Set<UserSavedMeals> getUserSavedMeals() {
+        return userSavedMeals;
+    }
+
+    public void setUserSavedMeals(Set<UserSavedMeals> userSavedMeals) {
+        this.userSavedMeals = userSavedMeals;
+    }
+
+    public Set<UserSavedMealPlans> getUserSavedMealPlans() {
+        return userSavedMealPlans;
+    }
+
+    public void setUserSavedMealPlans(Set<UserSavedMealPlans> userSavedMealPlans) {
+        this.userSavedMealPlans = userSavedMealPlans;
+    }
+
+    public Set<UserSavedRecipes> getUserSavedRecipes() {
+        return userSavedRecipes;
+    }
+
+    public void setUserSavedRecipes(Set<UserSavedRecipes> userSavedRecipes) {
+        this.userSavedRecipes = userSavedRecipes;
+    }
+
+    public Set<UserSavedIngredients> getUserSavedIngredients() {
+        return userSavedIngredients;
+    }
+
+    public void setUserSavedIngredients(Set<UserSavedIngredients> userSavedIngredients) {
+        this.userSavedIngredients = userSavedIngredients;
     }
 }

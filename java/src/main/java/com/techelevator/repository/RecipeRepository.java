@@ -9,7 +9,7 @@ public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
     Recipe findByRecipeId(Long recipeId);
 
-    Recipe findByCategory(String recipeCategory);
+    List<Recipe> findAllByCategoryLike(String recipeCategory);
 
     List<Recipe> findAllByCategory(String recipeCategory);
 
