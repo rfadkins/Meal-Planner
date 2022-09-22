@@ -31,12 +31,12 @@ public class userOwnershipController{
 
     //------------------------------USER STUFF------------------------------
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/id/{userId}")
     public User getUserById(@PathVariable("userId") Long userId) {
         return userService.findByUserId(userId);
     }
 
-    @GetMapping("/user/{userName}")
+    @GetMapping("/user/username/{userName}")
     public User getUserByUsername(@PathVariable("userName") String userName) {
         return userService.findByUsername(userName);
     }
@@ -99,12 +99,12 @@ public class userOwnershipController{
         return this.userOwnershipService.addMealToUser(userId, mealId);
     }
 
-    @DeleteMapping ("/meal/user/{userId}/{mealId}")
-    public void removeMealFromUser(@PathVariable("userSavedMealId") Long userSavedMealId) {
-        userOwnershipService.deleteUserSavedMeal(userSavedMealId);
+    @DeleteMapping ("/user/meal/{userId}/{mealId}")
+    public String removeMealFromUser(@PathVariable("userSavedMealId") Long userSavedMealId) {
+        return this.userOwnershipService.deleteUserSavedMeal(userSavedMealId);
     }
 
-    @GetMapping ("/meal/user/{userId}")
+    @GetMapping ("/user/meal/{userId}")
     public List<UserSavedMeals> displayMyMeals(@PathVariable ("userId") Long userId) {
         return userOwnershipService.displayUserSavedMeals(userId);
     }
@@ -120,12 +120,12 @@ public class userOwnershipController{
         return this.userOwnershipService.addMealPlanToUser(userId,mealPlanId);
     }
 
-    @DeleteMapping ("/mealplan/user/{userSavedMealPlansId}")
+    @DeleteMapping ("/user/mealplan/{userSavedMealPlansId}")
     public String removeMealPlanFromUser(@PathVariable("userSavedMealPlansId") Long userSavedMealPlansId) {
         return this.userOwnershipService.removeMealPlanFromUser(userSavedMealPlansId);
     }
 
-    @GetMapping ("/mealplan/user/{userId}")
+    @GetMapping ("/user/mealplan/{userId}")
     public List<UserSavedMealPlans> displayMyMealPlans(@PathVariable ("userId") Long userId) {
         return userOwnershipService.displayUserSavedMealPlans(userId);
     }
