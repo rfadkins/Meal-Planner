@@ -38,8 +38,7 @@ const addNewRecipe = async (e) => {
 
 export function testRecipes() {
     const testRecipes = [
-        { id: 1, name: "Baked Potato", ingredients: [{ count: 1, measurement: "whole", name: "potato" }, { count: 2, measurement: "tbs", name: "butter" }, { count: 1, measurement: "pinch", name: "salt" }], instructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt." },
-        { id: 2, name: "Baked Potato", ingredients: [{ count: 1, measurement: "whole", name: "potato" }, { count: 2, measurement: "tbs", name: "butter" }, { count: 1, measurement: "pinch", name: "salt" }], instructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt." }
+        { id: 1, name: "Baked Potato", ingredients: [{ id: 1, ingredientCount: 1, ingredientLabel: "whole", ingredientName: "potato" }, { id: 2, ingredientCount: 2, ingredientLabel: "tbs", ingredientName: "butter" }, { id: 3, ingredientCount: 1, ingredientLabel: "pinch", ingredientName: "salt" }], instructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt." }
     ]
     return testRecipes;
 };
