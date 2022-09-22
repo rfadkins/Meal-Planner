@@ -39,20 +39,20 @@ public class RecipeServiceTests {
     @Autowired
     RecipeIngredientService recipeIngredientService;
 
-    @Test
-    public void recipeIdIsNotNull() {
-        Recipe recipe = Recipe.builder()
-                .recipeName("TestRecipeName")
-                .recipeInstructions("TestRecipeInstructions")
-                .category("TestCategory")
-                .build();
-
-        recipe = recipeService.createRecipe(recipe.getRecipeName(),
-                                            recipe.getRecipeInstructions(),
-                                            recipe.getCategory());
-
-        Assertions.assertThat(recipe.getRecipeId()).isNotNull();
-    }
+//    @Test
+//    public void recipeIdIsNotNull() {
+//        Recipe recipe = Recipe.builder()
+//                .recipeName("TestRecipeName")
+//                .recipeInstructions("TestRecipeInstructions")
+//                .category("TestCategory")
+//                .build();
+//
+//        recipe = recipeService.createRecipe(recipe.getRecipeName(),
+//                                            recipe.getRecipeInstructions(),
+//                                            recipe.getCategory());
+//
+//        Assertions.assertThat(recipe.getRecipeId()).isNotNull();
+//    }
 
 
 
