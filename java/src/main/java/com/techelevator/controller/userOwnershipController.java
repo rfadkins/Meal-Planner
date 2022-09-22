@@ -4,8 +4,12 @@ import com.techelevator.business.IngredientService;
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserOwnershipService;
 import com.techelevator.business.UserService;
+import com.techelevator.exceptions.UserNotFoundException;
+import com.techelevator.exceptions.UserSavedIngredientNotFoundException;
 import com.techelevator.model.*;
+import com.techelevator.repository.UserSavedIngredientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +18,18 @@ import java.util.Set;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class userOwnershipController{
-    //This controller handles join tables related to user ownership
+
 
     @Autowired
     UserService userService;
     @Autowired
     UserOwnershipService userOwnershipService;
+    @Autowired
+    UserSavedIngredientsRepository userSavedIngredientsRepository;
+
+
 
     @Autowired
     public void UserOwnershipController (UserService userService, UserOwnershipService userOwnershipService) {
@@ -50,11 +58,23 @@ public class userOwnershipController{
 
     //------------------------------INGREDIENT /  PANTRY------------------------------
 
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/user/pantry/{userId}/{ingredientId}")
     public UserSavedIngredients addIngredientToPantry(@PathVariable ("userId") Long userId,
                                                         @PathVariable ("ingredientId") Long ingredientId) {
-        return this.userOwnershipService.addIngredientToUserPantry(userId,ingredientId);
+        try {
+            User user = userService.findByUserId(userId);
+            if (user == null){
+                throw new UserNotFoundException();
+            } else {
+                return userOwnershipService.addIngredientToUserPantry(userId, ingredientId);
+            }
+        } catch (Exception e) {
+
+            e.getMessage();
+            return null;
+        }
+
     }
 
     @DeleteMapping ("/user/pantry/{userSavedIngredientsId}")
@@ -62,9 +82,21 @@ public class userOwnershipController{
         return this.userOwnershipService.deleteIngredientFromUserPantry(userSavedIngredientsId);
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping ("/user/pantry/{userId}")
     public List<UserSavedIngredients> listUserPantry(@PathVariable ("userId") Long userId) {
-        return this.userOwnershipService.displayUserPantry(userId);
+        try {
+            List<UserSavedIngredients> userSavedIngredients = userSavedIngredientsRepository.findAllByUser
+                                                                        (userService.findByUserId(userId));
+            if (userSavedIngredients == null){
+                throw new UserSavedIngredientNotFoundException();
+            } else {
+                return this.userOwnershipService.displayUserPantry(userId);
+            }
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 
 

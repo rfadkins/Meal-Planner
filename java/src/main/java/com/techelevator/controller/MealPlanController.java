@@ -6,6 +6,7 @@ import com.techelevator.business.UserService;
 import com.techelevator.model.MealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class MealPlanController {
     //This controller handles the meal_plan table
 

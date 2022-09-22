@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins="*")
 @RequestMapping("/ingredient")
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class IngredientController extends IngredientService{
     //This controller handles the Ingredient table
 

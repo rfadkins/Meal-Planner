@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class recipe_IngredientController{
 
 //This controller handles join tables related to ingredients in recipes

@@ -50,7 +50,8 @@ public class MealPlanMealService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println(e.getMessage());
+            e.getMessage();
+            //System.out.println(e.getMessage());
         }
         return mealsInMealPlan;
     }

@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 //@RequestMapping("/recipe")
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class RecipeController{
 //This controller handles the recipe table
 

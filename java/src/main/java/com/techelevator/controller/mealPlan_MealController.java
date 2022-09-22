@@ -8,12 +8,13 @@ import com.techelevator.model.Ingredient;
 import com.techelevator.model.MealPlan;
 import com.techelevator.model.MealsInMealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class mealPlan_MealController{
     //This controller handles join tables related to meals in meal plans
 

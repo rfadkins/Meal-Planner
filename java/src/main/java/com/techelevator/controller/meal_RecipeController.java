@@ -3,10 +3,11 @@ package com.techelevator.controller;
 import com.techelevator.business.MealRecipeService;
 import com.techelevator.business.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class meal_RecipeController{
 
     private UserService userService;
