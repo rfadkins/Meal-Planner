@@ -54,12 +54,13 @@ public class UserOwnershipService {
                 return userSavedIngredients;
             }
         } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
+            e.getMessage();
+            e.printStackTrace();
         }
         return userSavedIngredients;
     }
 
-    public String deleteIngredientFromUserPantry(Long userSavedIngredientId) {
+    public void deleteIngredientFromUserPantry(Long userSavedIngredientId) {
         try {
             UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientId);
             if (userSavedIngredients == null) {
@@ -67,13 +68,33 @@ public class UserOwnershipService {
             } else {
                 String ingredientName = userSavedIngredients.getIngredient().getIngredientName();
                 userSavedIngredientsRepository.delete(userSavedIngredients);
-                return (ingredientName + " deleted from pantry");
             }
         } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
+            e.getMessage();
+            e.printStackTrace();
         }
-        return "Ingredient not deleted from pantry";
     }
+
+
+    public UserSavedIngredients editUserSavedIngredient(Long userId, Long ingredientId, Long userSavedIngredientId) {
+
+        UserSavedIngredients userSavedIngredientsToEdit = new UserSavedIngredients();
+        try {
+            userSavedIngredientsToEdit = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientId);
+            if (userSavedIngredientsToEdit == null) {
+                throw new UserSavedIngredientNotFoundException();
+            } else {
+                userSavedIngredientsToEdit.setUser(userRepository.findByUserId(userId));
+                userSavedIngredientsToEdit.setIngredient(ingredientRepository.findByIngredientId(ingredientId));
+                userSavedIngredientsRepository.saveAndFlush(userSavedIngredientsToEdit);
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+        }
+        return userSavedIngredientsToEdit;
+    }
+
 
     public List<UserSavedIngredients> displayUserPantry(Long userId) {
         List<UserSavedIngredients> userSavedIngredients = new ArrayList<>();
@@ -85,7 +106,22 @@ public class UserOwnershipService {
                 userSavedIngredients = userSavedIngredientsRepository.findAllByUser(user);
             }
         } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
+            e.getMessage();
+            e.printStackTrace();
+        }
+        return userSavedIngredients;
+    }
+
+    public UserSavedIngredients getUserSavedIngredientById(Long userSavedIngredientId) {
+        UserSavedIngredients userSavedIngredients = new UserSavedIngredients();
+        try {
+            userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientId);
+            if (userSavedIngredients == null) {
+                throw new UserSavedIngredientNotFoundException();
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
         }
         return userSavedIngredients;
     }
@@ -117,7 +153,8 @@ public class UserOwnershipService {
         return userSavedRecipes;
     }
 
-    public String deleteUserSavedRecipe(Long userSavedRecipeId) {
+
+    public void deleteUserSavedRecipe(Long userSavedRecipeId) {
         try {
             UserSavedRecipes userSavedRecipes = userSavedRecipesRepository.findByUserSavedRecipesId(userSavedRecipeId);
             if (userSavedRecipes == null) {
@@ -125,15 +162,36 @@ public class UserOwnershipService {
             } else {
                 String recipeName = userSavedRecipes.getRecipe().getRecipeName();
                 userSavedRecipesRepository.delete(userSavedRecipes);
-                return (recipeName + " deleted from saved recipes");
             }
         } catch (Exception e) {
             BasicLogger.log(e.getMessage());
         }
-        return "Recipe not deleted from saved recipes";
     }
 
+
+
+    public UserSavedRecipes editUserSavedRecipe(Long userId, Long recipeId, Long userSavedRecipeId) {
+
+        UserSavedRecipes userSavedRecipesToEdit = new UserSavedRecipes();
+        try {
+            userSavedRecipesToEdit = userSavedRecipesRepository.findByUserSavedRecipesId(userSavedRecipeId);
+            if (userSavedRecipesToEdit == null) {
+                throw new UserSavedRecipeNotFoundException();
+            } else {
+                userSavedRecipesToEdit.setUser(userRepository.findByUserId(userId));
+                userSavedRecipesToEdit.setRecipe(recipeRepository.findByRecipeId(recipeId));
+                userSavedRecipesRepository.saveAndFlush(userSavedRecipesToEdit);
+
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return userSavedRecipesToEdit;
+    }
+
+
     public List<UserSavedRecipes> displayUserSavedRecipes(Long userId) {
+
         List<UserSavedRecipes> userSavedRecipes = new ArrayList<>();
         try {
             User user = userRepository.findByUserId(userId);
@@ -148,26 +206,25 @@ public class UserOwnershipService {
         return userSavedRecipes;
     }
 
+    public UserSavedRecipes getUserSavedRecipe(Long userSavedRecipeId) {
+        try {
+            UserSavedRecipes userSavedRecipes = userSavedRecipesRepository.findByUserSavedRecipesId(userSavedRecipeId);
+            if (userSavedRecipes == null) {
+                throw new UserSavedRecipeNotFoundException();
+            } else {
+                return userSavedRecipes;
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
 
     //------------------------------MEAL------------------------------
 
-
-    public List<UserSavedMeals> displayUserSavedMeals(Long userId) {
-
-        List<UserSavedMeals> userSavedMeals = new ArrayList<>();
-        try {
-            User user = userRepository.findByUserId(userId);
-            if (user == null) {
-                throw new UserNotFoundException();
-            } else {
-                userSavedMeals = userSavedMealsRepository.findAllByUser(user);
-            }
-        } catch (Exception e) {
-            BasicLogger.log(e.getMessage());
-        }
-        return userSavedMeals;
-    }
 
     public UserSavedMeals addMealToUser(Long userId, Long mealId) {
 
@@ -208,6 +265,57 @@ public class UserOwnershipService {
     }
 
 
+    public UserSavedMeals editUserSavedMeal(Long userId, Long mealId, Long userSavedMealId) {
+
+        UserSavedMeals userSavedMealsToEdit = new UserSavedMeals();
+        try {
+            userSavedMealsToEdit = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
+            if (userSavedMealsToEdit == null) {
+                throw new UserSavedMealNotFoundException();
+            } else {
+                userSavedMealsToEdit.setUser(userRepository.findByUserId(userId));
+                userSavedMealsToEdit.setMeal(mealRepository.findByMealId(mealId));
+                userSavedMealsRepository.saveAndFlush(userSavedMealsToEdit);
+                return userSavedMealsToEdit;
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return userSavedMealsToEdit;
+    }
+
+    public List<UserSavedMeals> displayUserSavedMeals(Long userId) {
+
+        List<UserSavedMeals> userSavedMeals = new ArrayList<>();
+        try {
+            User user = userRepository.findByUserId(userId);
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else {
+                userSavedMeals = userSavedMealsRepository.findAllByUser(user);
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return userSavedMeals;
+    }
+
+    public UserSavedMeals getUserSavedMeals(Long userSavedMealId) {
+        try {
+            UserSavedMeals userSavedMeals = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
+            if (userSavedMeals == null) {
+                throw new UserSavedMealNotFoundException();
+            } else {
+                return userSavedMeals;
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 
     //------------------------------MEAL PLAN------------------------------
 
@@ -234,7 +342,7 @@ public class UserOwnershipService {
         return userSavedMealPlan;
     }
 
-    public String removeMealPlanFromUser(Long userSavedMealPlanId) {
+    public void deleteMealPlanFromUser(Long userSavedMealPlanId) {
         try {
             UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlanId);
             if (userSavedMealPlan == null) {
@@ -242,12 +350,37 @@ public class UserOwnershipService {
             } else {
                 userSavedMealPlansRepository.delete(userSavedMealPlan);
                 String name = userSavedMealPlan.getMealPlan().getMealPlanName();
-                return (name + " Meal Plan removed from user");
             }
         } catch (Exception e) {
             BasicLogger.log(e.getMessage());
         }
-        return "Meal Plan not removed from user";
+    }
+
+    public UserSavedMealPlans editUserSavedMealPlan(Long userId, Long mealPlanId, Long userSavedMealPlanId) {
+
+        UserSavedMealPlans userSavedMealPlanToEdit = new UserSavedMealPlans();
+        try {
+            userSavedMealPlanToEdit = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlanId);
+            User user = userRepository.findByUserId(userId);
+            MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+
+            if (userSavedMealPlanToEdit == null) {
+                throw new UserSavedMealPlanNotFoundException();
+            } else if (user == null) {
+                throw new UserNotFoundException();
+            } else if (mealPlan == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                userSavedMealPlanToEdit.setUser(userRepository.findByUserId(userId));
+                userSavedMealPlanToEdit.setMealPlan(mealPlanRepository.findByMealPlanId(mealPlanId));
+                userSavedMealPlansRepository.saveAndFlush(userSavedMealPlanToEdit);
+
+                return userSavedMealPlanToEdit;
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return userSavedMealPlanToEdit;
     }
 
     public List<UserSavedMealPlans> displayUserSavedMealPlans(Long userId) {
@@ -266,6 +399,20 @@ public class UserOwnershipService {
         return userSavedMealPlans;
     }
 
+    public UserSavedMealPlans getUserSavedMealPlan(Long userSavedMealPlanId) {
+        try {
+            UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlanId);
+            if (userSavedMealPlan == null) {
+                throw new UserSavedMealPlanNotFoundException();
+            } else {
+                return userSavedMealPlan;
+            }
+        } catch (Exception e) {
+            e.getMessage();
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 
 

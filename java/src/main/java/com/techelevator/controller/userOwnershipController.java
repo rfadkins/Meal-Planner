@@ -4,14 +4,14 @@ import com.techelevator.business.IngredientService;
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserOwnershipService;
 import com.techelevator.business.UserService;
-import com.techelevator.exceptions.UserNotFoundException;
-import com.techelevator.exceptions.UserSavedIngredientNotFoundException;
+import com.techelevator.exceptions.*;
 import com.techelevator.model.*;
-import com.techelevator.repository.UserSavedIngredientsRepository;
+import com.techelevator.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Set;
@@ -21,15 +21,30 @@ import java.util.Set;
 @PreAuthorize("isAuthenticated()")
 public class userOwnershipController{
 
+//imports
 
     @Autowired
     UserService userService;
     @Autowired
     UserOwnershipService userOwnershipService;
     @Autowired
+    UserRepository userRepository;
+    @Autowired
+    IngredientRepository ingredientRepository;
+    @Autowired
+    RecipeRepository recipeRepository;
+    @Autowired
+    MealRepository mealRepository;
+    @Autowired
+    MealPlanRepository mealPlanRepository;
+    @Autowired
     UserSavedIngredientsRepository userSavedIngredientsRepository;
-
-
+    @Autowired
+    UserSavedRecipesRepository userSavedRecipesRepository;
+    @Autowired
+    UserSavedMealsRepository userSavedMealsRepository;
+    @Autowired
+    UserSavedMealPlansRepository userSavedMealPlansRepository;
 
     @Autowired
     public void UserOwnershipController (UserService userService, UserOwnershipService userOwnershipService) {
@@ -37,31 +52,61 @@ public class userOwnershipController{
         this.userOwnershipService = userOwnershipService;
     }
 
-    //------------------------------USER STUFF------------------------------
 
+
+/*
+-----------------------------------USER STUFF-----------------------------------
+Get User by ID                      /user/id/{userId}
+Get User by Username                /user/username/{username}
+Get All Users                       /user/  ** (ADMIN ONLY)? **
+*/
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user/id/{userId}")
     public User getUserById(@PathVariable("userId") Long userId) {
-        return userService.findByUserId(userId);
-    }
-
+        try {
+            User user = userRepository.findByUserId(userId);
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else {
+                return user;
+            }
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+}
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user/username/{userName}")
     public User getUserByUsername(@PathVariable("userName") String userName) {
-        return userService.findByUsername(userName);
+        try {
+            User user = userRepository.findByUsername(userName);
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else {
+                return user;
+            }
+        } catch (UserNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
-
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/user")
     public List<User> getAllUsers() {
         return userService.listAllUsers();
     }
 
 
-
-    //------------------------------INGREDIENT /  PANTRY------------------------------
-
+/*
+------------------------------INGREDIENT /  PANTRY------------------------------
+Add ingredient to pantry            /user/pantry/add{userId}/{ingredientId}
+Delete ingredient from pantry       /user/pantry/delete/{userSavedIngredientsId}
+Edit UserSavedIngredient            /user/ingredient/pantry/edit/{userId}/{ingredientId}/{userIngredientId}
+Get all ingredients in pantry       /user/pantry/all/{userId}
+Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
+*/
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping ("/user/pantry/{userId}/{ingredientId}")
+    @PostMapping ("/user/pantry/add{userId}/{ingredientId}")
     public UserSavedIngredients addIngredientToPantry(@PathVariable ("userId") Long userId,
-                                                        @PathVariable ("ingredientId") Long ingredientId) {
+                                                      @PathVariable ("ingredientId") Long ingredientId) {
         try {
             User user = userService.findByUserId(userId);
             if (user == null){
@@ -70,97 +115,361 @@ public class userOwnershipController{
                 return userOwnershipService.addIngredientToUserPantry(userId, ingredientId);
             }
         } catch (Exception e) {
-
-            e.getMessage();
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
-
     }
 
-    @DeleteMapping ("/user/pantry/{userSavedIngredientsId}")
-    public String deleteIngredientFromUserPantry(@PathVariable ("userSavedIngredientsId") Long userSavedIngredientsId) {
-        return this.userOwnershipService.deleteIngredientFromUserPantry(userSavedIngredientsId);
-    }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping ("/user/pantry/{userId}")
+    @DeleteMapping ("/user/pantry/delete/{userSavedIngredientsId}")
+    public void deleteIngredientFromUserPantry(@PathVariable ("userSavedIngredientsId") Long userSavedIngredientsId) {
+        try {
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientsId);
+            if (userSavedIngredients == null){
+                throw new UserSavedIngredientNotFoundException();
+            } else {
+                userOwnershipService.deleteIngredientFromUserPantry(userSavedIngredientsId);
+            }
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping ("/user/ingredient/pantry/edit/{userId}/{ingredientId}/{userIngredientId}")
+    public UserSavedIngredients editIngredientFromUserPantry(@PathVariable ("userId") Long userId,
+                                                            @PathVariable ("ingredientId") Long ingredientId,
+                                                            @PathVariable ("userIngredientId") Long userSavedIngredientsId) {
+        try {
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientsId);
+            User user = userRepository.findByUserId(userId);
+            Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+            if (userSavedIngredients == null){
+                throw new UserSavedIngredientNotFoundException();
+            } else if (user == null) {
+                throw new UserNotFoundException();
+            } else if (ingredient == null) {
+                throw new IngredientNotFoundException();
+            } else {
+                return userOwnershipService.editUserSavedIngredient(userId, ingredientId, userSavedIngredientsId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping ("/user/pantry/all/{userId}")
     public List<UserSavedIngredients> listUserPantry(@PathVariable ("userId") Long userId) {
         try {
             List<UserSavedIngredients> userSavedIngredients = userSavedIngredientsRepository.findAllByUser
-                                                                        (userService.findByUserId(userId));
+                    (userService.findByUserId(userId));
             if (userSavedIngredients == null){
                 throw new UserSavedIngredientNotFoundException();
             } else {
                 return this.userOwnershipService.displayUserPantry(userId);
             }
         } catch(Exception e) {
-            e.getMessage();
-            return null;
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/user/pantry/get/{userSavedIngredientsId}")
+    public UserSavedIngredients getUserSavedIngredientById(@PathVariable("userSavedIngredientsId") Long userSavedIngredientsId) {
+        try {
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientsId);
+            if (userSavedIngredients == null){
+                throw new UserSavedIngredientNotFoundException();
+            } else {
+                return userSavedIngredients;
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
         }
     }
 
 
+/*
+-------------------------------------RECIPE-------------------------------------
+Add recipe to user                  /user/recipe/add/{userId}/{recipeId}
+Delete recipe from user             /user/recipe/delete/{userSavedRecipeId}
+Edit UserSavedRecipe                /user/recipe/edit/{userId}/{recipeId}/{userRecipeId}
+Get all of User's recipes           /user/recipe/all/{userId}
+Get specific User's recipe          /user/recipe/get/{userSavedRecipeId}
 
-    //------------------------------RECIPE------------------------------
+*/
+@ResponseStatus(HttpStatus.CREATED)
+@PostMapping ("/user/recipe/add/{userId}/{recipeId}")
+public UserSavedRecipes addRecipeToUser(@PathVariable ("userId") Long userId,
+                                        @PathVariable ("recipeId") Long recipeId) {
+    try {
+        User user = userRepository.findByUserId(userId);
+        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+        if (user == null) {
+            throw new UserNotFoundException();
+        } else if (recipe == null) {
+            throw new RecipeNotFoundException();
+        } else {
+            return this.userOwnershipService.addRecipeToUser(userId, recipeId);
+        }
+    } catch (Exception e) {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+    }
+}
 
-
-    @PostMapping ("/user/recipe/{userId}/{recipeId}")
-    public UserSavedRecipes addRecipeToUser(@PathVariable ("userId") Long userId,
-                                            @PathVariable ("recipeId") Long recipeId) {
-        return this.userOwnershipService.addRecipeToUser(userId,recipeId);
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping ("/user/recipe/delete/{userSavedRecipesId}")
+    public void deleteRecipeFromUser(@PathVariable ("userSavedRecipesId") Long userSavedRecipesId) {
+        try {
+            UserSavedRecipes userSavedRecipe = userSavedRecipesRepository.findByUserSavedRecipesId(userSavedRecipesId);
+            if (userSavedRecipe == null){
+                throw new UserSavedRecipeNotFoundException();
+            } else {
+                userOwnershipService.deleteUserSavedRecipe(userSavedRecipesId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
-    @DeleteMapping ("/user/recipe/{userSavedRecipesId}")
-    public String deleteRecipeFromUser(@PathVariable ("userSavedRecipesId") Long userSavedRecipesId) {
-        return this.userOwnershipService.deleteUserSavedRecipe(userSavedRecipesId);
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping ("/user/recipe/edit/{userId}/{recipeId}/{userRecipeId}")
+    public UserSavedRecipes editUserSavedRecipe(@PathVariable ("userId") Long userId,
+                                                @PathVariable ("recipeId") Long recipeId,
+                                                @PathVariable ("userRecipeId") Long userSavedRecipesId) {
+        try {
+            UserSavedRecipes userSavedRecipeToEdit = userOwnershipService.getUserSavedRecipe(userSavedRecipesId);
+            if (userSavedRecipeToEdit == null){
+                throw new UserSavedRecipeNotFoundException();
+            } else {
+                return this.userOwnershipService.editUserSavedRecipe(userId, recipeId, userSavedRecipesId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
-    @GetMapping ("/user/recipe/{userId}")
-    public List<UserSavedRecipes> listUserRecipes(@PathVariable ("userId") Long userId) {
-        return this.userOwnershipService.displayUserSavedRecipes(userId);
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping ("/user/recipe/get{userSavedRecipeId}")
+    public UserSavedRecipes getUserSavedRecipe(@PathVariable ("userSavedRecipeId") Long userSavedRecipeId) {
+        try {
+            UserSavedRecipes userSavedRecipe = userOwnershipService.getUserSavedRecipe(userSavedRecipeId);
+            if (userSavedRecipe == null){
+                throw new UserSavedRecipeNotFoundException();
+            } else {
+                return this.userOwnershipService.getUserSavedRecipe(userSavedRecipeId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping ("/user/recipe/all/{userId}")
+    public List<UserSavedRecipes> listAllUserRecipes(@PathVariable ("userId") Long userId) {
+        try {
+            User user = userRepository.findByUserId(userId);
+            if (user == null){
+                throw new UserNotFoundException();
+            } else {
+                return this.userOwnershipService.displayUserSavedRecipes(userId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
 
+/*
+--------------------------------------MEAL--------------------------------------
+Add meal to user                    /user/meal/add/{userId}/{mealId}
+Delete meal from user               /user/meal/delete/{userSavedMealId}
+Edit UserSavedMeal                  /user/meal/edit/{userId}/{mealId}/{userMealId}
+Get all of User's meals             /user/meal/all/{userId}
+Get specific User's meal            /user/meal/get/{userSavedMealId}
 
-    //------------------------------MEAL------------------------------
-
-
-    @PostMapping ("/user/meal/{userId}/{mealId}")
+*/
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping ("/user/meal/add{userId}/{mealId}")
     public UserSavedMeals addMealToUser(@PathVariable("userId") Long userId,
                                         @PathVariable("mealId") Long mealId) {
-        return this.userOwnershipService.addMealToUser(userId, mealId);
+        try {
+            User user = userRepository.findByUserId(userId);
+            Meal meal = mealRepository.findByMealId(mealId);
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else if (meal == null) {
+                throw new MealNotFoundException();
+            } else {
+                return this.userOwnershipService.addMealToUser(userId, mealId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
-    @DeleteMapping ("/user/meal/{userId}/{mealId}")
-    public String removeMealFromUser(@PathVariable("userSavedMealId") Long userSavedMealId) {
-        return this.userOwnershipService.deleteUserSavedMeal(userSavedMealId);
+
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping ("/user/meal/delete{userId}/{mealId}")
+    public void removeMealFromUser(@PathVariable("userSavedMealId") Long userSavedMealId) {
+        try {
+            UserSavedMeals userSavedMeal = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
+            if (userSavedMeal == null){
+                throw new UserSavedMealNotFoundException();
+            } else {
+                userOwnershipService.deleteUserSavedMeal(userSavedMealId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
-    @GetMapping ("/user/meal/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping ("/user/meal/edit/{userId}/{mealId}/{userMealId}")
+    public UserSavedMeals editUserSavedMeal(@PathVariable ("userId") Long userId,
+                                            @PathVariable ("mealId") Long mealId,
+                                            @PathVariable ("userMealId") Long userSavedMealId) {
+        try {
+            UserSavedMeals userSavedMealToEdit = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
+            if (userSavedMealToEdit == null){
+                throw new UserSavedMealNotFoundException();
+            } else {
+                return this.userOwnershipService.editUserSavedMeal(userId, mealId, userSavedMealId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping ("/user/meal/all{userId}")
     public List<UserSavedMeals> displayMyMeals(@PathVariable ("userId") Long userId) {
-        return userOwnershipService.displayUserSavedMeals(userId);
+        try {
+            User user = userRepository.findByUserId(userId);
+            if (user == null){
+                throw new UserNotFoundException();
+            } else {
+                return this.userOwnershipService.displayUserSavedMeals(userId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping ("/user/meal/get{userSavedMealId}")
+    public UserSavedMeals getUserSavedMeal(@PathVariable ("userSavedMealId") Long userSavedMealId) {
+        try {
+            UserSavedMeals userSavedMeal = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
+            if (userSavedMeal == null){
+                throw new UserSavedMealNotFoundException();
+            } else {
+                return this.userOwnershipService.getUserSavedMeals(userSavedMealId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
 
+/*
+-----------------------------------MEAL PLAN------------------------------------
+Add meal plan to user               /user/mealplan/add/{userId}/{mealPlanId}
+Delete meal plan from user          /user/mealplan/delete/{userSavedMealPlanId}
+Edit UserSavedMealPlan              /user/mealplan/edit/{userId}/{mealPlanId}/{userMealPlanId}
+Get all of User's meal plans        /user/mealplan/all/{userId}
 
-    //------------------------------MEAL PLAN------------------------------
-
-
-    @PostMapping ("/user/mealplan/{userId}/{mealplanId}")
+*/
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping ("/user/mealplan/add/{userId}/{mealplanId}")
     public UserSavedMealPlans addUserToMealPlan(@PathVariable("userId") Long userId,
                                                 @PathVariable("mealplanId") Long mealPlanId) {
-        return this.userOwnershipService.addMealPlanToUser(userId,mealPlanId);
+        try {
+            User user = userRepository.findByUserId(userId);
+            MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else if (mealPlan == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                return this.userOwnershipService.addMealPlanToUser(userId, mealPlanId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
-    @DeleteMapping ("/user/mealplan/{userSavedMealPlansId}")
-    public String removeMealPlanFromUser(@PathVariable("userSavedMealPlansId") Long userSavedMealPlansId) {
-        return this.userOwnershipService.removeMealPlanFromUser(userSavedMealPlansId);
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping ("/user/mealplan/delete{userSavedMealPlansId}")
+    public void deleteMealPlanFromUser(@PathVariable("userSavedMealPlansId") Long userSavedMealPlansId) {
+        try {
+            UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlansId);
+            if (userSavedMealPlan == null){
+                throw new UserSavedMealPlanNotFoundException();
+            } else {
+                userOwnershipService.deleteMealPlanFromUser(userSavedMealPlansId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
-    @GetMapping ("/user/mealplan/{userId}")
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping ("/user/mealplan/edit/{userId}/{mealPlanId}/{userMealPlanId}")
+    public UserSavedMealPlans editUserSavedMealPlan(@PathVariable ("userId") Long userId,
+                                                    @PathVariable ("mealPlanId") Long mealPlanId,
+                                                    @PathVariable ("userMealPlanId") Long userSavedMealPlanId) {
+        try {
+            UserSavedMealPlans userSavedMealPlanToEdit = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlanId);
+            User user = userRepository.findByUserId(userId);
+            MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+            if (userSavedMealPlanToEdit == null){
+                throw new UserSavedMealPlanNotFoundException();
+            } else if (user == null) {
+                throw new UserNotFoundException();
+            } else if (mealPlan == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                return this.userOwnershipService.editUserSavedMealPlan(userId, mealPlanId, userSavedMealPlanId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
+
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping ("/user/mealplan/all/{userId}")
     public List<UserSavedMealPlans> displayMyMealPlans(@PathVariable ("userId") Long userId) {
-        return userOwnershipService.displayUserSavedMealPlans(userId);
+        try {
+            User user = userRepository.findByUserId(userId);
+            if (user == null){
+                throw new UserNotFoundException();
+            } else {
+                return this.userOwnershipService.displayUserSavedMealPlans(userId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
     }
 
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping ("/user/mealplan/get/{userSavedMealPlanId}")
+    public UserSavedMealPlans getUserSavedMealPlan(@PathVariable ("userSavedMealPlanId") Long userSavedMealPlanId) {
+        try {
+            UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlanId);
+            if (userSavedMealPlan == null){
+                throw new UserSavedMealPlanNotFoundException();
+            } else {
+                return this.userOwnershipService.getUserSavedMealPlan(userSavedMealPlanId);
+            }
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
+        }
+    }
 
 }
