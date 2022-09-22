@@ -26,9 +26,11 @@ public class MealPlanMealService {
     @Autowired
     MealsInMealPlanRepository mealsInMealPlanRepository;
 
-    public MealsInMealPlan addMealToMealPlan(Long mealId, Long mealPlanId, int mealOrder) {
-        MealsInMealPlan mealsInMealPlan = new MealsInMealPlan();
+    public MealsInMealPlan addMealToMealPlan(Long mealId,
+                                            Long mealPlanId,
+                                            int mealOrder) {
 
+        MealsInMealPlan mealsInMealPlan = new MealsInMealPlan();
         try {
             Meal meal = mealRepository.findByMealId(mealId);
             MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
@@ -38,7 +40,6 @@ public class MealPlanMealService {
             } else if (meal == null) {
                 throw new MealNotFoundException();
             } else {
-                // create parent entities FIRST
                 mealsInMealPlan.setMealPlan(mealPlan);
                 mealsInMealPlan.setMeal(meal);
                 mealsInMealPlan.setMealOrder(mealOrder);
@@ -55,59 +56,39 @@ public class MealPlanMealService {
     }
 
 
-//        Set<Meal> mealsInMealPlan = new HashSet<>();
-//        String[] mealOrderArray = new String[30];
-//        try {
-//            if (mealPlan == null) {
-//                throw new MealPlanNotFoundException();
-//            } else if (meal == null) {
-//                throw new MealNotFoundException();
-//            } else {
-//
-//                mealPlanRepository.saveAndFlush(mealPlan);
-//            }
-//        } catch (Exception e) {
-//        }
-//        return mealPlan;
-//    }
+    public List<MealsInMealPlan> displayMealsInMealPlan(Long mealPlanId) {
+        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+        try {
+            if (mealPlan == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                List<MealsInMealPlan> mealsInMealPlan = mealsInMealPlanRepository.findAllByMealPlan(mealPlan);
+                return mealsInMealPlan;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
 
-//    public MealPlan removeMealsFromMealPlan (Long mealPlanId, Long mealId) {
-//        Set <Meal> mealsInMealPlan = new HashSet<>();
-//        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
-//        Meal meal = mealRepository.findByMealId(mealId);
-//        try {
-//            if(mealPlan == null) {
-//                throw new MealPlanNotFoundException();
-//            } else if (meal == null) {
-//                throw new MealNotFoundException();
-//            } else {
-//                mealsInMealPlan = mealPlan.getMealsInMealPlan();
-//                mealsInMealPlan.remove(meal);
-//                mealPlan.setMealsInMealPlan(mealsInMealPlan);
-//
-//                mealPlanRepository.saveAndFlush(mealPlan);
-//            }
-//
-//        } catch (Exception e) {
-//
-//        }
-//        return mealPlan;
-//    }
+    public String deleteMealFromMealPlan(Long mealsInMealPlanId) {
+        try {
+            MealsInMealPlan mealsInMealPlan = mealsInMealPlanRepository.findByMealsInMealPlanId(mealsInMealPlanId);
+            if (mealsInMealPlan == null) {
+                throw new MealPlanNotFoundException();
+            } else {
+                String mealName = mealsInMealPlan.getMeal().getMealName();
+                mealsInMealPlanRepository.delete(mealsInMealPlan);
+                return (mealName + " has been deleted from this meal plan.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return "Meal not deleted.";
+    }
 
-//    public List<Meal> displayMealsInMealPlan(Long mealPlanId) {
-//        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
-//        List<Meal> mealsInMealPlan = new ArrayList<>();
-//        try {
-//            if (mealPlan == null) {
-//                throw new MealPlanNotFoundException();
-//            } else {
-//                mealsInMealPlan = mealPlanRepository.findAllMealsByMealPlanId(mealPlanId);
-//            }
-//        } catch (Exception e) {
-//
-//        }
-//        return mealsInMealPlan;
-//    }
-   // }
+
 }

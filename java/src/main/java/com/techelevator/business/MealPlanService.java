@@ -1,5 +1,6 @@
 package com.techelevator.business;
 
+import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
 import com.techelevator.repository.*;
 import com.techelevator.util.BasicLogger;
@@ -25,8 +26,7 @@ public class MealPlanService {
     @Autowired
     private MealPlanRepository mealPlanRepository;
 
-    //TODO Test
-    //TODO perhaps different exceptions?
+
     public MealPlan createMealPlan(String name ){
         MealPlan mealPlan = new MealPlan();
         try {
@@ -34,10 +34,8 @@ public class MealPlanService {
                 throw new MealPlanNotFoundException();
             } else {
                 mealPlan.setMealPlanName(name);
-
                 mealPlanRepository.saveAndFlush(mealPlan);
             }
-
         } catch (MealPlanNotFoundException e) {
             BasicLogger.log("Meal Plan ID cannot be null");
         }
@@ -62,26 +60,29 @@ public class MealPlanService {
     }
 
     //TODO Test
-    public void deleteMealPlan(Long mealPlanId) {
+    public String deleteMealPlan(Long mealPlanId) {
         try {
-            if (mealPlanId == null) {
+            MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+            if (mealPlan == null) {
                 throw new MealPlanNotFoundException();
             } else {
-                mealPlanRepository.deleteById(mealPlanId);
+                String name = mealPlan.getMealPlanName();
+                mealPlanRepository.delete(mealPlan);
+                return (name + " has been deleted");
             }
         } catch (MealPlanNotFoundException e) {
             BasicLogger.log("Meal Plan ID cannot be null");
         }
+        return "Meal Plan has not been deleted";
     }
 
     //TODO Test
     public MealPlan displayMealPlan(Long mealPlanId) {
-        MealPlan mealPlan = new MealPlan();
+
+        MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
         try {
-            if (mealPlanId == null) {
+            if (mealPlan == null) {
                 throw new MealPlanNotFoundException();
-            } else {
-                mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
             }
         } catch (MealPlanNotFoundException e) {
             BasicLogger.log("Meal Plan ID cannot be null");
@@ -99,26 +100,5 @@ public class MealPlanService {
         return mealPlans;
     }
 
-//    public List<MealPlan> displayAllMealPlansByUser(Long userId) {
-//        List<MealPlan> mealPlans = new ArrayList<>();
-//        try {
-//            mealPlans = mealPlanRepository.findAllByFkUserUserId(userId);
-//        } catch (Exception e) {
-//            BasicLogger.log("No meal plans found");
-//        }
-//        return mealPlans;
-//    }
 
-
-    public String[] fillMealOrderArray (String[] mealOrder) {
-        for (int i = 1; i < 30; i++) {
-            mealOrder[i] = 'A' + String.valueOf(i);
-        }
-        return mealOrder;
-    }
-    /*--------------------
-    displayMealPlan()
-    GET
-    Path: /mealplan/{meal_plan_id}
-    --------------------*/
 }

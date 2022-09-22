@@ -12,8 +12,6 @@ public interface MealRepository extends JpaRepository<Meal, Long> {
 
     Meal findByMealId(Long mealId);
 
-    //Map<Long, Recipe> findAllRecipesByMealId(Long mealId);
-
 
 }
 

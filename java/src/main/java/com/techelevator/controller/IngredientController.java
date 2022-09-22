@@ -26,17 +26,14 @@ public class IngredientController extends IngredientService{
 
 
     @Autowired
-    public IngredientController(UserService userService, IngredientService ingredientService) {
+    public IngredientController(
+            UserService userService,
+            IngredientService ingredientService) {
         this.userService = userService;
         this.ingredientService = ingredientService;
     }
 
 
-    /*--------------------
-    createIngredient()
-    POST
-    PATH: /ingredient/
-    --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/")
     public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
@@ -45,11 +42,18 @@ public class IngredientController extends IngredientService{
     }
 
 
-    /*--------------------
-    editIngredient()
-    PUT
-    PATH: /ingredient/{ingredient_id}
-    --------------------*/
+    @GetMapping("/{ingredientId}")
+    public Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
+        return ingredientService.getIngredientById(ingredientId);
+    }
+
+
+    @GetMapping("/")
+    public List<Ingredient> listIngredients() {
+        return ingredientService.getAllIngredients();
+    }
+
+
     @ResponseStatus(HttpStatus.ACCEPTED)
     @PutMapping ("/{ingredientId}")
     public void editIngredient(@PathVariable("ingredientId") Long ingredientId, @RequestBody Ingredient ingredient) {
@@ -58,43 +62,11 @@ public class IngredientController extends IngredientService{
     }
 
 
-//    /*--------------------
-//    deleteIngredient()
-//    DELETE
-//    PATH: /ingredient/{ingredient_id}
-//    --------------------*/
     @ResponseStatus(HttpStatus.ACCEPTED)
     @DeleteMapping ("/{ingredientId}")
     public void deleteIngredient(@PathVariable("ingredientId") Long ingredientId) {
         ingredientService.deleteIngredient(ingredientId);
     }
-
-//    /*--------------------
-//    getIngredient()
-//    GET
-//    PATH: /Ingredient/{Ingredient_id}
-//    --------------------*/
-    @GetMapping("/{ingredientId}")
-    public com.techelevator.model.Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
-        return ingredientService.getIngredientById(ingredientId);
-    }
-
-//    /*--------------------
-//    List listIngredients()
-//    GET
-//    PATH: /Ingredient/
-//    --------------------*/
-    @GetMapping("/")
-    public List<Ingredient> listIngredients() {
-
-        return ingredientService.getAllIngredients();
-
-    }
-
-
-
-
-
 
 }
 
@@ -111,27 +83,5 @@ public class IngredientController extends IngredientService{
 //        return new ResponseEntity<List<Ingredient>>(ingredientService.getAllIngredients(), httpHeaders, HttpStatus.OK);
 
 
-
-
-
-    /*UserService userService;
-    IngredientService ingredientService;
-
-    @Autowired
-    public IngredientController(UserService userService, IngredientService ingredientService) {
-        this.userService = userService;
-        this.ingredientService = ingredientService;
-    }
-
-    //Creats an infgredient
-
-    @PostMapping("/ingredient")
-    public Ingredient createIngredient(String name, String category) {
-        return ingredientService.createIngredient(name, category);
-    }*/
-
-//Edit an ingredient
-
-//Remove an ingredient
 
 

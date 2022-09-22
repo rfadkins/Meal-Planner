@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin
@@ -28,47 +30,39 @@ public class MealPlanController {
         this.mealPlanService = mealPlanService;
     }
 
-    /*--------------------
-    createMealPlan()
-    POST
-    Path: /mealplan/
-    --------------------*/
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/mealplan/")
     public MealPlan createMealPlan(@RequestParam String mealPlanName) {
         return this.mealPlanService.createMealPlan(mealPlanName);
     }
 
-    /*--------------------
-    editMealPlan()
-    PUT
-    Path: /mealplan/{meal_plan_id}
-    --------------------*/
-//    @PutMapping ("/mealplan/{mealplanId}")
-//    public void editeMealPlan(@PathVariable("mealplanId") Long mealplanID, @RequestBody MealPlan mealPlan) {
-//        //MealPlan mealPlan = mapper.mapMealPlanDTOToEntity(mealPlanDTO);
-//        mealPlanService.editMealPlan(mealplanID, mealPlan.getMealPlanName());
-//    }
-//
-//    /*--------------------
-//    deleteMealPlan()
-//    DELETE
-//    Path: /mealplan/{meal_plan_id}
-//    --------------------*/
-//    @DeleteMapping ("/mealplan/{mealplanId}")
-//    public void editMealPlan(@PathVariable("mealplanId") Long mealplanID) {
-//        mealPlanService.deleteMealPlan(mealplanID);
-//    }
-//
-//    /*--------------------
-//    displayMealPlan()
-//    GET
-//    Path: /mealplan/{meal_plan_id}
-//    --------------------*/
-//    @GetMapping ("/mealplan/{mealplanId}")
-//    public MealPlan displayMealPlan(@PathVariable("mealplanId") Long mealplanID) {
-//        return mealPlanService.displayMealPlan(mealplanID);
-//    }
+
+    @GetMapping ("/mealplan/{mealplanId}")
+    public MealPlan displayMealPlan(@PathVariable("mealplanId") Long mealplanID) {
+        return mealPlanService.displayMealPlan(mealplanID);
+    }
+
+
+    @GetMapping ("/mealplan/")
+    public List<MealPlan> displayAllMealPlans() {
+        return mealPlanService.displayAllMealPlans();
+    }
+
+
+    @PutMapping ("/mealplan/{mealplanId}")
+    public MealPlan editMealPlan(@PathVariable("mealplanId") Long mealplanID,
+                                @RequestBody MealPlan mealPlan) {
+        return this.mealPlanService.editMealPlan(mealplanID, mealPlan.getMealPlanName());
+    }
+
+
+    @DeleteMapping ("/mealplan/{mealplanId}")
+    public String editMealPlan(@PathVariable("mealplanId") Long mealplanID) {
+        return this.mealPlanService.deleteMealPlan(mealplanID);
+    }
+
+
 
 
 }

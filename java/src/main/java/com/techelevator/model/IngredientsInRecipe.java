@@ -20,7 +20,7 @@ public class IngredientsInRecipe {
     }
 
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="ingredient_id")
     public Ingredient getIngredient() {
         return ingredient;
@@ -32,7 +32,7 @@ public class IngredientsInRecipe {
     @Column(name = "ingredient_name")
     String ingredientName;
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="recipe_id")
     public Recipe getRecipe() {
         return recipe;

@@ -10,6 +10,8 @@ import com.techelevator.model.MealsInMealPlan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 //@PreAuthorize("isAuthenticated()")
 public class mealPlan_MealController{
@@ -34,20 +36,19 @@ public class mealPlan_MealController{
     public MealsInMealPlan addMealToMealPlan(
                         @PathVariable("mealId") Long mealId,
                         @PathVariable("mealPlanId") Long mealPlanId,
-            @RequestParam int mealOrder ) {
+                        @RequestParam int mealOrder ) {
         return this.mealPlanMealService.addMealToMealPlan(mealId, mealPlanId, mealOrder );
-
     }
 
-    /*--------------------
-    removeMealFromMealPlan()
-    DELETE
-    meal/meaplan/{meal_id}/{mealplan_id}
-    --------------------*/
+    @GetMapping("/meal/mealplan/{mealPlanId}")
+    public List<MealsInMealPlan> displayMealsInMealPlan(@PathVariable("mealPlanId") Long mealPlanId) {
+        return this.mealPlanMealService.displayMealsInMealPlan(mealPlanId);
+    }
 
-//    @DeleteMapping("/meal/mealplan/{mealId}/{mealPlanId}")
-//    public void removeMealFromMealPlan(@PathVariable("mealId") Long mealId, @PathVariable("mealPlanId") Long mealPlanId) {
-//       mealPlanMealService.removeMealsFromMealPlan(mealPlanId,mealId);
-//    }
+
+    @DeleteMapping("/meal/mealplan/{mealsInMealPlanId}/")
+    public void removeMealFromMealPlan(@PathVariable("mealsInMealPlanId") Long mealsInMealPlanId) {
+        mealPlanMealService.deleteMealFromMealPlan(mealsInMealPlanId);
+    }
 
 }

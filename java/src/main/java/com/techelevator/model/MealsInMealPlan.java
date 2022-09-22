@@ -20,7 +20,7 @@ public class MealsInMealPlan {
     }
 
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="meal_id")
     public Meal getMeal() {;
         return meal;
@@ -29,7 +29,7 @@ public class MealsInMealPlan {
         this.meal = meal;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="meal_plan_id")
     public MealPlan getMealPlan() {
         return mealPlan;
@@ -51,7 +51,7 @@ public class MealsInMealPlan {
     }
 
     public MealsInMealPlan(Long mealsInMealPlanId, Meal meal, MealPlan mealPlan, int mealOrder, String mealName,
-                           String mealPlanName) {
+                            String mealPlanName) {
         this.mealsInMealPlanId = mealsInMealPlanId;
         this.meal = meal;
         this.mealPlan = mealPlan;

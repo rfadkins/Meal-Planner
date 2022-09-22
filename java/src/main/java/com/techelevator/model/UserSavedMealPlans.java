@@ -10,50 +10,51 @@ import javax.persistence.ManyToOne;
 @Entity
 @Table(name="user_saved_meal_plans")
 public class UserSavedMealPlans {
+    private Long userSavedMealPlansId;
+    private MealPlan mealPlan;
+    private User user;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_user_saved_meal_plans_id")
     @Column(name = "user_saved_meal_plan_id", nullable = false)
-     Long userSavedMealPlansId;
+    public Long getUserSavedMealPlansId() {
+        return userSavedMealPlansId;
+    }
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="user_id")
-    User user;
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="meal_plan_id")
-    MealPlan mealPlan;
+    public MealPlan getMealPlan() {
+        return mealPlan;
+    }
+    public void setMealPlan(MealPlan mealPlan) {
+        this.mealPlan = mealPlan;
+    }
 
     public UserSavedMealPlans() {
     }
-
     public UserSavedMealPlans(Long userSavedMealPlansId, User user, MealPlan mealPlan) {
         this.userSavedMealPlansId = userSavedMealPlansId;
         this.user = user;
         this.mealPlan = mealPlan;
     }
 
-    public Long getUserSavedMealPlansId() {
-        return userSavedMealPlansId;
-    }
-
     public void setUserSavedMealPlansId(Long userSavedMealPlansId) {
         this.userSavedMealPlansId = userSavedMealPlansId;
     }
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
-    public MealPlan getMealPlan() {
-        return mealPlan;
-    }
 
-    public void setMealPlan(MealPlan mealPlan) {
-        this.mealPlan = mealPlan;
-    }
+
+
+
 }

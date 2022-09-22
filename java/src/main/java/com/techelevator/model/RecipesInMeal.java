@@ -20,7 +20,7 @@ public class RecipesInMeal {
         return recipesInMealId;
     }
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="recipe_id")
     public Recipe getRecipe() {
         return recipe;
@@ -29,7 +29,7 @@ public class RecipesInMeal {
         this.recipe = recipe;
     }
 
-    @ManyToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="meal_id")
     public Meal getMeal() {
         return meal;

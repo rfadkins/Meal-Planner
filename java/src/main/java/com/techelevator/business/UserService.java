@@ -1,4 +1,5 @@
 package com.techelevator.business;
+import com.techelevator.exceptions.UserNotFoundException;
 import com.techelevator.model.Authority;
 import com.techelevator.util.BasicLogger;
 //import com.techelevator.model.User;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,9 +27,8 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    List<User> findAll(){
-        return userRepository.findAll();
-    }
+
+
 
     public User create(String username, String password, String role) {
         boolean userCreated = false;
@@ -39,10 +40,12 @@ public class UserService {
         newUser.setRole(role);
 
         Set<Authority> authorities = new HashSet<>();
-        authorities = newUser.addRoleToAuthorities(newUser.getRole());   // "setAuthorities" that took in the string
-        newUser.setAuthorities(authorities);                // setAuthorities taking in the effing Authority object
 
-        //userRepository.saveAndFlush(newUser);
+        // formerly "setAuthorities" that took in the string
+        authorities = newUser.addRoleToAuthorities(newUser.getRole());
+
+        // setAuthorities taking in the effing Authority object
+        newUser.setAuthorities(authorities);
         try {
             userRepository.saveAndFlush(newUser);
             userCreated = true;
@@ -50,28 +53,39 @@ public class UserService {
             BasicLogger.log(e.getMessage());
             userCreated = false;
         }
-
         return newUser;
     }
 
-    public List<User> findAllUsers() {
-        List<User> allTheUsers = userRepository.findAll();
-        for(User user: allTheUsers) {
-            user.addRoleToAuthorities(user.getRole());
-            user.setActivated(true);
+    public List<User> listAllUsers() {
+
+        List<User> users = new ArrayList<>();
+        try {
+            users = userRepository.findAll();
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
         }
-        return allTheUsers;
+        return users;
     }
 
     public User findByUserId(Long userId) {
-        User user = userRepository.findByUserId(userId);
-        user.addRoleToAuthorities(user.getRole());
-        user.setActivated(true);
-        return user;
+
+        try {
+            User user = userRepository.findByUserId(userId);
+            if (user == null) {
+                throw new UserNotFoundException();
+            } else {
+                user.addRoleToAuthorities(user.getRole());
+                user.setActivated(true);
+                return user;
+            }
+        } catch (Exception e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return null;
     }
 
     public User findByUsername(String username) throws UsernameNotFoundException {
-        for (User user : this.findAllUsers()) {
+        for (User user : this.listAllUsers()) {
             if (user.getUsername().toLowerCase().equals(username.toLowerCase())) {
                 return user;
             }

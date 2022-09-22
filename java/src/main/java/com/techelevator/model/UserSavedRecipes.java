@@ -4,62 +4,62 @@ import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Table(name="user_saved_recipes")
 public class UserSavedRecipes {
+    private Long userSavedRecipesId;
+    private Recipe recipe;
+    private User user;
 
     @Id
-    Long userSavedRecipesId;
-
-    String recipeNotes;
-
-    @ManyToOne
-    @JoinColumn(name="recipe_id")
-    Recipe recipe;
-
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    User user;
-
-    public UserSavedRecipes() {
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mp_user_saved_recipes_id")
+    @Column(name = "user_saved_recipes_id", nullable = false)
+    public Long getUserSavedRecipesId() {
+        return userSavedRecipesId;
     }
 
-    public UserSavedRecipes(Long userSavedRecipesId, String recipeNotes, Recipe recipe, User user) {
-        this.userSavedRecipesId = userSavedRecipesId;
-        this.recipeNotes = recipeNotes;
+    //String recipeNotes;
+
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name="recipe_id")
+    public Recipe getRecipe() {
+        return recipe;
+    }
+    public void setRecipe(Recipe recipe) {
         this.recipe = recipe;
+    }
+
+    @ManyToOne(cascade=CascadeType.PERSIST)
+    @JoinColumn(name="user_id")
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
         this.user = user;
     }
 
-    public Long getUserSavedRecipesId() {
-        return userSavedRecipesId;
+    public UserSavedRecipes() {
+    }
+    public UserSavedRecipes(Long userSavedRecipesId, Recipe recipe, User user) {
+        this.userSavedRecipesId = userSavedRecipesId;
+        this.recipe = recipe;
+        this.user = user;
     }
 
     public void setUserSavedRecipesId(Long userSavedRecipesId) {
         this.userSavedRecipesId = userSavedRecipesId;
     }
+//
+//    public String getRecipeNotes() {
+//        return recipeNotes;
+//    }
+//
+//    public void setRecipeNotes(String recipeNotes) {
+//        this.recipeNotes = recipeNotes;
+//    }
 
-    public String getRecipeNotes() {
-        return recipeNotes;
-    }
 
-    public void setRecipeNotes(String recipeNotes) {
-        this.recipeNotes = recipeNotes;
-    }
 
-    public Recipe getRecipe() {
-        return recipe;
-    }
 
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

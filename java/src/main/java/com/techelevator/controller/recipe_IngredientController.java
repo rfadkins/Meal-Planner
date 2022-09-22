@@ -28,35 +28,23 @@ public class recipe_IngredientController{
 
 
 
-
-    /*--------------------
-    addIngredientToRecipe()
-    POST
-    Ingredient/recipe/{ingredient_id}/{recipe_id}
-<<<<<<< Updated upstream
-     --------------------*/
-
     @PostMapping ("/ingredient/recipe/{ingredientId}/{recipeId}")
-    public IngredientsInRecipe addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId")  Long recipeId, @RequestParam String ingredientQuantity, @RequestParam String ingredientMeasurement) {
+    public IngredientsInRecipe addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId,
+                                                    @PathVariable("recipeId")  Long recipeId,
+                                                    @RequestParam String ingredientQuantity,
+                                                    @RequestParam String ingredientMeasurement) {
         return this.recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId,  ingredientQuantity, ingredientMeasurement);
     }
 
     @GetMapping("/ingredient/recipe/{recipeId}")
     public List<IngredientsInRecipe> listIngredientsInRecipe(@PathVariable("recipeId") Long recipeId) {
-        return recipeIngredientService.listIngredientsInRecipe(recipeId);
+        return this.recipeIngredientService.listIngredientsInRecipe(recipeId);
     }
-//
-//
-//    /*--------------------
-//    removeIngredientFromRecipe()
-//    DELETE
-//    ingredient/recipe/{ingredient_id}/{recipe_id}
-//    --------------------*/
-//
-//    @DeleteMapping("/ingredient/recipe/{ingredientId}/{recipeId}")
-//    public void removeIngredientFromRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId) {
-//       recipeIngredientService.removeIngredientFromRecipe(recipeId,ingredientId);
-//    }
+
+    @DeleteMapping("/ingredient/recipe/{ingredientId}/{recipeId}")
+    public String removeIngredientFromRecipe(@PathVariable("ingredientsInRecipeId") Long ingredientsInRecipeId) {
+        return this.recipeIngredientService.deleteIngredientFromRecipe(ingredientsInRecipeId);
+    }
 
 
 }
