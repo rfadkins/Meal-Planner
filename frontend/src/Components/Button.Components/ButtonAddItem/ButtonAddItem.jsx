@@ -9,7 +9,7 @@ export default function AddItemButton(props){
     const [buttonPopup, setButtonPopup] = useState(false)
 
     return(
-        <div>
+        <div className="add-item-button">
             <main>
                 <button className={props.nameHandle}
                     onClick={() => setButtonPopup(true)}

@@ -1,3 +1,7 @@
+.add-item-button{
+  display:flex;
+  justify-content: center;
+}
 .Pantry-add{
   display: flex;
   align-items: center;
@@ -13,23 +17,21 @@
 }
 
 .Shopping-add{
+  justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: aqua;
   border-radius: 20px;
-  height: 30px;
-  width: 70px;
-  margin: -25px 0 0 25px;
+  margin-top: 5px;
 }
 
 .Recipe-add{
+  justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: aqua;
   border-radius: 20px;
-  height: 30px;
-  width: 70px;
-  margin: -25px 0 -15px 10px;
+  margin-top: 5px;
 }
