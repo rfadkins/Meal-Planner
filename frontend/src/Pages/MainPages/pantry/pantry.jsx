@@ -5,7 +5,7 @@ import AddItemButton from "../../../Components/Button.Components/ButtonAddItem/B
 import ButtonSelectItem from "../../../Components/Button.Components/ButtonSelectItem/ButtonSelectItem";
 import Bar from "../../../Components/Input.Component/search_bar/search_bar";
 /* Functional Javascript */
-import { getAllPantryIngredients, addNewIngredient } from "./pantry-functions";
+import { getAllPantryIngredients, addNewIngredient, testIngredientList } from "./pantry-functions";
 /* Redux */
 import { useSelector } from 'react-redux';
 import { useEffect } from "react";
@@ -13,17 +13,17 @@ import { useEffect } from "react";
 export default function Pantry() {
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    const [userPantry, setUserPantry] = useState([]);
-    //const [userPantry, setUserPantry] = useState(testIngredientList);
+    //const [userPantry, setUserPantry] = useState([]);
+    const [userPantry, setUserPantry] = useState(testIngredientList());
 
     //add new ingredients
     const [newIngredientName, setNewIngredientName] = useState("")
     const [newIngredientCategory, setNewIngredientCategory] = useState("")
 
-    useEffect(() => {
-        getAllPantryIngredients(currentUserId, currentUserToken)
-            .then(function (result) { setUserPantry(result) })
-    }, [])
+    // useEffect(() => {
+    //     getAllPantryIngredients(currentUserId, currentUserToken)
+    //         .then(function (result) { setUserPantry(result) })
+    // }, [])
 
     function addIngredientOnClick() {
         //format and POST new ingredient
