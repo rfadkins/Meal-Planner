@@ -27,7 +27,7 @@ public class meal_RecipeController{
     --------------------*/
     @PostMapping ("/recipe/meal/{recipeId}/{mealId}")
     public void addRecipeToMeal(@PathVariable("recipeId") Long recipeId, @PathVariable("mealId") Long mealId) {
-      mealRecipeService.addRecipeToMeal(mealId,recipeId);
+      mealRecipeService.addRecipeToMeal(recipeId, mealId);
     }
 //
 //

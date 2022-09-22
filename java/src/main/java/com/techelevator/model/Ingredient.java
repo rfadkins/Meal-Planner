@@ -6,11 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Builder
 @Entity
 @Table(name = "ingredient")
 public class Ingredient {
@@ -26,13 +21,66 @@ public class Ingredient {
     @Column(name = "category")
     private String ingredientCategory;
 
+    /*     *** Ingredients In Recipe ***
+     */
     @JsonIgnore
     @OneToMany(mappedBy="ingredient", fetch = FetchType.LAZY)
     private Set<IngredientsInRecipe> ingredientsInRecipe;
-
+    /*     *** User Saved Ingredients***
+     */
     @JsonIgnore
     @OneToMany(mappedBy="ingredient", fetch = FetchType.LAZY)
     private Set<UserSavedIngredients> userSavedIngredients;
 
+    public Ingredient() {
+    }
 
+    public Ingredient(Long ingredientId, String ingredientName, String ingredientCategory,
+                      Set<IngredientsInRecipe> ingredientsInRecipe, Set<UserSavedIngredients> userSavedIngredients) {
+        this.ingredientId = ingredientId;
+        this.ingredientName = ingredientName;
+        this.ingredientCategory = ingredientCategory;
+        this.ingredientsInRecipe = ingredientsInRecipe;
+        this.userSavedIngredients = userSavedIngredients;
+    }
+
+    public Long getIngredientId() {
+        return ingredientId;
+    }
+
+    public void setIngredientId(Long ingredientId) {
+        this.ingredientId = ingredientId;
+    }
+
+    public String getIngredientName() {
+        return ingredientName;
+    }
+
+    public void setIngredientName(String ingredientName) {
+        this.ingredientName = ingredientName;
+    }
+
+    public String getIngredientCategory() {
+        return ingredientCategory;
+    }
+
+    public void setIngredientCategory(String ingredientCategory) {
+        this.ingredientCategory = ingredientCategory;
+    }
+
+    public Set<IngredientsInRecipe> getIngredientsInRecipe() {
+        return ingredientsInRecipe;
+    }
+
+    public void setIngredientsInRecipe(Set<IngredientsInRecipe> ingredientsInRecipe) {
+        this.ingredientsInRecipe = ingredientsInRecipe;
+    }
+
+    public Set<UserSavedIngredients> getUserSavedIngredients() {
+        return userSavedIngredients;
+    }
+
+    public void setUserSavedIngredients(Set<UserSavedIngredients> userSavedIngredients) {
+        this.userSavedIngredients = userSavedIngredients;
+    }
 }

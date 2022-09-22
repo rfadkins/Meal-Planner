@@ -35,8 +35,8 @@ public class MealPlanController {
     --------------------*/
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/mealplan/")
-    public MealPlan createMealPlan(@RequestBody MealPlan mealPlan) {
-        return this.mealPlanService.createMealPlan(mealPlan.getMealPlanName());
+    public MealPlan createMealPlan(@RequestParam String mealPlanName) {
+        return this.mealPlanService.createMealPlan(mealPlanName);
     }
 
     /*--------------------

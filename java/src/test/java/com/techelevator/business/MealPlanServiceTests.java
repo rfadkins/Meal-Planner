@@ -34,18 +34,18 @@ public class MealPlanServiceTests {
     @Autowired
     MealPlanRepository mealPlanRepository;
 
-
-    @Test
-    public void mealPlanIdIsNotNull() {
-        MealPlan mealPlan = MealPlan.builder()
-                .mealPlanName("TestMealPlanName")
-                .build();
-
-        mealPlanRepository.save(mealPlan);
-
-        mealPlan = mealPlanService.displayMealPlan(mealPlan.getMealPlanId());
-
-        Assertions.assertThat(mealPlan.getMealPlanId()).isNotNull();
-    }
+//
+//    @Test
+//    public void mealPlanIdIsNotNull() {
+//        MealPlan mealPlan = MealPlan.builder()
+//                .mealPlanName("TestMealPlanName")
+//                .build();
+//
+//        mealPlanRepository.save(mealPlan);
+//
+//        mealPlan = mealPlanService.displayMealPlan(mealPlan.getMealPlanId());
+//
+//        Assertions.assertThat(mealPlan.getMealPlanId()).isNotNull();
+//    }
 
 }

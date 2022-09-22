@@ -37,8 +37,8 @@ public class recipe_IngredientController{
      --------------------*/
 
     @PostMapping ("/ingredient/recipe/{ingredientId}/{recipeId}")
-    public IngredientsInRecipe addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId") Long recipeId,  Integer ingredientQuantity, String ingredientMeasurement) {
-        return recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId,  ingredientQuantity, ingredientMeasurement);
+    public IngredientsInRecipe addIngredientToRecipe(@PathVariable("ingredientId") Long ingredientId, @PathVariable("recipeId")  Long recipeId, @RequestParam String ingredientQuantity, @RequestParam String ingredientMeasurement) {
+        return this.recipeIngredientService.addIngredientToRecipe(recipeId,ingredientId,  ingredientQuantity, ingredientMeasurement);
     }
 
     @GetMapping("/ingredient/recipe/{recipeId}")

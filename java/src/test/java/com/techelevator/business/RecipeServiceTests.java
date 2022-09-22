@@ -39,17 +39,17 @@ public class RecipeServiceTests {
     @Autowired
     RecipeIngredientService recipeIngredientService;
 
-    @Test
-    public void recipeIdIsNotNull() {
-        Recipe recipe = Recipe.builder()
-                .recipeName("TestRecipeName")
-                .recipeInstructions("TestRecipeInstructions")
-                .category("TestCategory")
-                .build();
-        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-
-        Assertions.assertThat(recipe.getRecipeId()).isNotNull();
-    }
+//    @Test
+//    public void recipeIdIsNotNull() {
+//        Recipe recipe = Recipe.builder()
+//                .recipeName("TestRecipeName")
+//                .recipeInstructions("TestRecipeInstructions")
+//                .category("TestCategory")
+//                .build();
+//        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+//
+//        Assertions.assertThat(recipe.getRecipeId()).isNotNull();
+//    }
 
 
 
@@ -126,22 +126,22 @@ public class RecipeServiceTests {
 //
 //        Assertions.assertThat(testMealRecipes.get(meal.getMealId())).isNotNull();
 //    }
-
-    @Test
-    public void deletedRecipeIsNull() {
-        Recipe recipe = Recipe.builder()
-                .recipeName("TestRecipeName")
-                .recipeInstructions("TestRecipeInstructions")
-                .category("TestCategory")
-                .build();
-
-        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
-        recipeService.deleteRecipe(recipe.getRecipeId());
-
-        Recipe testRecipe = recipeRepository.findByRecipeId(recipe.getRecipeId());
-
-        Assertions.assertThat(testRecipe).isNull();
-    }
+//
+//    @Test
+//    public void deletedRecipeIsNull() {
+//        Recipe recipe = Recipe.builder()
+//                .recipeName("TestRecipeName")
+//                .recipeInstructions("TestRecipeInstructions")
+//                .category("TestCategory")
+//                .build();
+//
+//        recipe = recipeService.createRecipe(recipe.getRecipeName(), recipe.getRecipeInstructions(), recipe.getCategory());
+//        recipeService.deleteRecipe(recipe.getRecipeId());
+//
+//        Recipe testRecipe = recipeRepository.findByRecipeId(recipe.getRecipeId());
+//
+//        Assertions.assertThat(testRecipe).isNull();
+//    }
 
 }
 

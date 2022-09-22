@@ -30,7 +30,7 @@ public class MealPlanService {
     public MealPlan createMealPlan(String name ){
         MealPlan mealPlan = new MealPlan();
         try {
-            if (name == null) {
+            if (mealPlan == null) {
                 throw new MealPlanNotFoundException();
             } else {
                 mealPlan.setMealPlanName(name);

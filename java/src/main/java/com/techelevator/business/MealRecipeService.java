@@ -23,24 +23,28 @@ public class MealRecipeService {
 
 
     public RecipesInMeal addRecipeToMeal(Long recipeId, Long mealId) {
-        Meal meal = mealRepository.findByMealId(mealId);
-        Recipe recipe = recipeRepository.findByRecipeId(recipeId);
-        RecipesInMeal recipeInMeal = recipesInMealRepository.findByMealMealId(mealId);
-        //Set<Recipe> recipesInMeal = new HashSet<>();
+        RecipesInMeal recipeInMeal = new RecipesInMeal();
+
         try {
+            Meal meal = mealRepository.findByMealId(mealId);
+            Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+
             if ( meal == null) {
                 throw new MealNotFoundException();
             } else if (recipe == null) {
                 throw new RecipeNotFoundException();
-            } else if (recipeInMeal == null) {
-                recipeInMeal = new RecipesInMeal();
-            } else {
+            }  else {
+                //create parent entities FIRST
                 recipeInMeal.setMeal(meal);
                 recipeInMeal.setRecipe(recipe);
+                recipeInMeal.setMealName(meal.getMealName());
+                recipeInMeal.setRecipeName(recipe.getRecipeName());
                 recipesInMealRepository.saveAndFlush(recipeInMeal);
+                return recipeInMeal;
             }
         } catch (Exception e ) {
-
+            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return recipeInMeal;
     }

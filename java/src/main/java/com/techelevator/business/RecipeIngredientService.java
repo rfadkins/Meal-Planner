@@ -35,7 +35,7 @@ public class RecipeIngredientService {
 
 
 
-    public IngredientsInRecipe addIngredientToRecipe (Long recipeId, Long ingredientId,  Integer ingredientQuantity, String ingredientMeasurement) {
+    public IngredientsInRecipe addIngredientToRecipe (Long recipeId, Long ingredientId,  String ingredientQuantity, String ingredientMeasurement) {
         IngredientsInRecipe ingredientInRecipe = new IngredientsInRecipe();
 
         try {
@@ -45,11 +45,11 @@ public class RecipeIngredientService {
                 throw new RecipeNotFoundException();
             } else if (ingredient == null) {
                 throw new IngredientNotFoundException();
-            } else if (ingredientInRecipe == null) {
-                ingredientInRecipe = new IngredientsInRecipe();
             } else {
                 ingredientInRecipe.setRecipe(recipe);
                 ingredientInRecipe.setIngredient(ingredient);
+                ingredientInRecipe.setRecipeName(recipe.getRecipeName());
+                ingredientInRecipe.setIngredientName(ingredient.getIngredientName());
                 ingredientInRecipe.setIngredientQuantity(ingredientQuantity);
                 ingredientInRecipe.setIngredientMeasurement(ingredientMeasurement);
                 ingredientsInRecipeRepository.saveAndFlush(ingredientInRecipe);
