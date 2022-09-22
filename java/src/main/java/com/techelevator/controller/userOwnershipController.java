@@ -105,14 +105,16 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
 */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/user/pantry/add{userId}/{ingredientId}")
-    public UserSavedIngredients addIngredientToPantry(@PathVariable ("userId") Long userId,
-                                                      @PathVariable ("ingredientId") Long ingredientId) {
+    public UserSavedIngredients addIngredientToPantry(@RequestBody User user,
+                                                    @PathVariable ("ingredientId") Long ingredientId) {
         try {
-            User user = userService.findByUserId(userId);
+            Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
             if (user == null){
                 throw new UserNotFoundException();
+            } else if (ingredient == null) {
+                throw new IngredientNotFoundException();
             } else {
-                return userOwnershipService.addIngredientToUserPantry(userId, ingredientId);
+                return userOwnershipService.addIngredientToUserPantry(user.getUserId(), ingredientId);
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
