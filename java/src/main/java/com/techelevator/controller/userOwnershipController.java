@@ -270,14 +270,20 @@ public UserSavedRecipes addRecipeToUser(@PathVariable ("userId") Long userId,
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping ("/user/recipe/get{userSavedRecipeId}")
-    public UserSavedRecipes getUserSavedRecipe(@PathVariable ("userSavedRecipeId") Long userSavedRecipeId) {
+    @GetMapping ("/user/recipe/get/{userId}/{recipeId}")
+    public UserSavedRecipes getUserSavedRecipe(@PathVariable ("userId") Long userId,
+                                                @PathVariable ("recipeId") Long recipeId) {
         try {
-            UserSavedRecipes userSavedRecipe = userOwnershipService.getUserSavedRecipe(userSavedRecipeId);
-            if (userSavedRecipe == null){
+            User user = userRepository.findByUserId(userId);
+            Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+
+            if (user == null){
                 throw new UserSavedRecipeNotFoundException();
+            } else if (recipe == null) {
+                throw new RecipeNotFoundException();
             } else {
-                return this.userOwnershipService.getUserSavedRecipe(userSavedRecipeId);
+                UserSavedRecipes userSavedRecipe = userSavedRecipesRepository.findByUserAndRecipe_recipeId(user, recipeId);
+                return this.userOwnershipService.getUserSavedRecipe(userSavedRecipe.getUserSavedRecipesId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
