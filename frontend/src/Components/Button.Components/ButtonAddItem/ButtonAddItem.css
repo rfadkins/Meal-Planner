@@ -16,7 +16,7 @@
   font-size: xx-large;
 }
 
-.Shopping-add{
+.Shopping-add, .Recipe-add, .meal-plan-add{
   justify-self: center;
   display: flex;
   align-items: center;
@@ -24,9 +24,10 @@
   background-color: aqua;
   border-radius: 20px;
   margin-top: 5px;
+  width: 100px;
 }
 
-.Recipe-add{
+/* .Recipe-add{
   justify-self: center;
   display: flex;
   align-items: center;
@@ -36,3 +37,7 @@
   margin-top: 5px;
   width: 60px;
 }
+
+.meal-plan-add{
+
+} */

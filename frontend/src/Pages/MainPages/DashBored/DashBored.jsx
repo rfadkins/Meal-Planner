@@ -8,23 +8,40 @@ import RecipeCard from '../../../Components/Calander.Component/RecipeCard/Recipe
 import { useSelector } from 'react-redux';
 
 
-import { getCurrentMealPlan } from "./dashboard-functions";
+import { getCurrentMealPlan, testMealPlan } from "./dashboard-functions";
 import MealComponent from "./meal-component";
+import AddItemButton from "../../../Components/Button.Components/ButtonAddItem/ButtonAddItem";
+import MealInformation from "./meal-info";
 
 export default function Dashbored(){
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    const [currentMealPlan, setCurrentMealPlan] = useState(getCurrentMealPlan(currentUserId)[0])
-    //find way to only display 4 at a time
-    const [mealPreview, setMealPreview] = useState(getCurrentMealPlan(currentUserId)[0].meals)
+    const [currentMealPlan, setCurrentMealPlan] = useState(testMealPlan()[0])
+    //find way to only display 4 at a time?
+    const [mealPreview, setMealPreview] = useState(testMealPlan()[0].meals)
 
     //console.log(`currentMealPlan: ${JSON.stringify(currentMealPlan)}`)
     //console.log(`mealPreview: ${JSON.stringify(mealPreview)}`)
+
+    // Needed for Edit
+    const [currentMealPlanName, setCurrentMealPlanName] = useState(testMealPlan()[0].name)
+
+    function updateMealPlanOnClick(){
+
+    }
+    
     return(
         <div className="dashboard">
-            <h2>Current Meal Plan: {currentMealPlan.name}</h2>
-            <button>Change Current Meal Plan</button>
-            <MealComponent meals = {mealPreview} />
+            <h1>{currentMealPlan.name}</h1>
+            <AddItemButton buttonImage='Edit Meal Plan' nameHandle="meal-plan-add">
+            <h3 className="title">Edit Meal Plan</h3>
+                <p>Meal Plan Name: <input type="text" className="textInputLong" value={currentMealPlanName} onChange={()=>setCurrentMealPlanName(event.target.value)} /></p>
+                <MealInformation meals={mealPreview} />
+                <div className="popup-buttons">
+                    <button className="submitButton" onClick={updateMealPlanOnClick}>Submit</button>
+                </div>
+            </AddItemButton>
+            <MealComponent meals={mealPreview} setMeals={setMealPreview}/>
         </div>
     )
 }
