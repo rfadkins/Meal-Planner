@@ -39,12 +39,12 @@ public class IngredientController extends IngredientService{
     }
 
 
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @PostMapping ("/")
-//    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
-//        this.ingredientService = ingredientService;
-//        return this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
-//    }
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping ("/")
+    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
+        this.ingredientService = ingredientService;
+        return this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+    }
 
 
     @GetMapping("/{ingredientId}")

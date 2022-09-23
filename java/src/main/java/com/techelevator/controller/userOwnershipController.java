@@ -123,14 +123,15 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
 
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping ("/user/pantry/delete/{userSavedIngredientsId}")
-    public void deleteIngredientFromUserPantry(@PathVariable ("userSavedIngredientsId") Long userSavedIngredientsId) {
+    @DeleteMapping ("/user/pantry/delete/{ingredientId}")
+    public void deleteIngredientFromUserPantry(@RequestBody User user,
+                                            @PathVariable ("ingredientId") Long ingredientId) {
         try {
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientsId);
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(user, ingredientId);
             if (userSavedIngredients == null){
                 throw new UserSavedIngredientNotFoundException();
             } else {
-                userOwnershipService.deleteIngredientFromUserPantry(userSavedIngredientsId);
+                userOwnershipService.deleteIngredientFromUserPantry(user, ingredientId);
             }
         } catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);

@@ -60,9 +60,11 @@ public class UserOwnershipService {
         return userSavedIngredients;
     }
 
-    public void deleteIngredientFromUserPantry(Long userSavedIngredientId) {
+    public void deleteIngredientFromUserPantry(User user, Long userSavedIngredientId) {
+
+
         try {
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientId);
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(user, userSavedIngredientId);
             if (userSavedIngredients == null) {
                 throw new UserSavedIngredientNotFoundException();
             } else {
