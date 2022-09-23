@@ -12,6 +12,6 @@ public interface UserSavedIngredientsRepository extends JpaRepository<UserSavedI
 
     UserSavedIngredients findByUserSavedIngredientsId(Long userSavedIngredientsId);
     List<UserSavedIngredients> findAllByUser(User user);
-    UserSavedIngredients findByUserAndIngredient_Id(User user, Long ingredientId);
+    UserSavedIngredients findByUserAndIngredient_ingredientId(User user, Long ingredientId);
 
 }

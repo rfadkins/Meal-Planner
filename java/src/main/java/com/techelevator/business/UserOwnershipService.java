@@ -65,7 +65,7 @@ public class UserOwnershipService {
 
         try {
             User user = userRepository.findByUserId(userId);
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(user, userSavedIngredientId);
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_ingredientId(user, userSavedIngredientId);
             if (userSavedIngredients == null) {
                 throw new UserSavedIngredientNotFoundException();
             } else {

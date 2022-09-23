@@ -129,7 +129,7 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
                                                 @PathVariable("ingredientId") Long ingredientId) {
         try {
             User user = userRepository.findByUserId(userId);
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(user, ingredientId);
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_ingredientId(user, ingredientId);
             if (userSavedIngredients == null){
                 throw new UserSavedIngredientNotFoundException();
             } else {
@@ -142,22 +142,19 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
 
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PutMapping ("/user/ingredient/pantry/edit/{userId}/{ingredientId}/{userIngredientId}")
+    @PutMapping ("/user/ingredient/pantry/edit/{userId}/{ingredientId}")
     public UserSavedIngredients editIngredientFromUserPantry(@PathVariable ("userId") Long userId,
-                                                            @PathVariable ("ingredientId") Long ingredientId,
-                                                            @PathVariable ("userIngredientId") Long userSavedIngredientsId) {
+                                                            @PathVariable ("ingredientId") Long ingredientId) {
         try {
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientsId);
             User user = userRepository.findByUserId(userId);
             Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
-            if (userSavedIngredients == null){
-                throw new UserSavedIngredientNotFoundException();
-            } else if (user == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
             } else if (ingredient == null) {
                 throw new IngredientNotFoundException();
             } else {
-                return userOwnershipService.editUserSavedIngredient(userId, ingredientId, userSavedIngredientsId);
+                UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_ingredientId(user, ingredientId);
+                return userOwnershipService.editUserSavedIngredient(userId, ingredientId, userSavedIngredients.getUserSavedIngredientsId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
