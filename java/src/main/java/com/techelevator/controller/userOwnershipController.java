@@ -105,7 +105,7 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
 */
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping ("/user/pantry/add{userId}/{ingredientId}")
-    public UserSavedIngredients addIngredientToPantry(@RequestBody User user,
+    public UserSavedIngredients addIngredientToPantry(@PathVariable ("userId") Long userId,
                                                     @PathVariable ("ingredientId") Long ingredientId) {
         try {
             Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
@@ -114,7 +114,7 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
             } else if (ingredient == null) {
                 throw new IngredientNotFoundException();
             } else {
-                return userOwnershipService.addIngredientToUserPantry(user.getUserId(), ingredientId);
+                return userOwnershipService.addIngredientToUserPantry(userId, ingredientId);
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -124,10 +124,10 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping ("/user/pantry/delete/{ingredientId}")
-    public void deleteIngredientFromUserPantry(@RequestBody User user,
-                                            @PathVariable ("ingredientId") Long ingredientId) {
+    public void deleteIngredientFromUserPantry(@PathVariable("userId") Long userId,
+                                                @PathVariable("ingredientId") Long ingredientId) {
         try {
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(user, ingredientId);
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(userId, ingredientId);
             if (userSavedIngredients == null){
                 throw new UserSavedIngredientNotFoundException();
             } else {
