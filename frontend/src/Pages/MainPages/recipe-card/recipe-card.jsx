@@ -76,7 +76,7 @@ export default function RecipeCard() {
                 </div>
             </AddItemButton>
             <div className="card-List">
-                <RecipeCardPart recipeList={recipeList} />
+                <RecipeCardPart recipeList={recipeList} viewOnly={false} />
             </div>
         </div>
     )
