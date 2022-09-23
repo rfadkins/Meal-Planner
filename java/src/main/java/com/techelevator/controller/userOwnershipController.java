@@ -376,7 +376,7 @@ Get specific User's meal            /user/meal/get/{userSavedMealId}
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping ("/user/meal/all{userId}")
+    @GetMapping ("/user/meal/all/{userId}")
     public List<UserSavedMeals> displayMyMeals(@PathVariable ("userId") Long userId) {
         try {
             User user = userRepository.findByUserId(userId);
