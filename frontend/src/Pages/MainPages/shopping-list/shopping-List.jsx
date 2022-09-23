@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Link, Routes, Route } from 'react-router-dom';
 import ListItem from "../../../Components/Button.Components/ButtonListItem/ListItem";
 import Bar from "../../../Components/Input.Component/search_bar/search_bar";
-import AddItemButtom from "../../../Components/Button.Components/ButtonAddItem/ButtonAddItem";
+import AddItemButton from "../../../Components/Button.Components/ButtonAddItem/ButtonAddItem";
 
 import './shopping-List.css'
 /*redux*/
@@ -16,12 +16,10 @@ export default function ShoppingList(){
 
     console.log(shoppingList)
     return(
-        <div>
-            <div>
+        <div className="shopping-list">
+            
                 <Bar/>
-                <br/>
-                <br/>
-                <AddItemButtom buttonImage='+' nameHandle="Shopping-add">
+                <AddItemButton buttonImage='+' nameHandle="Shopping-add">
                     <h3 className="title">Add to Shopping List</h3>
                     <p>Item name? <input type="text" className="textInputLong"/></p>
                     <p>Catagory? <input type="text" className="textInputLong"/></p>
@@ -31,10 +29,9 @@ export default function ShoppingList(){
                         <p>Date added? <input type="text" className="textInputShort"/></p>
                     </div>
                     <button className="submitButton">submit</button>
-                </AddItemButtom>
-            </div>
+                </AddItemButton>
             
-            <div className="shopping-List">
+            <div className="shopping-list-items">
                 <ListItem shoppingList = {shoppingList}/>
             </div>
         </div>

@@ -1,4 +1,10 @@
-.shopping-List{
+.shopping-list{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.shopping-list-items{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
