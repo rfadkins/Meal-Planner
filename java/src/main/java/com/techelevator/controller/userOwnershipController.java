@@ -309,14 +309,14 @@ public UserSavedRecipes addRecipeToUser(@PathVariable ("userId") Long userId,
 /*
 --------------------------------------MEAL--------------------------------------
 Add meal to user                    /user/meal/add/{userId}/{mealId}
-Delete meal from user               /user/meal/delete/{userSavedMealId}
+Delete meal from user               /user/meal/delete/{userId}/{mealId}
 Edit UserSavedMeal                  /user/meal/edit/{userId}/{mealId}/{userMealId}
 Get all of User's meals             /user/meal/all/{userId}
 Get specific User's meal            /user/meal/get/{userSavedMealId}
 
 */
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping ("/user/meal/add{userId}/{mealId}")
+    @PostMapping ("/user/meal/add/{userId}/{mealId}")
     public UserSavedMeals addMealToUser(@PathVariable("userId") Long userId,
                                         @PathVariable("mealId") Long mealId) {
         try {
@@ -336,8 +336,9 @@ Get specific User's meal            /user/meal/get/{userSavedMealId}
 
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping ("/user/meal/delete{userId}/{mealId}")
-    public void removeMealFromUser(@PathVariable("userSavedMealId") Long userSavedMealId) {
+    @DeleteMapping ("/user/meal/delete/{userId}/{mealId}")
+    public void removeMealFromUser(@PathVariable("userId") Long userId,
+                                    @PathVariable("mealId") Long mealId) {
         try {
             UserSavedMeals userSavedMeal = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
             if (userSavedMeal == null){
@@ -351,16 +352,19 @@ Get specific User's meal            /user/meal/get/{userSavedMealId}
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping ("/user/meal/edit/{userId}/{mealId}/{userMealId}")
+    @PutMapping ("/user/meal/edit/{userId}/{mealId}")
     public UserSavedMeals editUserSavedMeal(@PathVariable ("userId") Long userId,
-                                            @PathVariable ("mealId") Long mealId,
-                                            @PathVariable ("userMealId") Long userSavedMealId) {
+                                            @PathVariable ("mealId") Long mealId) {
         try {
-            UserSavedMeals userSavedMealToEdit = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
-            if (userSavedMealToEdit == null){
-                throw new UserSavedMealNotFoundException();
+            User user = userRepository.findByUserId(userId);
+            Meal meal = mealRepository.findByMealId(mealId);
+            if (user == null){
+                throw new UserNotFoundException();
+            } else if (meal == null) {
+                throw new MealNotFoundException();
             } else {
-                return this.userOwnershipService.editUserSavedMeal(userId, mealId, userSavedMealId);
+                UserSavedMeals userSavedMealToEdit = userSavedMealsRepository.findByUserAndMeal_mealId(user, mealId);
+                return this.userOwnershipService.editUserSavedMeal(userId, mealId, userSavedMealToEdit.getUserSavedMealsId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -383,14 +387,19 @@ Get specific User's meal            /user/meal/get/{userSavedMealId}
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping ("/user/meal/get{userSavedMealId}")
-    public UserSavedMeals getUserSavedMeal(@PathVariable ("userSavedMealId") Long userSavedMealId) {
+    @GetMapping ("/user/meal/get/{userId}/{mealId}")
+    public UserSavedMeals getUserSavedMeal(@PathVariable ("userId") Long userId,
+                                            @PathVariable ("mealId") Long mealId) {
         try {
-            UserSavedMeals userSavedMeal = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
-            if (userSavedMeal == null){
+            User user = userRepository.findByUserId(userId);
+            Meal meal = mealRepository.findByMealId(mealId);
+            if (user == null){
                 throw new UserSavedMealNotFoundException();
+            } else if (meal == null) {
+                throw new MealNotFoundException();
             } else {
-                return this.userOwnershipService.getUserSavedMeals(userSavedMealId);
+                UserSavedMeals userSavedMeal = userSavedMealsRepository.findByUserAndMeal_mealId(user, mealId);
+                return this.userOwnershipService.getUserSavedMeals(userSavedMeal.getUserSavedMealsId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
