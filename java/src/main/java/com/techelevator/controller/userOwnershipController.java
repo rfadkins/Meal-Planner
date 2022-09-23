@@ -179,13 +179,19 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/user/pantry/get/{userSavedIngredientsId}")
-    public UserSavedIngredients getUserSavedIngredientById(@PathVariable("userSavedIngredientsId") Long userSavedIngredientsId) {
+    @GetMapping("/user/pantry/get/{userId}/{ingredientId}")
+    public UserSavedIngredients getUserSavedIngredientById(@PathVariable("userId") Long userId,
+                                                            @PathVariable("ingredientId") Long ingredientId) {
         try {
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserSavedIngredientsId(userSavedIngredientsId);
-            if (userSavedIngredients == null){
+            User user = userRepository.findByUserId(userId);
+            Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+
+            if (user == null){
                 throw new UserSavedIngredientNotFoundException();
+            } else if (ingredient == null) {
+                throw new IngredientNotFoundException();
             } else {
+                UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_ingredientId(user, ingredientId);
                 return userSavedIngredients;
             }
         } catch (Exception e) {
@@ -223,14 +229,20 @@ public UserSavedRecipes addRecipeToUser(@PathVariable ("userId") Long userId,
 }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping ("/user/recipe/delete/{userSavedRecipesId}")
-    public void deleteRecipeFromUser(@PathVariable ("userSavedRecipesId") Long userSavedRecipesId) {
+    @DeleteMapping ("/user/recipe/delete/{userId}/{recipeId}")
+    public void deleteRecipeFromUser(@PathVariable ("userId") Long userId,
+                                    @PathVariable ("recipeId") Long recipeId) {
         try {
-            UserSavedRecipes userSavedRecipe = userSavedRecipesRepository.findByUserSavedRecipesId(userSavedRecipesId);
-            if (userSavedRecipe == null){
-                throw new UserSavedRecipeNotFoundException();
+            User user = userRepository.findByUserId(userId);
+            Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+
+            if (user == null){
+                throw new UserNotFoundException();
+            } else if (recipe == null) {
+                throw new RecipeNotFoundException();
             } else {
-                userOwnershipService.deleteUserSavedRecipe(userSavedRecipesId);
+                UserSavedRecipes userSavedRecipe = userSavedRecipesRepository.findByUserAndRecipe_recipeId(user, recipeId);
+                userOwnershipService.deleteUserSavedRecipe(userSavedRecipe.getUserSavedRecipesId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -238,16 +250,19 @@ public UserSavedRecipes addRecipeToUser(@PathVariable ("userId") Long userId,
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping ("/user/recipe/edit/{userId}/{recipeId}/{userRecipeId}")
+    @PutMapping ("/user/recipe/edit/{userId}/{recipeId}")
     public UserSavedRecipes editUserSavedRecipe(@PathVariable ("userId") Long userId,
-                                                @PathVariable ("recipeId") Long recipeId,
-                                                @PathVariable ("userRecipeId") Long userSavedRecipesId) {
+                                                @PathVariable ("recipeId") Long recipeId) {
         try {
-            UserSavedRecipes userSavedRecipeToEdit = userOwnershipService.getUserSavedRecipe(userSavedRecipesId);
-            if (userSavedRecipeToEdit == null){
+            User user = userRepository.findByUserId(userId);
+            Recipe recipe = recipeRepository.findByRecipeId(recipeId);
+            if (user == null){
                 throw new UserSavedRecipeNotFoundException();
+            } else if (recipe == null) {
+                throw new RecipeNotFoundException();
             } else {
-                return this.userOwnershipService.editUserSavedRecipe(userId, recipeId, userSavedRecipesId);
+                UserSavedRecipes userSavedRecipeToEdit = userSavedRecipesRepository.findByUserAndRecipe_recipeId(user, recipeId);
+                return userSavedRecipeToEdit;
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);

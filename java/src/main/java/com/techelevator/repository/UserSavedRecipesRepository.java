@@ -12,6 +12,7 @@ public interface UserSavedRecipesRepository extends JpaRepository<UserSavedRecip
 
     UserSavedRecipes findByUserSavedRecipesId(Long userSavedRecipeId);
     List<UserSavedRecipes> findAllByUser(User user);
+    UserSavedRecipes findByUserAndRecipe_recipeId(User user, Long recipeId);
 
 }
 
