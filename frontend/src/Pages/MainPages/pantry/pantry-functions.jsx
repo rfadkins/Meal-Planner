@@ -7,21 +7,25 @@ import axios from "axios";
 export async function getAllPantryIngredients(userId, token) {
   try {
     const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
-    const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${userId}`, authHeader)
-    return userPantryIngredients.data
+    const userPantryIngredients = await axios.get(`${baseUrl}/user/pantry/all/${userId}`, authHeader)
+    return userPantryIngredients.data.map((dataItem)=>dataItem.ingredient)
   } catch (err) {
-    alert(err);
+    alert("Ingredients not found");
+    const returnValue=[]
+    return returnValue
   }
 };
 
 export async function getAllIngredients(token) {
   try {
-    const api = `${baseUrl}/ingredients/`
+    const api = `${baseUrl}/ingredient/`
     const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
     const ingredients = await axios.get(api, authHeader);
     return ingredients.data
   } catch (err) {
     alert(err);
+    const returnValue=[]
+    return returnValue
   }
 }
 
@@ -55,7 +59,7 @@ export async function deletePantryIngredient(userId, token, ingredientId) {
     const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
 
     //remove from pantry
-    const disjoinIngredientFromUser = `${baseUrl}/pantry/${userId}/${ingredientId}`
+    const disjoinIngredientFromUser = `${baseUrl}/user/pantry/delete/${userId}/${ingredientId}`
     const disjoinIngredientFromUserResponse = await axios.delete(disjoinIngredientFromUser, authHeader)
     console.log(`Successfully disjoined ingredient from user`)
     //delete ingredient
@@ -78,7 +82,7 @@ export async function addNewIngredient(userId, token, ingredient) {
     console.log(`Successfully added into Ingredient Table`)
 
     //using response, join new ingredient to user
-    const joinIngredientToUser = `${baseUrl}/pantry/${userId}/${ingredientId}`
+    const joinIngredientToUser = `${baseUrl}/user/pantry/add${userId}/${ingredientId}`
     const joinIngredientToUserResponse = await axios.post(joinIngredientToUser, "", authHeader)
     console.log(`Successfully joined to User Table`)
   } catch (err) {

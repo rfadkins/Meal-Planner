@@ -13,17 +13,17 @@ import { useEffect } from "react";
 export default function Pantry() {
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    //const [userPantry, setUserPantry] = useState([]);
-    const [userPantry, setUserPantry] = useState(testIngredientList());
+    const [userPantry, setUserPantry] = useState([]);
+    //const [userPantry, setUserPantry] = useState(testIngredientList());
 
     //add new ingredients
     const [newIngredientName, setNewIngredientName] = useState("")
     const [newIngredientCategory, setNewIngredientCategory] = useState("")
 
-    // useEffect(() => {
-    //     getAllPantryIngredients(currentUserId, currentUserToken)
-    //         .then(function (result) { setUserPantry(result) })
-    // }, [])
+    useEffect(() => {
+        getAllPantryIngredients(currentUserId, currentUserToken)
+            .then(function (result) { setUserPantry(result) })
+    }, [])
 
     function addIngredientOnClick() {
         //format and POST new ingredient
@@ -38,7 +38,7 @@ export default function Pantry() {
 
     return (
         <div className="pantry">
-            <Bar />
+            
             <div className="Pantry-body">
 
                 <AddItemButton buttonImage='+' nameHandle="Pantry-add" setMain={setUserPantry}>
@@ -59,3 +59,4 @@ export default function Pantry() {
 //pull existing categories as options in the dropdown
 //have categories be created and maintained in a settings menu
 //when adding new ingredient, check for dupe and ask user if they are sure
+//add <Bar /> for search abilities
