@@ -109,6 +109,7 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
                                                     @PathVariable ("ingredientId") Long ingredientId) {
         try {
             Ingredient ingredient = ingredientRepository.findByIngredientId(ingredientId);
+            User user = userRepository.findByUserId(userId);
             if (user == null){
                 throw new UserNotFoundException();
             } else if (ingredient == null) {
@@ -127,11 +128,12 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
     public void deleteIngredientFromUserPantry(@PathVariable("userId") Long userId,
                                                 @PathVariable("ingredientId") Long ingredientId) {
         try {
-            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(userId, ingredientId);
+            User user = userRepository.findByUserId(userId);
+            UserSavedIngredients userSavedIngredients = userSavedIngredientsRepository.findByUserAndIngredient_Id(user, ingredientId);
             if (userSavedIngredients == null){
                 throw new UserSavedIngredientNotFoundException();
             } else {
-                userOwnershipService.deleteIngredientFromUserPantry(user, ingredientId);
+                userOwnershipService.deleteIngredientFromUserPantry(userId, ingredientId);
             }
         } catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
