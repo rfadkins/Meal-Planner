@@ -85,6 +85,8 @@ export async function addNewIngredient(userId, token, ingredient) {
     const joinIngredientToUser = `${baseUrl}/user/pantry/add${userId}/${ingredientId}`
     const joinIngredientToUserResponse = await axios.post(joinIngredientToUser, "", authHeader)
     console.log(`Successfully joined to User Table`)
+    console.log(joinIngredientToUserResponse.data.ingredient.ingredientId)
+    return joinIngredientToUserResponse.data.ingredient.ingredientId
   } catch (err) {
     alert(err);
   }
