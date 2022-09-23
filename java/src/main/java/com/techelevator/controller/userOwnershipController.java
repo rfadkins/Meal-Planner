@@ -124,7 +124,7 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
 
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping ("/user/pantry/delete/{ingredientId}")
+    @DeleteMapping ("/user/pantry/delete/{userId}/{ingredientId}")
     public void deleteIngredientFromUserPantry(@PathVariable("userId") Long userId,
                                                 @PathVariable("ingredientId") Long ingredientId) {
         try {
