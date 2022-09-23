@@ -149,7 +149,7 @@ async function joinIngredientToRecipe(token, recipeId, ingredientForJoin) {
 
 export function testRecipes() {
     const testRecipes = [
-        { id: 1, name: "Baked Potato", ingredients: [{ id: 1, ingredientCount: 1, ingredientLabel: "whole", ingredientName: "potato" }, { id: 2, ingredientCount: 2, ingredientLabel: "tbs", ingredientName: "butter" }, { id: 3, ingredientCount: 1, ingredientLabel: "pinch", ingredientName: "salt" }], instructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt." }
+        { id: 1, recipeName: "Baked Potato", ingredients: [{ id: 1, ingredientCount: 1, ingredientLabel: "whole", ingredientName: "potato" }, { id: 2, ingredientCount: 2, ingredientLabel: "tbs", ingredientName: "butter" }, { id: 3, ingredientCount: 1, ingredientLabel: "pinch", ingredientName: "salt" }], recipeInstructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt." }
     ]
     return testRecipes;
 };

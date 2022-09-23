@@ -3,40 +3,41 @@ import "./DashBored.css"
 
 export default function RecipeInformation(props) {
     const arr = props.recipes;
-    const setArr = props.setRecipes;
+    console.log(arr)
+    // const setArr = props.setRecipes;
 
-    const addInput = () => {
-        setArr(s => {
-            return [
-                ...s,
-                {
-                    recipe:""
-                }
-            ];
-        });
-    };
+    // const addInput = () => {
+    //     setArr(s => {
+    //         return [
+    //             ...s,
+    //             {
+    //                 recipe:""
+    //             }
+    //         ];
+    //     });
+    // };
 
-    const handleChangeName = e => {
-        e.preventDefault();
+    // const handleChangeName = e => {
+    //     e.preventDefault();
 
-        const index = e.target.id;
-        setArr(s => {
-            const newArr = s.slice();
-            newArr[index].name = e.target.value;
-            return newArr;
-        });
-    };
+    //     const index = e.target.id;
+    //     setArr(s => {
+    //         const newArr = s.slice();
+    //         newArr[index].name = e.target.value;
+    //         return newArr;
+    //     });
+    // };
 
-    const handleChangeRecipe = e => {
-        e.preventDefault();
+    // const handleChangeRecipe = e => {
+    //     e.preventDefault();
 
-        const index = e.target.id;
-        setArr(s => {
-            const newArr = s.slice();
-            newArr[index].recipes.push(e.target.value);
-            return newArr;
-        });
-    };
+    //     const index = e.target.id;
+    //     setArr(s => {
+    //         const newArr = s.slice();
+    //         newArr[index].recipes.push(e.target.value);
+    //         return newArr;
+    //     });
+    // };
     
     return (
         <div>
@@ -46,7 +47,6 @@ export default function RecipeInformation(props) {
                     <div key={i} id={i} className="recipe-info">
                         <input
                             id={i}
-                            onChange={handleChangeName}
                             value={item.recipeName}
                             type="text"
                             className="recipe-info-name"
@@ -55,7 +55,7 @@ export default function RecipeInformation(props) {
                 );
             })}
             <div className="popup-buttons">
-                <button className="addIngredientButton" onClick={addInput}>Add Recipe</button>
+                <button className="addIngredientButton">Add Recipe</button>
             </div>
         </div>
     );

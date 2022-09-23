@@ -58,13 +58,13 @@ export function testMealPlan() {
             id: 1, name: "Meal Plan 1", meals: [
                 {
                     id: 1, name: "meal a", recipes: [
-                        { id: 1, name: "Omelet", ingredients: [{ count: 2, measurement: "large", name: "egg" }, { count: 2, measurement: "tbs", name: "butter" }, { count: .25, measurement: "cup", name: "cheese" }], instructions: "Omelet instructions" },
-                        { id: 2, name: "Breakfast Potatoes", ingredients: [{ count: 1, measurement: "whole", name: "potato" }, { count: 2, measurement: "tbs", name: "butter" }, { count: 1, measurement: "pinch", name: "salt" }], instructions: "Breakfast potatoes instructions" }
+                        { id: 1, recipeName: "Omelet", ingredients: [{ ingredientCount: 2, ingredientLabel: "large", ingredientName: "egg" }, { ingredientCount: 2, ingredientLabel: "tbs", ingredientName: "butter" }, { ingredientCount: .25, ingredientLabel: "cup", ingredientName: "cheese" }], instructions: "Omelet instructions" },
+                        { id: 2, recipeName: "Breakfast Potatoes", ingredients: [{ ingredientCount: 1, ingredientLabel: "whole", ingredientName: "potato" }, { ingredientCount: 2, ingredientLabel: "tbs", ingredientName: "butter" }, { ingredientCount: 1, ingredientLabel: "pinch", ingredientName: "salt" }], recipeInstructions: "Breakfast potatoes instructions" }
                     ]
                 },
                 {
                     id: 1, name: "meal b", recipes: [
-                        { id: 1, name: "Baked Potato", ingredients: [{ count: 1, measurement: "whole", name: "potato" }, { count: 2, measurement: "tbs", name: "butter" }, { count: 1, measurement: "pinch", name: "salt" }], instructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt." }
+                        { id: 1, recipeName: "Baked Potato", ingredients: [{ ingredientCount: 1, ingredientLabel: "whole", ingredientName: "potato" }, { ingredientCount: 2, ingredientLabel: "tbs", ingredientName: "butter" }, { ingredientCount: 1, ingredientLabel: "pinch", ingredientName: "salt" }], recipeInstructions: "Wrap potato in foil. Bake on cooking sheet at 350 for 10 minutes. Let cool. Serve with butter and salt." }
                     ]
                 },
                 {

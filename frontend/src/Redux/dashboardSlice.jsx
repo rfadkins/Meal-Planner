@@ -4,7 +4,7 @@ const dashboardSlice = createSlice({
   name: "dashboard",
   initialState: {
     currentMealPlan: { mealPlanId: null, mealPlanName: "" },
-    currentMeals: [{ mealId: null, mealName: "", recipes:[]}],
+    currentMeals: [{ mealId: null, mealName: "", recipes:[{recipeName: "", ingredients:[], recipeInstructions:""}]}],
   },
   reducers: {
     addCurrentMealPlan: (state, action) => {

@@ -20,16 +20,18 @@ export default function Dashbored() {
     const dispatch = useDispatch()
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    const currentMealPlan = useSelector((state) => state.dashboard.currentMealPlan)
-    const mealPreview = useSelector((state) => state.dashboard.currentMeals)
+    //const currentMealPlan = useSelector((state) => state.dashboard.currentMealPlan)
+    //const mealPreview = useSelector((state) => state.dashboard.currentMeals)
 
-    async function startup(){
-        const retrievedMealPlan = await getCurrentMealPlan(currentUserId, currentUserToken)
-        dispatch(addCurrentMealPlan(...retrievedMealPlan))
-        const retrievedMeals = await getCurrentMeals(currentUserToken, useSelector((state) => state.dashboard.currentMealPlan.mealPlanId))
-    }
+    // async function startup(){
+    //     const retrievedMealPlan = await getCurrentMealPlan(currentUserId, currentUserToken)
+    //     dispatch(addCurrentMealPlan(...retrievedMealPlan))
+    //     const retrievedMeals = await getCurrentMeals(currentUserToken, useSelector((state) => state.dashboard.currentMealPlan.mealPlanId))
+    // }
 
-    //const [currentMealPlan, setCurrentMealPlan] = useState(testMealPlan()[0])
+    const [currentMealPlan, setCurrentMealPlan] = useState(testMealPlan()[0])
+    const [mealPreview, setMealPreview]=useState(testMealPlan()[0].meals)
+    console.log(mealPreview)
     //const [currentMealPlan, setCurrentMealPlan] = useState({ mealPlanName: "" })
     //const [mealPreview, setMealPreview] = useState([])
 
@@ -56,16 +58,16 @@ export default function Dashbored() {
 
     return (
         <div className="dashboard">
-            <h1>{currentMealPlan.mealPlanName}</h1>
+            <h1>{currentMealPlan.name}</h1>
             <AddItemButton buttonImage='Edit Meal Plan' nameHandle="meal-plan-add">
                 <h3 className="title">Edit Meal Plan</h3>
                 <p>Meal Plan Name: <input type="text" className="textInputLong" value={currentMealPlanName} onChange={() => setCurrentMealPlanName(event.target.value)} /></p>
-                <MealInformation/>
+                <MealInformation meals={mealPreview} setMeals={mealPreview}/>
                 <div className="popup-buttons">
                     <button className="submitButton" onClick={updateMealPlanOnClick}>Submit</button>
                 </div>
             </AddItemButton>
-            <MealComponent/>
+            <MealComponent meals={mealPreview}/>
         </div>
     )
 }

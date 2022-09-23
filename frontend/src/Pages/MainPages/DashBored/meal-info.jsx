@@ -8,20 +8,38 @@ import { useSelector } from 'react-redux';
 import { useEffect } from "react";
 import { addCurrentMeals } from "../../../Redux/dashboardSlice";
 
+import BasicExample from "./testing";
+
 export default function MealInformation(props) {
-    const arr = useSelector((state) => state.dashboard.currentMeals);
-    const setArr = useDispatch()
+    // const arr = useSelector((state) => state.dashboard.currentMeals);
+    // console.log(arr)
+    // const setArr = useDispatch()
+
+    // const addInput = () => {
+    //     setArr(
+    //         addCurrentMeals(
+    //             [...arr,
+    //             {
+    //                 name: "",
+    //                 recipes: []
+    //             }]
+    //         )
+    //     )
+    // };
+
+    const arr = props.meals;
+    const setArr = props.setMeals;
 
     const addInput = () => {
-        setArr(
-            addCurrentMeals(
-                [...arr,
+        setArr(s => {
+            return [
+                ...s,
                 {
-                    name: "",
-                    recipes: []
-                }]
-            )
-        )
+                    mealName: "",
+                    recipes:[]
+                }
+            ];
+        });
     };
 
 
@@ -64,7 +82,7 @@ export default function MealInformation(props) {
                             className="meal-info-name"
                             placeholder="Meal Name"
                         />
-                        
+                        <RecipeInformation recipes={item.recipes} />
 
                     </div>
                 );

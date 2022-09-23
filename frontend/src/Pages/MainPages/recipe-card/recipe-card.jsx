@@ -13,17 +13,17 @@ import { useSelector } from 'react-redux';
 export default function RecipeCard() {
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    //const [recipeList, setRecipeList] = useState(testRecipes())
-    const [recipeList, setRecipeList] = useState([])
+    const [recipeList, setRecipeList] = useState(testRecipes())
+    // const [recipeList, setRecipeList] = useState([])
 
-    //load in user recipes
-    useEffect(() => {
-        getAllUserRecipes(currentUserId, currentUserToken)
-            .then(function (result) { 
-                console.log("Recipe-Card")
-                console.log(result)
-                setRecipeList(result) })
-    }, [])
+    // //load in user recipes
+    // useEffect(() => {
+    //     getAllUserRecipes(currentUserId, currentUserToken)
+    //         .then(function (result) { 
+    //             console.log("Recipe-Card")
+    //             console.log(result)
+    //             setRecipeList(result) })
+    // }, [])
 
     //new recipe
     const [newRecipeName, setNewRecipeName] = useState("")
