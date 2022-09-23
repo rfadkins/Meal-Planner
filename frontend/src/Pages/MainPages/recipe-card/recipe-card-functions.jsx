@@ -4,12 +4,16 @@ import axios from "axios";
 /* File contains functional code for recipe-card */
 
 
-export function getAllUserRecipes(userId) {
-    
-
-    //const data = { username: username, password: password };
-    //const userPantryIngredients = await axios.get(`${baseUrl}/pantry/user/${currentUserId}`, data);
-
+export async function getAllUserRecipes(userId, token) {
+    try {
+        const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
+        const userRecipes = await axios.get(`${baseUrl}/user/recipe/all/${userId}`, authHeader)
+        return userRecipes.data
+      } catch (err) {
+        alert("Recipes not found");
+        const returnValue=[]
+        return returnValue
+      }
 };
 
 const getRecipesByCategory = async (e) => {

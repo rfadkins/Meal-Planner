@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import "./recipe-card.css"
 /* components */
 import RecipeCardPart from "../../../Components/Calander.Component/RecipeCard/RecipeCard";
@@ -13,10 +13,18 @@ import { useSelector } from 'react-redux';
 export default function RecipeCard() {
     const currentUserId = useSelector((state) => state.user.id)
     const currentUserToken = useSelector((state) => state.token.token)
-    const [recipeList, setRecipeList] = useState(testRecipes())
+    //const [recipeList, setRecipeList] = useState(testRecipes())
+    const [recipeList, setRecipeList] = useState([])
+
+    //load in user recipes
+    useEffect(() => {
+        getAllUserRecipes(currentUserId, currentUserToken)
+            .then(function (result) { setRecipeList(result) })
+    }, [])
 
     //new recipe
     const [newRecipeName, setNewRecipeName] = useState("")
+    const [newRecipeCategory, setNewRecipeCategory] = useState("")
     const [newRecipeIngredients, setNewRecipeIngredients] = useState(
         [{
             id: 1,
@@ -26,18 +34,21 @@ export default function RecipeCard() {
         }]
     )
     const [newRecipeInstructions, setNewRecipeInstructions] = useState("")
+    function addRecipeOnClick(){
+
+    }
 
     return (
         <div className="recipe-card">
-            <Bar />
             <AddItemButton buttonImage='Add Recipe' nameHandle="Recipe-add">
                 <h3 className="title">New Recipe</h3>
-                <p>Recipe Name <input type="text" className="textInputLong" /></p>
+                <p>Recipe Name <input type="text" className="textInputLong" value={newRecipeName} onChange={()=>setNewRecipeName(event.target.value)} /></p>
+                <p>Recipe Category <input type="text" className="textInputLong" value={newRecipeCategory} onChange={()=>setNewRecipeCategory(event.target.value)} /></p>
                 <IngredientInformation 
                     ingredients = {newRecipeIngredients} 
                     setIngredients = {setNewRecipeIngredients} />
                 <p>Instructions</p>
-                <input type="text" className="textInputBox" />
+                <input type="text" className="textInputBox" value={newRecipeInstructions} onChange={()=>setNewRecipeInstructions(event.target.value)} />
                 <div className="popup-buttons">
                     <button className="submitButton">Submit</button>
                 </div>
@@ -48,3 +59,8 @@ export default function RecipeCard() {
         </div>
     )
 }
+
+
+
+//Updates for later:
+//add <Bar /> for search abilities
