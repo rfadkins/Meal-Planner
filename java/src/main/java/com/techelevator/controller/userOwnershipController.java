@@ -340,11 +340,15 @@ Get specific User's meal            /user/meal/get/{userSavedMealId}
     public void removeMealFromUser(@PathVariable("userId") Long userId,
                                     @PathVariable("mealId") Long mealId) {
         try {
-            UserSavedMeals userSavedMeal = userSavedMealsRepository.findByUserSavedMealsId(userSavedMealId);
-            if (userSavedMeal == null){
+            User user = userRepository.findByUserId(userId);
+            Meal meal = mealRepository.findByMealId(mealId);
+            if (user == null){
                 throw new UserSavedMealNotFoundException();
+            } else if (meal == null) {
+                throw new MealNotFoundException();
             } else {
-                userOwnershipService.deleteUserSavedMeal(userSavedMealId);
+                UserSavedMeals userSavedMeal = userSavedMealsRepository.findByUserAndMeal_mealId(user, mealId);
+                userOwnershipService.deleteUserSavedMeal(userSavedMeal.getUserSavedMealsId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
