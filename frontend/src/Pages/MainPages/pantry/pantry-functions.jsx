@@ -62,10 +62,6 @@ export async function deletePantryIngredient(userId, token, ingredientId) {
     const disjoinIngredientFromUser = `${baseUrl}/user/pantry/delete/${userId}/${ingredientId}`
     const disjoinIngredientFromUserResponse = await axios.delete(disjoinIngredientFromUser, authHeader)
     console.log(`Successfully disjoined ingredient from user`)
-    //delete ingredient
-    const deleteIngredient = `${baseUrl}/ingredient/${ingredientId}`
-    const deleteIngredientResponse = await axios.delete(deleteIngredient, authHeader)
-    console.log(`Successfully deleted ingredient`)
   } catch (err) {
     alert(err);
   }
