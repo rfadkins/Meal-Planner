@@ -1,24 +1,30 @@
 import React, { useState } from "react"
+import { getCurrentMealRecipes } from "./dashboard-functions";
 import "./DashBored.css"
 import RecipeInformation from "./recipe-info";
+/*redux*/
+import { useDispatch } from "react-redux";
+import { useSelector } from 'react-redux';
+import { useEffect } from "react";
+import { addCurrentMeals } from "../../../Redux/dashboardSlice";
 
 export default function MealInformation(props) {
-    const arr = props.meals;
-    const setArr = props.setMeals;
+    const arr = useSelector((state) => state.dashboard.currentMeals);
+    const setArr = useDispatch()
 
     const addInput = () => {
-        setArr(s => {
-            return [
-                ...s,
+        setArr(
+            addCurrentMeals(
+                [...arr,
                 {
                     name: "",
                     recipes: []
-                }
-            ];
-        });
+                }]
+            )
+        )
     };
 
-    
+
 
     const handleChangeName = e => {
         e.preventDefault();
@@ -48,7 +54,6 @@ export default function MealInformation(props) {
         <div>
 
             {arr.map((item, i) => {
-                const [recipes, setRecipes] = useState(item.recipes)
                 return (
                     <div key={i} id={i} className="meal-info">
                         <input
@@ -59,15 +64,15 @@ export default function MealInformation(props) {
                             className="meal-info-name"
                             placeholder="Meal Name"
                         />
-                        <RecipeInformation recipes={recipes} setRecipes={setRecipes} />
                         
+
                     </div>
                 );
             })}
             <div className="popup-buttons">
-                            <button className="addIngredientButton" onClick={addInput}>Add Meal</button>
-                        </div>
-            
+                <button className="addIngredientButton" onClick={addInput}>Add Meal</button>
+            </div>
+
 
         </div>
     );
