@@ -2,11 +2,16 @@ package com.techelevator.controller;
 
 import com.techelevator.business.MealRecipeService;
 import com.techelevator.business.UserService;
+import com.techelevator.model.MealsInMealPlan;
+import com.techelevator.model.Recipe;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@CrossOrigin
 @PreAuthorize("isAuthenticated()")
 public class meal_RecipeController{
 
@@ -28,8 +33,8 @@ public class meal_RecipeController{
 
 
     @GetMapping ("/recipe/meal/{mealId}")
-    public void getRecipesInMeal(@PathVariable("mealId") Long mealId) {
-        mealRecipeService.getRecipesInMeal(mealId);
+    public List<Recipe> getRecipesInMeal(@PathVariable("mealId") Long mealId) {
+        return this.mealRecipeService.getRecipesInMeal(mealId);
     }
 
 
