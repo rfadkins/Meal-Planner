@@ -19,7 +19,10 @@ export default function RecipeCard() {
     //load in user recipes
     useEffect(() => {
         getAllUserRecipes(currentUserId, currentUserToken)
-            .then(function (result) { setRecipeList(result) })
+            .then(function (result) { 
+                console.log("Recipe-Card")
+                console.log(result)
+                setRecipeList(result) })
     }, [])
 
     //new recipe

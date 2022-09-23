@@ -10,9 +10,41 @@ import { addNewIngredient } from "../pantry/pantry-functions";
 export async function getAllUserRecipes(userId, token) {
     try {
         const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
-        const userRecipes = await axios.get(`${baseUrl}/user/recipe/all/${userId}`, authHeader)
-        console.log(userRecipes)
-        return userRecipes.data
+        const userRecipesResponse = await axios.get(`${baseUrl}/user/recipe/all/${userId}`, authHeader)
+        console.log("received user recipes")
+        //withdraw recipe from returned objects
+        const semiFormattedRecipes = userRecipesResponse.data.map((item) => {
+            //console.log(item)
+            return { ...item.recipe, ingredients: [] }
+        })
+        console.log("converted user recipes to semi formatted recipe array")
+        console.log(semiFormattedRecipes)
+        //look for and add ingredients to recipe
+        const formattedRecipes = 
+        Promise.all(
+            semiFormattedRecipes.map((recipe) => {
+                const recipeId = recipe.recipeId
+                getIngredientsForRecipe(token, recipeId)
+                    .then(function (result) {
+                        const ingredientsResponse = result
+                        const updatedRecipe = {
+                            recipeId: recipeId,
+                            recipeName: recipe.recipeName,
+                            category: recipe.category,
+                            recipeInstructions: recipe.recipeInstructions,
+                            ingredients: ingredientsResponse
+                        }
+                        console.log("updated recipe")
+                        console.log(updatedRecipe)
+                        return (updatedRecipe)
+                    })
+            })
+        )
+        console.log("converted user recipes to formatted recipe array")
+        console.log(formattedRecipes)
+
+        return formattedRecipes
+
     } catch (err) {
         alert("Recipes not found");
         const returnValue = []
@@ -39,6 +71,8 @@ const editUserRecipe = async (e) => {
 const deleteUserRecipe = async (e) => {
     e.preventDefault();
 }
+
+
 
 export async function addNewRecipe(userId, token, recipe) {
     try {
@@ -84,7 +118,16 @@ export async function addNewRecipe(userId, token, recipe) {
     //have a drop down that is based of what is being typed, if there are no ingredients found, add new
 }
 
-export async function joinIngredientToRecipe(token, recipeId, ingredientForJoin) {
+/* helper functions */
+
+async function getIngredientsForRecipe(token, recipeId) {
+    const authHeader = { headers: { "Authorization": `Bearer ${token}` } }
+    const getIngredientsForRecipeObject = `${baseUrl}/ingredient/recipe/${recipeId}`
+    const getIngredientsForRecipeResponse = await axios.get(getIngredientsForRecipeObject, authHeader)
+    return getIngredientsForRecipeResponse.data
+}
+
+async function joinIngredientToRecipe(token, recipeId, ingredientForJoin) {
     try {
 
         const ingredientId = ingredientForJoin.ingredientId
@@ -101,6 +144,8 @@ export async function joinIngredientToRecipe(token, recipeId, ingredientForJoin)
         return returnValue
     }
 };
+
+/* function for dummy data */
 
 export function testRecipes() {
     const testRecipes = [
