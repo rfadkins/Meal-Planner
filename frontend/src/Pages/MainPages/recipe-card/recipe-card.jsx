@@ -6,7 +6,7 @@ import Bar from "../../../Components/Input.Component/search_bar/search_bar";
 import AddItemButton from "../../../Components/Button.Components/ButtonAddItem/ButtonAddItem";
 import IngredientInformation from "./ingredient-info";
 /* js functionality */
-import { getAllUserRecipes, testRecipes } from "./recipe-card-functions";
+import { addNewRecipe, getAllUserRecipes, testRecipes } from "./recipe-card-functions";
 /* redux */
 import { useSelector } from 'react-redux';
 
@@ -30,12 +30,31 @@ export default function RecipeCard() {
             id: 1,
             ingredientName: "",
             ingredientCount: "",
-            ingredientLabel: ""
+            ingredientLabel: "",
+            ingredientCategory: "added from pantry"
         }]
     )
     const [newRecipeInstructions, setNewRecipeInstructions] = useState("")
     function addRecipeOnClick(){
-
+        const formattedNewRecipe = {
+            recipeName: newRecipeName,
+            category: newRecipeCategory,
+            ingredients: newRecipeIngredients,
+            recipeInstructions: newRecipeInstructions
+        }
+        addNewRecipe(currentUserId, currentUserToken, formattedNewRecipe)
+        // setNewRecipeName("")
+        // setNewRecipeCategory("")
+        // setNewRecipeIngredients(
+        //     [{
+        //         id: 1,
+        //         ingredientName: "",
+        //         ingredientCount: "",
+        //         ingredientLabel: "",
+        //         ingredientCategory: "added from pantry"
+        //     }]
+        // )
+        // setNewRecipeInstructions("")
     }
 
     return (
@@ -50,7 +69,7 @@ export default function RecipeCard() {
                 <p>Instructions</p>
                 <input type="text" className="textInputBox" value={newRecipeInstructions} onChange={()=>setNewRecipeInstructions(event.target.value)} />
                 <div className="popup-buttons">
-                    <button className="submitButton">Submit</button>
+                    <button className="submitButton" onClick={addRecipeOnClick}>Submit</button>
                 </div>
             </AddItemButton>
             <div className="card-List">
