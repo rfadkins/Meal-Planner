@@ -35,8 +35,11 @@ public class Ingredient {
     public Ingredient() {
     }
 
-    public Ingredient(Long ingredientId, String ingredientName, String ingredientCategory,
-                      Set<IngredientsInRecipe> ingredientsInRecipe, Set<UserSavedIngredients> userSavedIngredients) {
+    public Ingredient(Long ingredientId,
+                        String ingredientName,
+                        String ingredientCategory,
+                        Set<IngredientsInRecipe> ingredientsInRecipe,
+                        Set<UserSavedIngredients> userSavedIngredients) {
         this.ingredientId = ingredientId;
         this.ingredientName = ingredientName;
         this.ingredientCategory = ingredientCategory;

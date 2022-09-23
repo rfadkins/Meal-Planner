@@ -203,10 +203,10 @@ Get specific ingredient in pantry   /user/pantry/get/{userSavedIngredientsId}
 /*
 -------------------------------------RECIPE-------------------------------------
 Add recipe to user                  /user/recipe/add/{userId}/{recipeId}
-Delete recipe from user             /user/recipe/delete/{userSavedRecipeId}
-Edit UserSavedRecipe                /user/recipe/edit/{userId}/{recipeId}/{userRecipeId}
+Delete recipe from user             /user/recipe/delete/{userId}/{recipeId}
+Edit UserSavedRecipe                /user/recipe/edit/{userId}/{recipeId}
 Get all of User's recipes           /user/recipe/all/{userId}
-Get specific User's recipe          /user/recipe/get/{userSavedRecipeId}
+Get specific User's recipe          /user/recipe/get/{userId}/{recipeId}
 
 */
 @ResponseStatus(HttpStatus.CREATED)
@@ -414,8 +414,8 @@ Get specific User's meal            /user/meal/get/{userSavedMealId}
 /*
 -----------------------------------MEAL PLAN------------------------------------
 Add meal plan to user               /user/mealplan/add/{userId}/{mealPlanId}
-Delete meal plan from user          /user/mealplan/delete/{userSavedMealPlanId}
-Edit UserSavedMealPlan              /user/mealplan/edit/{userId}/{mealPlanId}/{userMealPlanId}
+Delete meal plan from user          /user/mealplan/delete/{userId}/{mealPlanId}
+Edit UserSavedMealPlan              /user/mealplan/edit/{userId}/{mealPlanId}
 Get all of User's meal plans        /user/mealplan/all/{userId}
 
 */
@@ -439,14 +439,19 @@ Get all of User's meal plans        /user/mealplan/all/{userId}
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping ("/user/mealplan/delete{userSavedMealPlansId}")
-    public void deleteMealPlanFromUser(@PathVariable("userSavedMealPlansId") Long userSavedMealPlansId) {
+    @DeleteMapping ("/user/mealplan/delete/{userId}/{mealPlanId}")
+    public void deleteMealPlanFromUser(@PathVariable ("userId") Long userId,
+                                        @PathVariable ("mealPlanId") Long mealPlanId) {
         try {
-            UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlansId);
-            if (userSavedMealPlan == null){
+            User user = userRepository.findByUserId(userId);
+            MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+            if (user == null){
                 throw new UserSavedMealPlanNotFoundException();
+            } else if (mealPlan == null) {
+                throw new MealPlanNotFoundException();
             } else {
-                userOwnershipService.deleteMealPlanFromUser(userSavedMealPlansId);
+                UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserAndMealPlan_mealPlanId(user, mealPlanId);
+                userOwnershipService.deleteMealPlanFromUser(userSavedMealPlan.getUserSavedMealPlansId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -454,22 +459,19 @@ Get all of User's meal plans        /user/mealplan/all/{userId}
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping ("/user/mealplan/edit/{userId}/{mealPlanId}/{userMealPlanId}")
+    @PutMapping ("/user/mealplan/edit/{userId}/{mealPlanId}")
     public UserSavedMealPlans editUserSavedMealPlan(@PathVariable ("userId") Long userId,
-                                                    @PathVariable ("mealPlanId") Long mealPlanId,
-                                                    @PathVariable ("userMealPlanId") Long userSavedMealPlanId) {
+                                                    @PathVariable ("mealPlanId") Long mealPlanId) {
         try {
-            UserSavedMealPlans userSavedMealPlanToEdit = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlanId);
             User user = userRepository.findByUserId(userId);
             MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
-            if (userSavedMealPlanToEdit == null){
-                throw new UserSavedMealPlanNotFoundException();
-            } else if (user == null) {
+            if (user == null) {
                 throw new UserNotFoundException();
             } else if (mealPlan == null) {
                 throw new MealPlanNotFoundException();
             } else {
-                return this.userOwnershipService.editUserSavedMealPlan(userId, mealPlanId, userSavedMealPlanId);
+                UserSavedMealPlans userSavedMealPlanToEdit = userSavedMealPlansRepository.findByUserAndMealPlan_mealPlanId(user, mealPlanId);
+                return this.userOwnershipService.editUserSavedMealPlan(userId, mealPlanId, userSavedMealPlanToEdit.getUserSavedMealPlansId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
@@ -494,14 +496,19 @@ Get all of User's meal plans        /user/mealplan/all/{userId}
 
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping ("/user/mealplan/get/{userSavedMealPlanId}")
-    public UserSavedMealPlans getUserSavedMealPlan(@PathVariable ("userSavedMealPlanId") Long userSavedMealPlanId) {
+    @GetMapping ("/user/mealplan/get/{userId}/{mealPlanId}")
+    public UserSavedMealPlans getUserSavedMealPlan(@PathVariable ("userId") Long userId,
+                                                    @PathVariable ("mealPlanId") Long mealPlanId) {
         try {
-            UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserSavedMealPlansId(userSavedMealPlanId);
-            if (userSavedMealPlan == null){
+            User user = userRepository.findByUserId(userId);
+            MealPlan mealPlan = mealPlanRepository.findByMealPlanId(mealPlanId);
+            if (user == null){
                 throw new UserSavedMealPlanNotFoundException();
+            } else if (mealPlan == null) {
+                throw new MealPlanNotFoundException();
             } else {
-                return this.userOwnershipService.getUserSavedMealPlan(userSavedMealPlanId);
+                UserSavedMealPlans userSavedMealPlan = userSavedMealPlansRepository.findByUserAndMealPlan_mealPlanId(user, mealPlanId);
+                return this.userOwnershipService.getUserSavedMealPlan(userSavedMealPlan.getUserSavedMealPlansId());
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage(), e);
