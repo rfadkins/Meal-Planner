@@ -19,7 +19,7 @@ public class IngredientsInRecipe {
         return ingredientsInRecipeId;
     }
 
-
+//property based access to accomodate extra columns
     @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="ingredient_id")
     public Ingredient getIngredient() {

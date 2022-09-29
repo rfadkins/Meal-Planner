@@ -104,3 +104,15 @@ export function testIngredientList() {
   ]
   return testIngredients;
 };
+
+export async function printIngredients(userId, token) {
+  try {
+    const authHeader = { headers: { "Authorization": `Bearer ${token}`, "Content-Type" : 'application/pdf' } }
+    const printIngredients = await axios.get(`${baseUrl}/ingredients/print}`, authHeader)
+    return printIngredients;
+    
+  } catch (err) {
+    alert("Ingredients not found");
+    
+  }
+};

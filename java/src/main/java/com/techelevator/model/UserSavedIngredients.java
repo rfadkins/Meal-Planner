@@ -22,6 +22,7 @@ public class UserSavedIngredients {
         return userSavedIngredientsId;
     }
 
+    //property based access to accomodate extra columns
     @ManyToOne(cascade=CascadeType.PERSIST)
     @JoinColumn(name="ingredient_id")
     public Ingredient getIngredient() {
