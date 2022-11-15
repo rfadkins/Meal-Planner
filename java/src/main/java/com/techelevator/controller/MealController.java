@@ -3,12 +3,15 @@ package com.techelevator.controller;
 import com.techelevator.business.MealService;
 import com.techelevator.business.UserService;
 
+import com.techelevator.exceptions.IngredientNotFoundException;
+import com.techelevator.model.Ingredient;
 import com.techelevator.model.Meal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
