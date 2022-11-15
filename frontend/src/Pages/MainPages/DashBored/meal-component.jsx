@@ -5,20 +5,39 @@ import RecipeCard from '../../../Components/Calander.Component/RecipeCard/Recipe
 
 /*redux*/
 import { useSelector } from 'react-redux';
+import { useEffect } from "react";
 
 export default function MealComponent(props) {
-    const meals = props.meals
+    const currentUserId = useSelector((state) => state.user.id)
+    const currentUserToken = useSelector((state) => state.token.token)
+
+    //const meals = useSelector((state) => state.dashboard.currentMeals)
+    const meals=props.meals
+    //console.log(meals)
 
     return (
-        meals.map((meal, index) =>
+        meals.map((meal, index) => {
+            console.log(meal)
+            const [recipes, setRecipes] = useState(meal.recipes);
+            // async function onStartup() {
+            //     const retrievedRecipes = await getCurrentMealRecipes(currentUserToken, item.mealId)
+            //     setRecipes(retrievedRecipes)
+            //     console.log(recipes)
+            // }
+
+            // onStartup();
+
+            return(
             <div key={index} className="meal-component">
-                <h3>{meal.name}</h3>
-                {meal.recipes.map((recipe) => 
-                    <li key={recipe.id}>{recipe.name}</li>
-                )}
-                <button>Made</button>
-                <button>Skip</button>
+                <h2>{meal.name}</h2>
+                <RecipeCard recipeList={recipes} viewOnly={true} />
             </div>
-        )
+            )
+        })
     )
 }
+/*
+Upgrades
+<button>Made</button>
+<button>Skip</button>
+*/

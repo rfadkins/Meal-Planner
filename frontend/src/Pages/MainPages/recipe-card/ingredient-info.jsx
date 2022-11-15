@@ -2,15 +2,6 @@ import React, { useState } from "react"
 import "./recipe-card.css"
 
 export default function IngredientInformation(props) {
-    const inputArr = [
-        {
-            id: 1,
-            ingredientName: "",
-            ingredientCount: "",
-            ingredientLabel: ""
-        }
-    ];
-
     const arr = props.ingredients;
     const setArr = props.setIngredients;
 
@@ -21,7 +12,8 @@ export default function IngredientInformation(props) {
                 {
                     ingredientName: "",
                     ingredientCount: "",
-                    ingredientLabel: ""
+                    ingredientLabel: "",
+                    ingredientCategory: "added from pantry"
                 }
             ];
         });

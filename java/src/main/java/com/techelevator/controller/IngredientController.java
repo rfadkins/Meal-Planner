@@ -20,7 +20,7 @@ import java.util.List;
 @CrossOrigin(origins="*")
 @RequestMapping("/ingredient")
 @PreAuthorize("isAuthenticated()")
-public class IngredientController extends IngredientService{
+public class IngredientController{
     //This controller handles the Ingredient table
 
     UserService userService;
@@ -39,38 +39,45 @@ public class IngredientController extends IngredientService{
     }
 
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping ("/")
-    public Ingredient createIngredient(@RequestBody Ingredient ingredient) {
-        this.ingredientService = ingredientService;
-        return this.ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory());
+    public ResponseEntity<Ingredient> createIngredient(@RequestBody Ingredient ingredient) {
+        try {
+            if (ingredient == null) {
+                throw new IngredientNotFoundException();
+            } else {
+                return ResponseEntity.ok(ingredientService.createIngredient(ingredient.getIngredientName(), ingredient.getIngredientCategory()));
+            }
+        } catch(Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
-
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{ingredientId}")
-    public Ingredient getIngredient(@PathVariable("ingredientId") Long ingredientId) {
+    public ResponseEntity<Ingredient> getIngredient(@PathVariable("ingredientId") Long ingredientId) {
         try {
             Ingredient newIngredient = ingredientRepository.findByIngredientId(ingredientId);
             if (newIngredient == null) {
                 throw new IngredientNotFoundException();
             }
-            return newIngredient;
+            return ResponseEntity.ok(newIngredient);
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient not found", e);
+            return ResponseEntity.badRequest().build();
         }
     }
 
 
-
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/")
-    public List<Ingredient> listIngredients() {
-        return ingredientService.getAllIngredients();
+    public ResponseEntity<List<Ingredient>> listIngredients() {
+        return ResponseEntity.ok(ingredientService.getAllIngredients());
     }
 
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @PutMapping ("/{ingredientId}")
-    public Ingredient editIngredient(@PathVariable("ingredientId") Long ingredientId,
+    public ResponseEntity<Ingredient> editIngredient(@PathVariable("ingredientId") Long ingredientId,
                                 @RequestBody Ingredient ingredient) {
         try {
             Ingredient editedIngredient = ingredientRepository.findByIngredientId(ingredientId);
@@ -79,17 +86,17 @@ public class IngredientController extends IngredientService{
             } else if (ingredient == null) {
                 throw new IngredientNotFoundException();
             } else {
-                return ingredientService.editIngredient(ingredientId,
+                return ResponseEntity.ok(ingredientService.editIngredient(ingredientId,
                                                         ingredient.getIngredientName(),
-                                                        ingredient.getIngredientCategory());
+                                                        ingredient.getIngredientCategory()));
             }
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient not found", e);
+            return ResponseEntity.badRequest().build();
         }
     }
 
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @DeleteMapping ("/{ingredientId}")
     public void deleteIngredient(@PathVariable("ingredientId") Long ingredientId) {
         try {
@@ -100,24 +107,11 @@ public class IngredientController extends IngredientService{
                 ingredientService.deleteIngredient(ingredientId);
             }
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient not found", e);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Ingredient not found");
         }
         ingredientService.deleteIngredient(ingredientId);
     }
 }
-
-
-
-
-//old code - may still be needed :)
-
-
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        //httpHeaders.add(JWTFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-//
-//        httpHeaders.add("Access-Control-Allow-Origin:","*");
-//        return new ResponseEntity<List<Ingredient>>(ingredientService.getAllIngredients(), httpHeaders, HttpStatus.OK);
-
 
 
 

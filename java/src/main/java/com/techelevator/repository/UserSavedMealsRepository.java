@@ -13,4 +13,5 @@ public interface UserSavedMealsRepository extends JpaRepository<UserSavedMeals, 
 
     UserSavedMeals findByUserSavedMealsId(Long userSavedMealId);
     List<UserSavedMeals> findAllByUser(User user);
+    UserSavedMeals findByUserAndMeal_mealId(User user, Long mealId);
 }

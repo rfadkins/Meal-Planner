@@ -6,13 +6,24 @@ import IngredientInformation from "../../../Pages/MainPages/recipe-card/ingredie
 
 export default function RecipeCardPart(props) {
     const recipeList = props.recipeList
+    const viewOnly = props.viewOnly
+
+    //console.log(recipeList)
+
+    //if recipes is empty
+    if (recipeList.length === 0) {
+        return (
+            <p>Please start by adding recipes</p>
+        )
+    }
 
     return (
         recipeList.map((recipe, index) => {
             const [buttonPopup, setButtonPopup] = useState(false)
-            const [recipeName, setRecipeName] = useState(recipe.name)
+            const [recipeName, setRecipeName] = useState(recipe.recipeName)
+            const [recipeCategory, setRecipeCategory] = useState(recipe.category)
             const [recipeIngredients, setRecipeIngredients] = useState(recipe.ingredients)
-            const [recipeInstructions, setRecipeInstructions] = useState(recipe.instructions)
+            const [recipeInstructions, setRecipeInstructions] = useState(recipe.recipeInstructions)
 
             function editRecipeOnClick() {
                 //const updatedIngredient = { ingredientName: newIngredientName, ingredientCategory: newIngredientCategory }
@@ -25,6 +36,26 @@ export default function RecipeCardPart(props) {
                 //setNewIngredientName("")
                 //setNewIngredientCategory("")
                 setButtonPopup(false)
+            }
+
+            if(viewOnly==true){
+                return(
+                    <section key={index} className="RecipeCard">
+                        <p className="RecipeCard-text">
+                            {recipeName}
+                        </p>
+                        <p className="RecipeCard-text">
+                            Ingredients:
+                            {recipeIngredients.map((ingredient, index) =>
+                                <li key={index}>{ingredient.ingredientCount} {ingredient.ingredientLabel} {ingredient.ingredientName}</li>
+                            )}
+                        </p>
+                        <p className="RecipeCard-text">
+                            Instructions:<br></br>
+                            {recipeInstructions}
+                        </p>
+                    </section>
+                )
             }
 
             return (
@@ -48,6 +79,7 @@ export default function RecipeCardPart(props) {
                     <PopUp trigger={buttonPopup} setTrigger={setButtonPopup}>
                         <h3 className="title">Edit Recipe</h3>
                         <p>Recipe Name <input type="text" className="textInputLong" value={recipeName} onChange={()=>setRecipeName(event.target.value)} /></p>
+                        <p>Recipe Category <input type="text" className="textInputLong" value={recipeCategory} onChange={()=>setRecipeCategory(event.target.value)} /></p>
                         <IngredientInformation
                             ingredients={recipeIngredients}
                             setIngredients={setRecipeIngredients} />

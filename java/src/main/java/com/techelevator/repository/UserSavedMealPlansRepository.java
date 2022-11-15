@@ -12,4 +12,5 @@ public interface UserSavedMealPlansRepository extends JpaRepository<UserSavedMea
 
     UserSavedMealPlans findByUserSavedMealPlansId(Long userSavedMealPlanId);
     List<UserSavedMealPlans> findAllByUser(User user);
+    UserSavedMealPlans findByUserAndMealPlan_mealPlanId(User user, Long mealPlanId);
 }
